@@ -1,3 +1,6 @@
 *
-!.gitignore
-! OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+# !.gitignore
+!OneDrive/
+!OneDrive/Documents/
+!OneDrive/Documents/PowerShell/
+!OneDrive/Documents/PowerShell/Microsoft.PowerShell_profile.ps1
