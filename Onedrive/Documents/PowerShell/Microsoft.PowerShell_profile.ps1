@@ -18,7 +18,6 @@ function Set-PythonPath {
 function Enter-MegaScriptEnvironment {
   Set-Location $MegaScriptPath
   Set-PythonPath
-  asd
   .\venv\Scripts\activate
 }
 
@@ -89,5 +88,6 @@ function vidata {
   Set-Location "C:\Users\ville\AppData\Local\nvim-data"
 }
 
-
-
+function vid {
+  Set-Location "C:\Users\ville\AppData\Local\nvim"
+}
