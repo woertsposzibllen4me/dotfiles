@@ -1,0 +1,33 @@
+gui:
+  theme:
+    activeBorderColor:
+      - "#FF9E64"  # Neon orange for active elements
+      - bold
+    inactiveBorderColor:
+      - "#00FFFF"  # Bright cyan-blue for inactive elements
+    optionsTextColor:
+      - "#00FFFF"  # Bright cyan-blue for options text
+    selectedLineBgColor:
+      - "#0080FF"  # Slightly darker blue for selected lines
+    selectedRangeBgColor:
+      - "#0080FF"  # Matching selected line color
+    cherryPickedCommitBgColor:
+      - "#0080FF"  # Matching selected line color
+    cherryPickedCommitFgColor:
+      - "#FFFFFF"  # White text for contrast
+    unstagedChangesColor:
+      - "#FF9E64"  # Neon orange for unstaged changes
+
+  nerdFontsVersion: "3"
+  border: "rounded"
+  showCommandLog: true
+  showBottomLine: true
+  showFileTree: true
+  showRandomTip: true
+  showIcons: true
+
+git:
+  paging:
+    colorArg: always
+    useConfig: true
+

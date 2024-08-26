@@ -1,0 +1,13 @@
+*
+!.gitignore
+!.wezterm.lua
+
+!OneDrive/
+!OneDrive/Documents/
+!OneDrive/Documents/PowerShell/
+!OneDrive/Documents/PowerShell/Microsoft.PowerShell_profile.ps1
+
+!AppData/
+!AppData/Local/
+!AppData/Local/lazygit/
+!AppData/Local/lazygit/config.yml

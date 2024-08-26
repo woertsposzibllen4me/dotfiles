@@ -35,86 +35,120 @@ function tab_title(tab_info)
 end
 
 local process_icons = {
-	["lua-language-server.exe"] = "",
-	["powershell.exe"] = "", -- PowerShell icon
-	["pwsh.exe"] = "", -- PowerShell Core icon
-	["cmd.exe"] = "", -- Windows Command Prompt icon
-	["bash.exe"] = "", -- Git Bash icon
-	["wsl.exe"] = "", -- WSL icon
-	["ssh"] = "", -- SSH sessions icon
-	["nvim.exe"] = "", -- Neovim icon
-	["vim.exe"] = "", -- Vim icon
-	["htop.exe"] = "", -- htop icon
-	["lazygit.exe"] = "󰊢",
-	["less.exe"] = "",
+	-- Shells
+	["powershell"] = "\u{f0a0a} ", --
+	["pwsh"] = "\u{f0a0a} ", --
+	["cmd"] = "\u{ebc4} ", --
+	["bash"] = "\u{e795} ", --
+	["zsh"] = "\u{e795} ", --
+	["fish"] = "\u{e795} ", --
+	["nu"] = "\u{e795} ", --
+
+	-- Programming languages and runtimes
+	["python"] = "\u{e606} ", --
+	["node"] = "\u{ed0d} ", --
+	["ruby"] = "\u{e791} ", --
+	["java"] = "\u{e738} ", --
+	["perl"] = "\u{e769} ", --
+	["php"] = "\u{e73d} ", --
+
+	-- Text editors and IDEs
+	["nvim"] = "\u{e62b} ", --
+	["vim"] = "\u{e62b} ", --
+	["code"] = "\u{e70c} ", --
+	["emacs"] = "\u{e7b4} ", --
+
+	-- Version control
+	["git"] = "\u{f02a2} ", --
+	["lazygit"] = "\u{f02a2} ", --
+
+	-- System tools
+	["htop"] = "\u{f85a} ", --
+	["top"] = "\u{f85a} ", --
+	["ssh"] = "\u{f817} ", --
+	["docker"] = "\u{f308} ", --
+
+	-- File operations
+	["ranger"] = "\u{f413} ", --
+	["fzf"] = "\u{f349} ", --
+
+	-- Networking
+	["ping"] = "\u{fb27} ", --
+	["curl"] = "\u{f8c8} ", --
+
+	-- Miscellaneous
+	["lua"] = "\u{e620} ", --
+	["terraform"] = "\u{e7b7} ", --
+
+	-- Additional common tools
+	["npm"] = "\u{e71e} ", --
+	["yarn"] = "\u{e718} ", --
+	["cargo"] = "\u{e7a8} ", --
+	["rustc"] = "\u{e7a8} ", --
+	["go"] = "\u{e626} ", --
+	["dotnet"] = "\u{e77f} ", --
+
+	-- Manual Additions
+	["lua-language-server"] = "\u{f08b1} ",
+	["oh-my-posh"] = "\u{f0a0a} ",
 }
 
-local function get_process_icon(process_name, tab_name)
-	wezterm.log_info("Process name: " .. (process_name or "unknown"))
-	local icon = process_icons[process_name:lower()]
-
-	-- Fallback to checking the tab name if no process icon was found
-	if not icon and tab_name then
-		wezterm.log_info("Tab name: " .. tab_name)
-		if tab_name:lower():find("lazygit") then
-			icon = "󰊢" -- Git nf icon
-		end
-	end
-	return (icon or "") .. " "
+-- Updated function to get process name
+local function get_process_name(process_name)
+	-- Extract just the executable name without path or extension
+	local name = process_name:match("([^\\]+)%.?[^.]*$")
+	name = name:gsub("%.exe$", "")
+	return name:lower()
 end
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
-	local title = tab_title(tab)
-	local pane = tab.active_pane
-	local process_name = tab.active_pane.foreground_process_name
-	local process_icon = get_process_icon(process_name:match("[^\\]+$"))
-	local zoom = ""
-	local index = (tab.tab_index + 1) .. ": "
-	if pane.is_zoomed then
-		zoom = " "
-	end
+	local process_name = get_process_name(tab.active_pane.foreground_process_name)
+	local icon = process_icons[process_name] or ""
+
+	-- Create tab number
+	local tab_number = tab.tab_index + 1 -- Wezterm uses 0-based indexing, so we add 1
+
+	-- Combine tab number, icon (if exists), and process name
+	local title = string.format("%d: %s%s", tab_number, icon, process_name)
+
 	return {
-		{ Text = " " .. zoom .. index .. process_icon .. title .. " " },
+		{ Text = " " .. title .. " " },
 	}
 end)
 
 config.font = wezterm.font("BerkeleyMono Nerd Font", { weight = "Regular" })
 config.font_size = 12.0
 
-config.color_scheme = "rose-pine-moon"
+config.color_scheme = "tokyonight_night"
 
 config.colors = {
 	tab_bar = {
-		background = "#182029",
+		background = "#16161e", -- Darker background for the tab bar
 		active_tab = {
-			bg_color = "#112939",
-			fg_color = "#ffc107",
+			bg_color = "#1a1b26", -- Slightly lighter than the tab bar background
+			fg_color = "#ff9e64", -- Orange pop color from Tokyo Night theme
 			intensity = "Bold",
-			italic = true,
+			italic = false,
 		},
-
 		inactive_tab = {
-			bg_color = "#20232b",
-			fg_color = "#b89f62",
+			bg_color = "#16161e", -- Same as tab bar background
+			fg_color = "#4b94a6", -- Muted foreground
 			italic = true,
 		},
-
 		inactive_tab_hover = {
-			bg_color = "#383b4b",
-			fg_color = "#e4b42b",
-			italic = true,
+			bg_color = "#1f2335", -- Slightly lighter on hover
+			fg_color = "#73e3ff", -- Tokyo Night cyan
+			italic = false,
 		},
-
 		new_tab = {
-			bg_color = "#20232b",
-			fg_color = "#b89f62",
-			italic = true,
+			bg_color = "#16161e", -- Same as tab bar background
+			fg_color = "#545c7e", -- Same as inactive tab
+			italic = false,
 		},
-
 		new_tab_hover = {
-			bg_color = "#383b4b",
-			fg_color = "#e4b42b",
-			italic = true,
+			bg_color = "#1f2335", -- Same as inactive tab hover
+			fg_color = "#7dcfff", -- Same as inactive tab hover
+			italic = false,
 		},
 	},
 }
@@ -122,15 +156,15 @@ config.colors = {
 config.background = {
 	{
 		source = {
-			File = "C:/Users/ville/OneDrive/Pictures/background/one_piece_sailing.png",
+			File = "C:/Users/ville/OneDrive/Pictures/background/luffy_sit.jpg",
 		},
 		hsb = {
-			brightness = 1.0,
+			brightness = 0.02,
 		},
 	},
 	{
 		source = {
-			Color = "rgba(28, 33, 39, 0.95)",
+			Color = "rgba(28, 33, 39, 0.55)",
 		},
 		height = "100%",
 		width = "100%",
