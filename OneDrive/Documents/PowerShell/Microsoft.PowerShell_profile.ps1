@@ -91,6 +91,3 @@ function vidata {
 function vid {
   Set-Location "C:\Users\ville\AppData\Local\nvim"
 }
-
-
-
