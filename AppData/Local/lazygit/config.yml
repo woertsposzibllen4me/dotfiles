@@ -17,7 +17,8 @@ gui:
       - "#FFFFFF"  # White text for contrast
     unstagedChangesColor:
       - "#FF9E64"  # Neon orange for unstaged changes
-
+    directory:
+      - "#00FFFF"  # Attempt to set directory color to bright cyan-blue
   nerdFontsVersion: "3"
   border: "rounded"
   showCommandLog: true

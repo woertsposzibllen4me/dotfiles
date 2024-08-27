@@ -4,7 +4,7 @@ $global:ScriptDirPath ="C:\Users\ville\MyScripts"
 Import-Module Terminal-Icons
 Import-Module PSFzf
 
-oh-my-posh init pwsh --config 'C:\Users\ville\AppData\Local\Programs\oh-my-posh\themes\tonybaloney.omp.json' | Invoke-Expression
+oh-my-posh init pwsh --config 'C:\Users\ville\AppData\Local\Programs\oh-my-posh\themes\montys.omp.json' | Invoke-Expression
 Set-PSReadLineOption -EditMode Emacs
 Set-PSReadLineKeyHandler -Chord 'Ctrl+g' -Function AcceptNextSuggestionWord
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t'
