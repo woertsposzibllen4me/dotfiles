@@ -119,8 +119,7 @@ end)
 config.font = wezterm.font("BerkeleyMono Nerd Font", { weight = "Regular" })
 config.font_size = 12.0
 
-config.color_scheme = "tokyonight_night"
-
+config.color_scheme = "Navy and Ivory (terminal.sexy)"
 config.colors = {
 	tab_bar = {
 		background = "#16161e", -- Darker background for the tab bar

@@ -1,24 +1,28 @@
 gui:
   theme:
     activeBorderColor:
-      - "#FF9E64"  # Neon orange for active elements
+      - "#E6D6AC"  # Light ivory for active elements
       - bold
     inactiveBorderColor:
-      - "#00FFFF"  # Bright cyan-blue for inactive elements
+      - "#34495E"  # Muted navy blue for inactive elements
     optionsTextColor:
-      - "#00FFFF"  # Bright cyan-blue for options text
+      - "#E6D6AC"  # Light ivory for options text
     selectedLineBgColor:
-      - "#0080FF"  # Slightly darker blue for selected lines
+      - "#4A6785"  # Slightly lighter navy for selected lines
     selectedRangeBgColor:
-      - "#0080FF"  # Matching selected line color
+      - "#4A6785"  # Matching selected line color
     cherryPickedCommitBgColor:
-      - "#0080FF"  # Matching selected line color
+      - "#5C7A99"  # Slightly brighter navy for cherry-picked commits
     cherryPickedCommitFgColor:
-      - "#FFFFFF"  # White text for contrast
+      - "#F0E6D2"  # Warmer ivory for contrast on cherry-picked commits
     unstagedChangesColor:
-      - "#FF9E64"  # Neon orange for unstaged changes
+      - "#D4B483"  # Muted gold for unstaged changes
     directory:
-      - "#00FFFF"  # Attempt to set directory color to bright cyan-blue
+      - "#7FA0C1"  # Lighter navy for directories
+    defaultFgColor:
+      - "#F0E6D2"  # Warm ivory for default text
+    defaultBgColor:
+      - "#1C2833"  # Dark navy background
   nerdFontsVersion: "3"
   border: "rounded"
   showCommandLog: true
@@ -26,9 +30,7 @@ gui:
   showFileTree: true
   showRandomTip: true
   showIcons: true
-
 git:
   paging:
     colorArg: always
     useConfig: true
-
