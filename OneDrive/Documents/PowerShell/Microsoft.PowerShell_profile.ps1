@@ -6,6 +6,7 @@ Import-Module PSFzf
 
 oh-my-posh init pwsh --config 'C:\Users\ville\AppData\Local\Programs\oh-my-posh\themes\montys.omp.json' | Invoke-Expression
 Set-PSReadLineOption -EditMode Emacs
+Set-PSReadLineOption -BellStyle None
 Set-PSReadLineKeyHandler -Chord 'Ctrl+g' -Function AcceptNextSuggestionWord
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t'
 
@@ -76,8 +77,9 @@ Set-Alias -Name sps -Value Start-PythonServer
 Set-Alias -Name p -Value Get-Location
 Set-Alias -Name c -Value Clear-Host
 Set-Alias -Name gds -Value Get-DirectorySize
-Set-Alias -Name vi -Value nvim
 Set-Alias -Name cpc -Value Copy-PathToClipboard
+Set-Alias -Name lg -Value lazygit
+Set-Alias -Name vi -Value nvim
 
 # Path aliases (these are fine as-is since they're not cmdlets)
 function scri {
@@ -91,3 +93,29 @@ function vidata {
 function vid {
   Set-Location "C:\Users\ville\AppData\Local\nvim"
 }
+
+function lgcfg {
+  Set-Location "C:\Users\ville\AppData\Local\lazygit\"
+}
+
+function roam {
+  Set-Location "C:\Users\ville\AppData\Roaming"
+}
+
+function loc {
+  Set-Location "C:\Users\ville\AppData\Local"
+}
+
+$prompt = ""
+function Invoke-Starship-PreCommand {
+  $current_location = $executionContext.SessionState.Path.CurrentLocation
+  if ($current_location.Provider.Name -eq "FileSystem") {
+    $ansi_escape = [char]27
+    $provider_path = $current_location.ProviderPath -replace "\\", "/"
+    $prompt = "$ansi_escape]7;file://${env:COMPUTERNAME}/${provider_path}$ansi_escape\"
+  }
+  $host.ui.Write($prompt)
+}
+
+$env:PATH += ";C:\Program Files\starship\bin"
+Invoke-Expression (&starship init powershell)

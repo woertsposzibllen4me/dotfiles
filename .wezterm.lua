@@ -91,6 +91,7 @@ local process_icons = {
 	-- Manual Additions
 	["lua-language-server"] = "\u{f08b1} ",
 	["oh-my-posh"] = "\u{f0a0a} ",
+	["starship"] = "\u{f427} ",
 }
 
 -- Updated function to get process name
@@ -101,15 +102,38 @@ local function get_process_name(process_name)
 	return name:lower()
 end
 
+local function get_current_working_directory(tab)
+	-- Get the current working directory
+	local cwd_url = tab.active_pane.current_working_dir
+
+	wezterm.log_info("Original CWD object: " .. tostring(cwd_url))
+
+	if cwd_url then
+		-- Access the path field of the URL
+		local path = cwd_url.path
+		wezterm.log_info("CWD path: " .. tostring(path))
+
+		-- Extract just the last part of the path (current folder name)
+		local folder_name = string.match(path, "([^/\\]+)$")
+		wezterm.log_info("Extracted folder name: " .. tostring(folder_name))
+
+		return folder_name or ""
+	else
+		wezterm.log_info("CWD is nil")
+		return ""
+	end
+end
+
 wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
 	local process_name = get_process_name(tab.active_pane.foreground_process_name)
 	local icon = process_icons[process_name] or ""
+	local cwd = get_current_working_directory(tab)
 
 	-- Create tab number
 	local tab_number = tab.tab_index + 1 -- Wezterm uses 0-based indexing, so we add 1
 
 	-- Combine tab number, icon (if exists), and process name
-	local title = string.format("%d: %s%s", tab_number, icon, process_name)
+	local title = string.format("%d: %s%s - %s", tab_number, icon, process_name, cwd)
 
 	return {
 		{ Text = " " .. title .. " " },
@@ -119,7 +143,8 @@ end)
 config.font = wezterm.font("BerkeleyMono Nerd Font", { weight = "Regular" })
 config.font_size = 12.0
 
-config.color_scheme = "Navy and Ivory (terminal.sexy)"
+config.color_scheme = "tokyonight_moon"
+
 config.colors = {
 	tab_bar = {
 		background = "#16161e", -- Darker background for the tab bar
@@ -274,6 +299,10 @@ config.keys = {
 	{ key = "4", mods = "LEADER", action = wezterm.action({ ActivateTab = 3 }) },
 	-- Switch to tab 5
 	{ key = "5", mods = "LEADER", action = wezterm.action({ ActivateTab = 4 }) },
+	-- Switch to tab 6
+	{ key = "6", mods = "LEADER", action = wezterm.action({ ActivateTab = 5 }) },
+	-- Switch to tab 7
+	{ key = "7", mods = "LEADER", action = wezterm.action({ ActivateTab = 6 }) },
 
 	{
 		key = "T",

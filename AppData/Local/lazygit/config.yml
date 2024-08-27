@@ -1,28 +1,22 @@
 gui:
   theme:
     activeBorderColor:
-      - "#E6D6AC"  # Light ivory for active elements
+      - "#FF9E64"  # Neon orange for active elements
       - bold
     inactiveBorderColor:
-      - "#34495E"  # Muted navy blue for inactive elements
+      - "#4db0c9"  # Balanced cyan-blue for inactive elements
     optionsTextColor:
-      - "#E6D6AC"  # Light ivory for options text
+      - "#4db0c9"  # Matching inactive border color
     selectedLineBgColor:
-      - "#4A6785"  # Slightly lighter navy for selected lines
+      - "#4877ab"  # Balanced blue for selected lines
     selectedRangeBgColor:
-      - "#4A6785"  # Matching selected line color
+      - "#4877ab"  # Matching selected line color
     cherryPickedCommitBgColor:
-      - "#5C7A99"  # Slightly brighter navy for cherry-picked commits
+      - "#3D99FF"  # Matching selected line color
     cherryPickedCommitFgColor:
-      - "#F0E6D2"  # Warmer ivory for contrast on cherry-picked commits
+      - "#FFFFFF"  # White text for contrast
     unstagedChangesColor:
-      - "#D4B483"  # Muted gold for unstaged changes
-    directory:
-      - "#7FA0C1"  # Lighter navy for directories
-    defaultFgColor:
-      - "#F0E6D2"  # Warm ivory for default text
-    defaultBgColor:
-      - "#1C2833"  # Dark navy background
+      - "#FF9E64"  # Neon orange for unstaged changes
   nerdFontsVersion: "3"
   border: "rounded"
   showCommandLog: true
