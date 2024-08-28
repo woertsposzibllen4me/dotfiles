@@ -4,6 +4,8 @@ $global:MegaScriptPath = "C:\Users\ville\MyMegaScript"
 $global:ScriptDirPath ="C:\Users\ville\MyScripts"
 Import-Module Terminal-Icons
 Import-Module PSFzf
+$env:PYTHONIOENCODING="utf-8"
+Invoke-Expression "$(thefuck --alias)"
 
 oh-my-posh init pwsh --config 'C:\Users\ville\AppData\Local\Programs\oh-my-posh\themes\montys.omp.json' | Invoke-Expression
 Set-PSReadLineOption -EditMode Emacs
@@ -32,7 +34,7 @@ function Get-PortUsage {
     [Parameter(Mandatory=$true)]
     [int]$Port
   )
-    
+
   netstat -aon | findstr ":$Port"
 }
 
@@ -75,13 +77,13 @@ Set-Alias -Name gpu -Value Get-PortUsage
 Set-Alias -Name spp -Value Set-PythonPath
 Set-Alias -Name eme -Value Enter-MegaScriptEnvironment
 Set-Alias -Name sps -Value Start-PythonServer
-Set-Alias -Name p -Value Get-Location
 Set-Alias -Name c -Value Clear-Host
 Set-Alias -Name gds -Value Get-DirectorySize
 Set-Alias -Name cpc -Value Copy-PathToClipboard
 Set-Alias -Name lg -Value lazygit
 Set-Alias -Name vi -Value nvim
 Set-Alias -Name ex -Value explorer
+
 
 # Path aliases (these are fine as-is since they're not cmdlets)
 function scri {
@@ -106,6 +108,10 @@ function roam {
 
 function loc {
   Set-Location "C:\Users\ville\AppData\Local"
+}
+
+function dot {
+  Set-Location "C:\Users\ville\myfiles\dotfiles\"
 }
 
 function prompt {
