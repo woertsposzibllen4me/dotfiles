@@ -10,6 +10,10 @@ $dotfilesConfig = @{
     "source" = "$dotfilesRepo\.gitconfig"
     "target" = "$HOME\.gitconfig"
   }
+  "Lazygit Config" = @{
+    "source" = "$dotfilesRepo\lazygit_config.yml"
+    "target" = "C:\Users\ville\AppData\Local\lazygit\config.yml"
+  }
   # Add more configurations as needed
 }
 
