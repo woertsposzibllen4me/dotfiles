@@ -72,6 +72,16 @@ function Get-DirectorySize {
   } | Format-Table -AutoSize
 }
 
+function Update-Profile{
+  . $PROFILE
+  Write-Host "PowerShell profile reloaded." -ForegroundColor Green
+}
+
+function Edit-Profile {
+  nvim $PROFILE
+}
+
+
 # Function aliases
 Set-Alias -Name gpu -Value Get-PortUsage
 Set-Alias -Name spp -Value Set-PythonPath
@@ -83,6 +93,10 @@ Set-Alias -Name cpc -Value Copy-PathToClipboard
 Set-Alias -Name lg -Value lazygit
 Set-Alias -Name vi -Value nvim
 Set-Alias -Name ex -Value explorer
+Set-Alias -Name p -Value $PROFILE
+Set-Alias -Name rel -Value Update-Profile
+Set-Alias -Name cfg -Value Edit-Profile
+
 
 
 # Path aliases (these are fine as-is since they're not cmdlets)
@@ -112,6 +126,10 @@ function loc {
 
 function dot {
   Set-Location "C:\Users\ville\myfiles\dotfiles\"
+}
+
+function my {
+  Set-Location "C:Users\ville\myfiles"
 }
 
 function prompt {
