@@ -81,6 +81,7 @@ Set-Alias -Name gds -Value Get-DirectorySize
 Set-Alias -Name cpc -Value Copy-PathToClipboard
 Set-Alias -Name lg -Value lazygit
 Set-Alias -Name vi -Value nvim
+Set-Alias -Name ex -Value explorer
 
 # Path aliases (these are fine as-is since they're not cmdlets)
 function scri {
