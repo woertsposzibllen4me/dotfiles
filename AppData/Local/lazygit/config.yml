@@ -1,22 +1,20 @@
 gui:
   theme:
     activeBorderColor:
-      - "#FF9E64"  # Neon orange for active elements
+      - "#FF9E64" # Neon orange for active elements
       - bold
     inactiveBorderColor:
-      - "#4db0c9"  # Balanced cyan-blue for inactive elements
+      - "#4db0c9" # Balanced cyan-blue for inactive elements
     optionsTextColor:
-      - "#4db0c9"  # Matching inactive border color
+      - "#4db0c9" # Matching inactive border color
     selectedLineBgColor:
-      - "#4877ab"  # Balanced blue for selected lines
-    selectedRangeBgColor:
-      - "#4877ab"  # Matching selected line color
+      - "#4877ab" # Balanced blue for selected lines
     cherryPickedCommitBgColor:
-      - "#3D99FF"  # Matching selected line color
+      - "#3D99FF" # Matching selected line color
     cherryPickedCommitFgColor:
-      - "#FFFFFF"  # White text for contrast
+      - "#FFFFFF" # White text for contrast
     unstagedChangesColor:
-      - "#FF9E64"  # Neon orange for unstaged changes
+      - "#FF9E64" # Neon orange for unstaged changes
   nerdFontsVersion: "3"
   border: "rounded"
   showCommandLog: true
@@ -28,3 +26,5 @@ git:
   paging:
     colorArg: always
     useConfig: true
+os:
+  editPreset: "nvim"
