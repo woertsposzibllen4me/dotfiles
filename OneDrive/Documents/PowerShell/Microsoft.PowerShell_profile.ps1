@@ -1,3 +1,4 @@
+[Console]::Write("`e[?2004h")
 # Constants
 $global:MegaScriptPath = "C:\Users\ville\MyMegaScript"
 $global:ScriptDirPath ="C:\Users\ville\MyScripts"
@@ -106,6 +107,14 @@ function loc {
   Set-Location "C:\Users\ville\AppData\Local"
 }
 
+function prompt {
+  # Call the Starship prompt
+  &starship prompt --status=$LASTEXITCODE --jobs=(Get-Job | Measure-Object).Count
+
+  # Re-enable bracketed paste mode after each command
+  [Console]::Write("`e[?2004h")
+}
+
 $prompt = ""
 function Invoke-Starship-PreCommand {
   $current_location = $executionContext.SessionState.Path.CurrentLocation
@@ -119,3 +128,14 @@ function Invoke-Starship-PreCommand {
 
 $env:PATH += ";C:\Program Files\starship\bin"
 Invoke-Expression (&starship init powershell)
+
+# Register an exit handler to disable bracketed paste mode
+$ExecutionContext.SessionState.InvokeCommand.CommandNotFoundAction = {
+  param($commandName, $errorRecord)
+  if ($commandName -eq 'exit') {
+    [Console]::Write("`e[?2004l")
+  }
+}
+
+# Optionally, you can also add this to handle when PowerShell is closed directly
+$null = Register-EngineEvent PowerShell.Exiting -Action { [Console]::Write("`e[?2004l") }
