@@ -129,7 +129,7 @@ function dot {
 }
 
 function my {
-  Set-Location "C:Users\ville\myfiles"
+  Set-Location "C:\Users\ville\myfiles"
 }
 
 function prompt {
