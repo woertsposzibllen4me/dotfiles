@@ -73,8 +73,10 @@ function Get-DirectorySize {
 }
 
 function Update-Profile{
-  . $PROFILE
-  Write-Host "PowerShell profile reloaded." -ForegroundColor Green
+  Add-Type -AssemblyName System.Windows.Forms
+  [System.Windows.Forms.SendKeys]::SendWait(". $")
+  [System.Windows.Forms.SendKeys]::SendWait("PROFILE")
+  [System.Windows.Forms.SendKeys]::SendWait("{ENTER}")
 }
 
 function Edit-Profile {
@@ -100,8 +102,8 @@ Set-Alias -Name cfg -Value Edit-Profile
 
 
 # Path aliases (these are fine as-is since they're not cmdlets)
-function scri {
-  Set-Location "C:\Users\ville\MyScripts" 
+function ahk{
+  Set-Location "C:\Users\ville\myfiles\scripts\autohotkey"
 }
 
 function vidata {
