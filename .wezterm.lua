@@ -12,7 +12,7 @@ require("wezterm").on("format-window-title", function()
 end)
 
 config.use_fancy_tab_bar = false
-config.tab_max_width = 35
+config.tab_max_width = 45
 
 wezterm.on("toggle-tabbar", function(window, _)
 	local overrides = window:get_config_overrides() or {}
@@ -132,8 +132,13 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
 	-- Create tab number
 	local tab_number = tab.tab_index + 1 -- Wezterm uses 0-based indexing, so we add 1
 
+	local zoom_icon = ""
+	if tab.active_pane.is_zoomed then
+		zoom_icon = " "
+	end
+
 	-- Combine tab number, icon (if exists), and process name
-	local title = string.format("%d: %s%s - %s", tab_number, icon, process_name, cwd)
+	local title = string.format("%s%d: %s%s - %s", zoom_icon, tab_number, icon, process_name, cwd)
 
 	return {
 		{ Text = " " .. title .. " " },
@@ -142,6 +147,11 @@ end)
 
 config.font = wezterm.font("BerkeleyMono Nerd Font", { weight = "Regular" })
 config.font_size = 12.0
+
+config.inactive_pane_hsb = {
+	saturation = 0.9,
+	brightness = 0.7,
+}
 
 config.color_scheme = "tokyonight_moon"
 
