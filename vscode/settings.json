@@ -1,0 +1,169 @@
+{
+    "security.workspace.trust.untrustedFiles": "open",
+    "liveServer.settings.CustomBrowser": "chrome",
+    "editor.fontLigatures": true,
+    "editor.wordWrap": "on",
+    "editor.fontFamily": "Maple Mono NF CN Light",
+    "editor.fastScrollSensitivity": 2,
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "Monokai Pro (Filter Octagon)",
+    "workbench.settings.applyToAllProfiles": [
+        "editor.fontFamily"
+    ],
+
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.trunk/*actions/": true,
+        "**/.trunk/*logs/": true,
+        "**/.trunk/*notifications/": true,
+        "**/.trunk/*out/": true,
+        "**/.trunk/*plugins/": true
+    },
+    "files.watcherExclude": {
+        "**/.trunk/*actions/": true,
+        "**/.trunk/*logs/": true,
+        "**/.trunk/*notifications/": true,
+        "**/.trunk/*out/": true,
+        "**/.trunk/*plugins/": true
+    },
+    "explorer.fileNesting.patterns": {
+        "*.ts": "${capture}.js",
+        "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+        "*.jsx": "${capture}.js",
+        "*.tsx": "${capture}.ts",
+        "tsconfig.json": "tsconfig.*.json",
+        "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb",
+        "*.sqlite": "${capture}.${extname}-*",
+        "*.db": "${capture}.${extname}-*",
+        "*.sqlite3": "${capture}.${extname}-*",
+        "*.db3": "${capture}.${extname}-*",
+        "*.sdb": "${capture}.${extname}-*",
+        "*.s3db": "${capture}.${extname}-*"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        },
+
+    },
+    "isort.args": [
+        "--profile",
+        "black"
+    ],
+    "cSpell.userWords": [
+        "addstr",
+        "aiosqlite",
+        "barebone",
+        "cutsoff",
+        "cutsoffs",
+        "CYPHER",
+        "dotenv",
+        "dslr",
+        "EXPEC",
+        "GBLN",
+        "getstr",
+        "gtts",
+        "imread",
+        "imshow",
+        "imwrite",
+        "iosevka",
+        "isort",
+        "Jetbrains",
+        "jsons",
+        "levelname",
+        "lockb",
+        "Monokai",
+        "mypy",
+        "noecho",
+        "NOMOVE",
+        "NOSIZE",
+        "NOTOPMOST",
+        "opencv",
+        "Parens",
+        "playsound",
+        "Popen",
+        "Punct",
+        "pyaudio",
+        "pycache",
+        "pydub",
+        "pygame",
+        "pygetwindow",
+        "Pylance",
+        "pylint",
+        "pylintrc",
+        "quickfix",
+        "Refitter",
+        "regreplace",
+        "robeau",
+        "robo",
+        "sbert",
+        "simpleaudio",
+        "skimage",
+        "ssim",
+        "stdscr",
+        "stfu",
+        "streamerbot",
+        "subkey",
+        "subkeys",
+        "syns",
+        "tmw",
+        "toarray",
+        "twm",
+        "unprimes",
+        "vectorizer",
+        "ville",
+        "voicelines",
+        "websockets"
+    ],
+    "cSpell.ignoreWords": [
+        "ANQM",
+        "Vnvqg"
+    ],
+    "gitlens.currentLine.enabled": false,
+    "flake8.args": [
+        "--config=old_config_files/.flake8",
+    ],
+    "pylint.args": [
+        "--config=old_config_files/.pylintrc",
+    ],
+    "mypy-type-checker.args": [
+        "--config=old_config_files/mypy.ini",
+    ],
+    "python.analysis.typeCheckingMode": "basic",  // Use basic type checking to complement mypy, avoiding redundancy
+    "python.analysis.diagnosticMode": "workspace",  // Analyze the entire workspace for comprehensive error detection
+    "python.analysis.useLibraryCodeForTypes": true,  // Enhance type information from external libraries for better analysis
+    "python.analysis.autoSearchPaths": true,  // Automatically detect and add necessary search paths to reduce configuration overhead
+    "python.analysis.extraPaths": ["./src"],  // Ensure Pylance can find modules in the specified additional paths
+    "python.analysis.completeFunctionParens": true,  // Improve coding efficiency by auto-completing function parentheses
+    "python.analysis.logLevel": "Error",  // Focus on errors to reduce noise from less critical issues
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportGeneralTypeIssues": "none",  // Avoid duplication with mypy's type checking
+        "reportUnusedImport": "none",       // Prevent duplication with pylint's unused import checks
+        "reportUndefinedVariable": "warning",  // Change to warning to keep quickfix but reduce prominence (allows to jump across errors without duplicates (alt f8))
+        "reportMissingTypeStubs": "none",   // Reduce noise from missing type stubs, managed manually if necessary
+        "reportPrivateUsage": "none",       // Minimize false positives from accessing private members
+        "reportOptionalSubscript": "none",  // Avoid redundancy with other type checks
+        "reportOptionalMemberAccess": "none" // Avoid redundancy with other type checks
+    },
+    "editor.rulers": [
+    ],
+    "search.smartCase": true,
+    "search.showLineNumbers": true,
+    "zenMode.hideLineNumbers": false,
+    "zenMode.hideStatusBar": false,
+    "vim.smartRelativeLine": true,
+    "editor.lineNumbers": "relative",
+    "macros": {
+        "splitAndCloseFirstGroup": [
+            "workbench.action.splitEditor",
+            "workbench.action.focusFirstEditorGroup",
+            "workbench.action.closeActiveEditor",
+            "workbench.action.focusSecondEditorGroup"
+        ]
+    },
+    "python.defaultInterpreterPath": "C:\\Users\\ville\\MyMegaScript\\venv",
+}

@@ -14,6 +14,14 @@ $dotfilesConfig = @{
     "source" = "$dotfilesRepo\lazygit_config.yml"
     "target" = "C:\Users\ville\AppData\Local\lazygit\config.yml"
   }
+  "Vs Code keybinds" = @{
+    "source" = "$dotfilesRepo\vscode\keybindings.json"
+    "target" = "C:\Users\ville\AppData\Roaming\Code\User\keybindings.json"
+  }
+  "VS Code settings" = @{
+    "source" = "$dotfilesRepo\vscode\settings.json"
+    "target" = "C:\Users\ville\AppData\Roaming\Code\User\settings.json"
+  }
   # Add more configurations as needed
 }
 
