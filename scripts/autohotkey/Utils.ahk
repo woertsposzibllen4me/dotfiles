@@ -97,6 +97,22 @@ else
 }
 return
 
+
+^!+e::
+; Check if an Explorer window exists
+if WinExist("ahk_class CabinetWClass")
+{
+    ; If it exists, activate (focus) it
+    WinActivate
+}
+else
+{
+    ; If no Explorer window is found, open a new one
+    Run, explorer.exe
+}
+return
+
+
 ; Unbind esc and use capslock for it instead as long as not in Dota or some game where I bind caps.
 #If !WinActive("ahk_exe dota2.exe")
 CapsLock::Esc

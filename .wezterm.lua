@@ -6,6 +6,7 @@ local act = wezterm.action
 config.default_prog = { "pwsh" }
 config.initial_cols = 120
 config.initial_rows = 30
+config.enable_kitty_keyboard = true
 
 require("wezterm").on("format-window-title", function()
 	return "Wezterm"
@@ -25,14 +26,6 @@ wezterm.on("toggle-tabbar", function(window, _)
 	end
 	window:set_config_overrides(overrides)
 end)
-
-function tab_title(tab_info)
-	local title = tab_info.tab_title
-	if title and #title > 0 then
-		return title
-	end
-	return tab_info.active_pane.title
-end
 
 local process_icons = {
 	-- Shells
@@ -97,8 +90,15 @@ local process_icons = {
 -- Updated function to get process name
 local function get_process_name(process_name)
 	-- Extract just the executable name without path or extension
-	local name = process_name:match("([^\\]+)%.?[^.]*$")
-	name = name:gsub("%.exe$", "")
+	wezterm.log_info("process_name : " .. tostring(process_name))
+	local name
+	if process_name and process_name ~= "" then
+		name = process_name:match("([^\\]+)%.?[^.]*$")
+		name = name:gsub("%.exe$", "")
+	else
+		name = "nil"
+	end
+
 	return name:lower()
 end
 
@@ -125,6 +125,7 @@ local function get_current_working_directory(tab)
 end
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
+	wezterm.log_info("\n")
 	local process_name = get_process_name(tab.active_pane.foreground_process_name)
 	local icon = process_icons[process_name] or ""
 	local cwd = get_current_working_directory(tab)
@@ -138,7 +139,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
 	end
 
 	-- Combine tab number, icon (if exists), and process name
-	local title = string.format("%s%d: %s%s - %s", zoom_icon, tab_number, icon, process_name, cwd)
+	local title = string.format("%s%d: %s%s - (../%s/)", zoom_icon, tab_number, icon, process_name, cwd)
 
 	return {
 		{ Text = " " .. title .. " " },
@@ -150,40 +151,49 @@ config.font_size = 12.0
 
 config.inactive_pane_hsb = {
 	saturation = 0.9,
-	brightness = 0.7,
+	brightness = 0.8,
 }
 
-config.color_scheme = "tokyonight-storm"
+local scheme_name = "tokyonight_moon"
+local scheme = wezterm.color.get_builtin_schemes()[scheme_name]
 
-config.colors = {
-	tab_bar = {
-		background = "#16161e", -- Darker background for the tab bar
-		active_tab = {
-			bg_color = "#1a1b26", -- Slightly lighter than the tab bar background
-			fg_color = "#ff9e64", -- Orange pop color from Tokyo Night theme
-			intensity = "Bold",
-			italic = false,
-		},
-		inactive_tab = {
-			bg_color = "#16161e", -- Same as tab bar background
-			fg_color = "#4b94a6", -- Muted foreground
-			italic = true,
-		},
-		inactive_tab_hover = {
-			bg_color = "#1f2335", -- Slightly lighter on hover
-			fg_color = "#73e3ff", -- Tokyo Night cyan
-			italic = false,
-		},
-		new_tab = {
-			bg_color = "#16161e", -- Same as tab bar background
-			fg_color = "#545c7e", -- Same as inactive tab
-			italic = false,
-		},
-		new_tab_hover = {
-			bg_color = "#1f2335", -- Same as inactive tab hover
-			fg_color = "#7dcfff", -- Same as inactive tab hover
-			italic = false,
-		},
+-- config.color_scheme = scheme_name
+
+scheme.brights[1] = "#ff69b4" -- Set pwsh args comments to pink !
+scheme.brights[2] = "#fc5858" -- more saturated reds
+scheme.ansi[2] = "#fc5858"
+scheme.brights[3] = "#b4ed77" -- more saturated greens
+scheme.ansi[3] = "#b4ed77"
+
+config.colors = scheme
+
+config.colors.tab_bar = {
+	background = "#16161e", -- Darker background for the tab bar
+	active_tab = {
+		bg_color = "#1a1b26", -- Slightly lighter than the tab bar background
+		fg_color = "#ff9e64", -- Orange pop color from Tokyo Night theme
+		intensity = "Bold",
+		italic = false,
+	},
+	inactive_tab = {
+		bg_color = "#16161e", -- Same as tab bar background
+		fg_color = "#4b94a6", -- Muted foreground
+		italic = true,
+	},
+	inactive_tab_hover = {
+		bg_color = "#1f2335", -- Slightly lighter on hover
+		fg_color = "#73e3ff", -- Tokyo Night cyan
+		italic = false,
+	},
+	new_tab = {
+		bg_color = "#16161e", -- Same as tab bar background
+		fg_color = "#545c7e", -- Same as inactive tab
+		italic = false,
+	},
+	new_tab_hover = {
+		bg_color = "#1f2335", -- Same as inactive tab hover
+		fg_color = "#7dcfff", -- Same as inactive tab hover
+		italic = false,
 	},
 }
 
@@ -205,7 +215,7 @@ config.background = {
 	},
 }
 
-config.leader = { key = "Space", mods = "CTRL" }
+config.leader = { key = " ", mods = "CTRL" }
 config.keys = {
 	{ key = "F11", action = wezterm.action.ToggleFullScreen },
 
@@ -272,17 +282,14 @@ config.keys = {
 		action = wezterm.action.CloseCurrentPane({ confirm = true }),
 	},
 
+	-- Zoom
 	{
 		key = "z",
 		mods = "LEADER",
 		action = wezterm.action.TogglePaneZoomState,
 	},
 
-	{
-		key = "c",
-		mods = "LEADER",
-		action = wezterm.action.ClearScrollback("ScrollbackAndViewport"),
-	},
+	-- Rename tab
 	{
 		key = "r",
 		mods = "LEADER",
@@ -295,11 +302,14 @@ config.keys = {
 			end),
 		}),
 	},
+
+	-- New tab
 	{
 		key = "t",
 		mods = "LEADER",
 		action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }),
 	},
+	-- Switch to tabs
 	{ key = "1", mods = "LEADER", action = wezterm.action({ ActivateTab = 0 }) },
 	-- Switch to tab 2
 	{ key = "2", mods = "LEADER", action = wezterm.action({ ActivateTab = 1 }) },
@@ -314,13 +324,21 @@ config.keys = {
 	-- Switch to tab 7
 	{ key = "7", mods = "LEADER", action = wezterm.action({ ActivateTab = 6 }) },
 
+	-- Toggle tabs
 	{
 		key = "T",
 		mods = "LEADER",
 		action = act.EmitEvent("toggle-tabbar"),
 	},
 
-	{ key = "U", mods = "CTRL", action = "DisableDefaultAssignment" },
+	{ key = "Enter", mods = "ALT", action = "DisableDefaultAssignment" },
+
+	-- Custom bind for nvim
+	{
+		key = "Enter",
+		mods = "ALT",
+		action = "DisableDefaultAssignment",
+	},
 }
 
 return config
