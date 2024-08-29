@@ -153,7 +153,7 @@ config.inactive_pane_hsb = {
 	brightness = 0.7,
 }
 
-config.color_scheme = "tokyonight_moon"
+config.color_scheme = "tokyonight-storm"
 
 config.colors = {
 	tab_bar = {
