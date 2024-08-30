@@ -6,7 +6,6 @@ Import-Module Terminal-Icons
 Import-Module PSFzf
 $env:PYTHONIOENCODING="utf-8"
 Invoke-Expression "$(thefuck --alias)"
-Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
 # Path for batch files
 $env:PATH += ";C:\Users\ville\myfiles\dotfiles\scripts\batch"
@@ -183,3 +182,5 @@ $ExecutionContext.SessionState.InvokeCommand.CommandNotFoundAction = {
 
 # Optionally, you can also add this to handle when PowerShell is closed directly
 $null = Register-EngineEvent PowerShell.Exiting -Action { [Console]::Write("`e[?2004l") }
+
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
