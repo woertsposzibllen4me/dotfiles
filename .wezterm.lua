@@ -166,6 +166,9 @@ scheme.brights[2] = "#fc5858" -- more saturated reds
 scheme.ansi[2] = "#fc5858"
 scheme.brights[3] = "#b4ed77" -- more saturated greens
 scheme.ansi[3] = "#b4ed77"
+scheme.brights[8] = "#67e6e6" -- more saturated greens
+
+scheme.ansi[8] = "#c2d0f2"
 
 config.colors = scheme
 
