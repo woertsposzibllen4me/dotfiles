@@ -15,9 +15,11 @@ $env:PATH += ";C:\Users\ville\myfiles\dotfiles\scripts\batch"
 Set-PSReadLineOption -EditMode Vi
 Set-PSReadLineOption -BellStyle None
 Set-PSReadLineKeyHandler -Chord 'Ctrl+g' -Function AcceptNextSuggestionWord
+Set-PSReadLineKeyHandler -Chord 'Ctrl+F' -Function AcceptSuggestion
+Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t'
 
-# Functions
 function Set-PythonPath {
   $env:PYTHONPATH = (Get-Location).Path
   Write-Output "PYTHONPATH set to: $env:PYTHONPATH"
@@ -83,6 +85,9 @@ function Edit-Profile {
   nvim $PROFILE
 }
 
+function Edit-Wezterm-Profile{
+  nvim "C:\Users\ville\myfiles\dotfiles\.wezterm.lua"
+}
 
 # Function aliases
 Set-Alias -Name gpu -Value Get-PortUsage
@@ -96,6 +101,7 @@ Set-Alias -Name vi -Value nvim
 Set-Alias -Name ex -Value explorer
 Set-Alias -Name rel -Value Update-Profile
 Set-Alias -Name cfg -Value Edit-Profile
+Set-Alias -Name wzcfg -Value Edit-Wezterm-Profile
 Set-Alias -Name d -Value dir
 
 
