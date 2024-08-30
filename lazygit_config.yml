@@ -27,4 +27,5 @@ git:
     colorArg: always
     useConfig: true
 # os:
-#   editPreset: "nvim"
+#   editCommand: "nvim"
+#   editCommandTemplate: '{{editor}} --server \\\\.\\pipe\\nvim-server --remote-tab "{{filename}}"'
