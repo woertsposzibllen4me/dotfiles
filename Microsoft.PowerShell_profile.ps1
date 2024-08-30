@@ -13,10 +13,22 @@ $env:PATH += ";C:\Users\ville\myfiles\dotfiles\scripts\batch"
 
 #oh-my-posh init pwsh --config 'C:\Users\ville\AppData\Local\Programs\oh-my-posh\themes\montys.omp.json' | Invoke-Expression
 Set-PSReadLineOption -EditMode Vi
+Set-PSReadLineKeyHandler -Chord 'U' -Function Redo -ViMode Command
+#Set-PSReadLineOption -EditMode Emacs
 Set-PSReadLineOption -BellStyle None
 Set-PSReadLineKeyHandler -Chord 'Ctrl+g' -Function AcceptNextSuggestionWord
-Set-PSReadLineKeyHandler -Chord 'Ctrl+F' -Function AcceptSuggestion
+Set-PSReadLineKeyHandler -Chord 'Ctrl+f' -Function AcceptSuggestion
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+
+if (Get-Module -ListAvailable -Name posh-git) {
+  # Import posh-git module
+  Import-Module posh-git
+} else {
+  # If posh-git is not installed, install it
+  Write-Host "posh-git is not installed. Installing..."
+  Install-Module posh-git -Scope CurrentUser -Force
+  Import-Module posh-git
+}
 
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t'
 
