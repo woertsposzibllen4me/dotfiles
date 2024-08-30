@@ -14,6 +14,7 @@ end)
 
 config.use_fancy_tab_bar = false
 config.tab_max_width = 45
+-- config.default_cursor_style = "SteadyBar"
 
 wezterm.on("toggle-tabbar", function(window, _)
 	local overrides = window:get_config_overrides() or {}
@@ -150,7 +151,8 @@ config.font = wezterm.font("BerkeleyMono Nerd Font", { weight = "Regular" })
 config.font_size = 12.0
 
 config.inactive_pane_hsb = {
-	saturation = 0.9,
+	hue = 1.0,
+	saturation = 0.8,
 	brightness = 0.8,
 }
 
@@ -215,29 +217,29 @@ config.background = {
 	},
 }
 
-config.leader = { key = " ", mods = "CTRL" }
+config.leader = { key = "w", mods = "CTRL" }
 config.keys = {
 	{ key = "F11", action = wezterm.action.ToggleFullScreen },
 
 	-- Navigate between panes
 	{
 		key = "h",
-		mods = "LEADER",
+		mods = "CTRL|SHIFT",
 		action = wezterm.action.ActivatePaneDirection("Left"),
 	},
 	{
 		key = "j",
-		mods = "LEADER",
+		mods = "CTRL|SHIFT",
 		action = wezterm.action.ActivatePaneDirection("Down"),
 	},
 	{
 		key = "k",
-		mods = "LEADER",
+		mods = "CTRL|SHIFT",
 		action = wezterm.action.ActivatePaneDirection("Up"),
 	},
 	{
 		key = "l",
-		mods = "LEADER",
+		mods = "CTRL|SHIFT",
 		action = wezterm.action.ActivatePaneDirection("Right"),
 	},
 
@@ -309,20 +311,15 @@ config.keys = {
 		mods = "LEADER",
 		action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }),
 	},
+
 	-- Switch to tabs
-	{ key = "1", mods = "LEADER", action = wezterm.action({ ActivateTab = 0 }) },
-	-- Switch to tab 2
-	{ key = "2", mods = "LEADER", action = wezterm.action({ ActivateTab = 1 }) },
-	-- Switch to tab 3
-	{ key = "3", mods = "LEADER", action = wezterm.action({ ActivateTab = 2 }) },
-	-- Switch to tab 4
-	{ key = "4", mods = "LEADER", action = wezterm.action({ ActivateTab = 3 }) },
-	-- Switch to tab 5
-	{ key = "5", mods = "LEADER", action = wezterm.action({ ActivateTab = 4 }) },
-	-- Switch to tab 6
-	{ key = "6", mods = "LEADER", action = wezterm.action({ ActivateTab = 5 }) },
-	-- Switch to tab 7
-	{ key = "7", mods = "LEADER", action = wezterm.action({ ActivateTab = 6 }) },
+	{ key = "F1", mods = "", action = wezterm.action({ ActivateTab = 0 }) },
+	{ key = "F2", mods = "", action = wezterm.action({ ActivateTab = 1 }) },
+	{ key = "F3", mods = "", action = wezterm.action({ ActivateTab = 2 }) },
+	{ key = "F5", mods = "", action = wezterm.action({ ActivateTab = 4 }) },
+	{ key = "F6", mods = "", action = wezterm.action({ ActivateTab = 5 }) },
+	{ key = "F7", mods = "", action = wezterm.action({ ActivateTab = 6 }) },
+	{ key = "F8", mods = "", action = wezterm.action({ ActivateTab = 7 }) },
 
 	-- Toggle tabs
 	{
@@ -331,12 +328,16 @@ config.keys = {
 		action = act.EmitEvent("toggle-tabbar"),
 	},
 
-	{ key = "Enter", mods = "ALT", action = "DisableDefaultAssignment" },
-
 	-- Custom bind for nvim
 	{
 		key = "Enter",
 		mods = "ALT",
+		action = "DisableDefaultAssignment",
+	},
+	-- Disable for Pwsh
+	{
+		key = "Tab",
+		mods = "CTRL",
 		action = "DisableDefaultAssignment",
 	},
 }
