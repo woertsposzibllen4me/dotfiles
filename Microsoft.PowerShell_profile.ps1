@@ -6,9 +6,13 @@ Import-Module Terminal-Icons
 Import-Module PSFzf
 $env:PYTHONIOENCODING="utf-8"
 Invoke-Expression "$(thefuck --alias)"
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
+
+# Path for batch files
+$env:PATH += ";C:\Users\ville\myfiles\dotfiles\scripts\batch"
 
 #oh-my-posh init pwsh --config 'C:\Users\ville\AppData\Local\Programs\oh-my-posh\themes\montys.omp.json' | Invoke-Expression
-Set-PSReadLineOption -EditMode Emacs
+Set-PSReadLineOption -EditMode Vi
 Set-PSReadLineOption -BellStyle None
 Set-PSReadLineKeyHandler -Chord 'Ctrl+g' -Function AcceptNextSuggestionWord
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t'
@@ -23,10 +27,6 @@ function Enter-MegaScriptEnvironment {
   Set-Location $MegaScriptPath
   Set-PythonPath
   .\venv\Scripts\activate
-}
-
-function Start-PythonServer {
-  py src\core\server.py
 }
 
 function Get-PortUsage {
@@ -88,16 +88,15 @@ function Edit-Profile {
 Set-Alias -Name gpu -Value Get-PortUsage
 Set-Alias -Name spp -Value Set-PythonPath
 Set-Alias -Name eme -Value Enter-MegaScriptEnvironment
-Set-Alias -Name sps -Value Start-PythonServer
 Set-Alias -Name c -Value Clear-Host
-Set-Alias -Name gds -Value Get-DirectorySize
+Set-Alias -Name dsize -Value Get-DirectorySize
 Set-Alias -Name cpc -Value Copy-PathToClipboard
 Set-Alias -Name lg -Value lazygit
 Set-Alias -Name vi -Value nvim
 Set-Alias -Name ex -Value explorer
-Set-Alias -Name p -Value $PROFILE
 Set-Alias -Name rel -Value Update-Profile
 Set-Alias -Name cfg -Value Edit-Profile
+Set-Alias -Name d -Value dir
 
 
 
