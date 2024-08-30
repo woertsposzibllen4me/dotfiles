@@ -3,6 +3,9 @@ gui:
     activeBorderColor:
       - "#FF9E64" # Neon orange for active elements
       - bold
+    searchingActiveBorderColor:
+      - "#ff966c"
+      - "bold"
     inactiveBorderColor:
       - "#4db0c9" # Balanced cyan-blue for inactive elements
     optionsTextColor:
@@ -15,17 +18,20 @@ gui:
       - "#FFFFFF" # White text for contrast
     unstagedChangesColor:
       - "#FF9E64" # Neon orange for unstaged changes
+    defaultFgColor:
+      - "#c8d3f5"
+
   nerdFontsVersion: "3"
   border: "rounded"
-  showCommandLog: true
-  showBottomLine: true
-  showFileTree: true
-  showRandomTip: true
-  showIcons: true
-git:
-  paging:
-    colorArg: always
-    useConfig: true
+  # showCommandLog: true
+  # showBottomLine: true
+  # showFileTree: true
+  # showRandomTip: true
+  # showIcons: true
+# git:
+#   paging:
+#     colorArg: always
+#     useConfig: true
 # os:
 #   editCommand: "nvim"
 #   editCommandTemplate: '{{editor}} --server \\\\.\\pipe\\nvim-server --remote-tab "{{filename}}"'
