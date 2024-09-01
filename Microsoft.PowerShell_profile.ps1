@@ -6,6 +6,11 @@ Import-Module PSFzf
 $env:PYTHONIOENCODING="utf-8"
 Invoke-Expression "$(thefuck --alias)"
 
+# Importing my custom modules
+Import-Module "C:\Users\ville\myfiles\dotfiles\pwsh_modules\cut_paste.psm1"
+Set-Alias -Name cut -Value Move-ItemToBuffer
+Set-Alias -Name paste -Value Restore-ItemFromBuffer
+
 # Path additions
 $env:PATH += ";C:\Users\ville\myfiles\dotfiles\scripts\batch"
 $env:Path += ";C:\Users\ville\myfiles\programs\on_path\"
