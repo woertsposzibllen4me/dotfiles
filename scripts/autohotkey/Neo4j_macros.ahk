@@ -2,6 +2,8 @@
 #NoEnv
 #SingleInstance force
 SetTitleMatchMode, 2 ; Allows for partial matching of the window title
+SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
+Menu, Tray, Icon, icons\neo4j.png
 
 targetWindowTitle := "neo4j@bolt://localhost:7687/neo4j - Neo4j Browser"
 
