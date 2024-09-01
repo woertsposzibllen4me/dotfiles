@@ -113,6 +113,20 @@ else
 return
 
 
+^!+n::
+SetTitleMatchMode, 2
+IfWinExist neo4j@bolt://localhost:7687
+{
+    ; If it exists, activate (focus) it
+    WinActivate
+}
+else
+{
+    ; If no Explorer window is found, open a new one
+    Run, "C:\Users\ville\AppData\Local\Programs\Neo4j Desktop\Neo4j Desktop.exe"
+}
+return
+
 ; Unbind esc and use capslock for it instead as long as not in Dota or some game where I bind caps.
 #If !WinActive("ahk_exe dota2.exe")
 CapsLock::Esc
