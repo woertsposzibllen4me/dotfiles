@@ -220,7 +220,7 @@ config.background = {
 	},
 }
 
-config.leader = { key = "w", mods = "CTRL" }
+config.leader = { key = " ", mods = "CTRL" }
 config.keys = {
 	{ key = "F11", action = wezterm.action.ToggleFullScreen },
 
@@ -316,13 +316,13 @@ config.keys = {
 	},
 
 	-- Switch to tabs
-	{ key = "F1", mods = "", action = wezterm.action({ ActivateTab = 0 }) },
-	{ key = "F2", mods = "", action = wezterm.action({ ActivateTab = 1 }) },
-	{ key = "F3", mods = "", action = wezterm.action({ ActivateTab = 2 }) },
-	{ key = "F5", mods = "", action = wezterm.action({ ActivateTab = 4 }) },
-	{ key = "F6", mods = "", action = wezterm.action({ ActivateTab = 5 }) },
-	{ key = "F7", mods = "", action = wezterm.action({ ActivateTab = 6 }) },
-	{ key = "F8", mods = "", action = wezterm.action({ ActivateTab = 7 }) },
+	{ key = "1", mods = "LEADER", action = wezterm.action({ ActivateTab = 0 }) },
+	{ key = "2", mods = "LEADER", action = wezterm.action({ ActivateTab = 1 }) },
+	{ key = "3", mods = "LEADER", action = wezterm.action({ ActivateTab = 2 }) },
+	{ key = "5", mods = "LEADER", action = wezterm.action({ ActivateTab = 4 }) },
+	{ key = "6", mods = "LEADER", action = wezterm.action({ ActivateTab = 5 }) },
+	{ key = "7", mods = "LEADER", action = wezterm.action({ ActivateTab = 6 }) },
+	{ key = "8", mods = "LEADER", action = wezterm.action({ ActivateTab = 7 }) },
 
 	-- Toggle tabs
 	{
@@ -344,5 +344,15 @@ config.keys = {
 		action = "DisableDefaultAssignment",
 	},
 }
+
+-- Add tab movement keybindings
+for i = 1, 8 do
+	-- CTRL+ALT + number to move to that position
+	table.insert(config.keys, {
+		key = tostring(i),
+		mods = "CTRL|ALT",
+		action = wezterm.action.MoveTab(i - 1),
+	})
+end
 
 return config
