@@ -1,14 +1,15 @@
 [Console]::Write("`e[?2004h")
 # Constants
 $global:MegaScriptPath = "C:\Users\ville\MyMegaScript"
-$global:ScriptDirPath ="C:\Users\ville\MyScripts"
 Import-Module Terminal-Icons
 Import-Module PSFzf
 $env:PYTHONIOENCODING="utf-8"
 Invoke-Expression "$(thefuck --alias)"
 
-# Path for batch files
+# Path additions
 $env:PATH += ";C:\Users\ville\myfiles\dotfiles\scripts\batch"
+$env:Path += ";C:\Users\ville\myfiles\programs\on_path\"
+
 
 #oh-my-posh init pwsh --config 'C:\Users\ville\AppData\Local\Programs\oh-my-posh\themes\montys.omp.json' | Invoke-Expression
 Set-PSReadLineOption -EditMode Vi
