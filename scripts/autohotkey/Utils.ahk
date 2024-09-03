@@ -36,9 +36,19 @@ IfWinExist, ahk_class CASCADIA_HOSTING_WINDOW_CLASS
 Run, pwsh.exe
 return
 
-; Ctrl + Alt + Shift + A to open a PowerShell window w/ admin mode
+; Ctrl + Alt + Shift + A to open or focus an admin PowerShell window
 +^!a::
-Run *RunAs pwsh.exe
+adminTitle := "Administrator: C:\Program Files\PowerShell\7\pwsh.exe"
+
+; Check if the window exists and activate it if it does
+if WinExist(adminTitle)
+{
+    WinActivate, %adminTitle%
+}
+else
+{
+    Run *RunAs pwsh.exe
+}
 return
 
 ; Ctrl + Alt + Shift + L to switch to an open WSL window or start a new one
