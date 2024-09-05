@@ -10,6 +10,11 @@ Sleep 50 ; Small delay to ensure clipboard content is ready
 StringReplace, Clipboard, Clipboard, \, /, All ; Replace backslashes with forward slashes
 return
 
+!^+i::
+Click ; Sends a left mouse click at the current mouse position (using with tobi eye tracker)
+return
+
+
 ; Ctrl + Alt + Shift + G to switch to an open Git Bash window
 ^!+g::
 IfWinExist, ahk_class mintty
