@@ -67,7 +67,7 @@ else
 return
 
 ; Ctrl + Alt + Shift + J to switch to an open Chrome window or start a new one
-^!+j::
+^!+j:: 
 SetTitleMatchMode, 2
 IfWinExist, ahk_exe chrome.exe
 {
@@ -75,9 +75,15 @@ IfWinExist, ahk_exe chrome.exe
 }
 else
 {
-    Run, "C:\Program Files\Google\Chrome\Application\chrome.exe"
+    Run, "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
 }
 return
+
+; Rebind Alt+J and Alt+K to Up and Down Arrow keys in browser
+#IfWinActive ahk_exe chrome.exe
+!j::Send {Down}
+!k::Send {Up}
+#IfWinActive
 
 
 ; Ctrl + Alt + Shift + K to switch to an open WezTerm window or start a new one
