@@ -13,7 +13,7 @@ Set-Alias -Name paste -Value Restore-ItemFromBuffer
 
 # Path additions
 $env:PATH += ";C:\Users\ville\myfiles\dotfiles\scripts\batch"
-$env:Path += ";C:\Users\ville\myfiles\programs\on_path\"
+$env:Path += ";C:\Users\ville\myfiles\programs\PROGRAMS_ON_PATH\"
 
 
 #oh-my-posh init pwsh --config 'C:\Users\ville\AppData\Local\Programs\oh-my-posh\themes\montys.omp.json' | Invoke-Expression
