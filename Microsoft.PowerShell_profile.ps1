@@ -4,7 +4,6 @@ $global:MegaScriptPath = "C:\Users\ville\MyMegaScript"
 Import-Module Terminal-Icons
 Import-Module PSFzf
 $env:PYTHONIOENCODING="utf-8"
-Invoke-Expression "$(thefuck --alias)"
 
 # Importing my custom modules
 Import-Module "C:\Users\ville\myfiles\dotfiles\pwsh_modules\cut_paste.psm1"
@@ -16,10 +15,8 @@ $env:PATH += ";C:\Users\ville\myfiles\dotfiles\scripts\batch"
 $env:Path += ";C:\Users\ville\myfiles\programs\PROGRAMS_ON_PATH\"
 
 
-#oh-my-posh init pwsh --config 'C:\Users\ville\AppData\Local\Programs\oh-my-posh\themes\montys.omp.json' | Invoke-Expression
 Set-PSReadLineOption -EditMode Vi
 Set-PSReadLineKeyHandler -Chord 'U' -Function Redo -ViMode Command
-#Set-PSReadLineOption -EditMode Emacs
 Set-PSReadLineOption -BellStyle None
 Set-PSReadLineKeyHandler -Chord 'Ctrl+g' -Function AcceptNextSuggestionWord
 Set-PSReadLineKeyHandler -Chord 'Ctrl+f' -Function AcceptSuggestion
