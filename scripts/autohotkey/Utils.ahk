@@ -1,5 +1,6 @@
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 #SingleInstance Force
+#MaxHotkeysPerInterval 3000
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 Menu, Tray, Icon, icons\utils.png
@@ -84,11 +85,13 @@ else
 }
 return
 
-; Rebind Alt+J and Alt+K to Up and Down Arrow keys in browser
-#IfWinActive ahk_exe chrome.exe
+; Rebind Alt+J and Alt+K to Up and Down Arrow keys (added h and l for left and right to test too)
+; #IfWinActive ahk_exe chrome.exe
 !j::Send {Down}
 !k::Send {Up}
-#IfWinActive
+!h::Send {Left}
+!l::Send {Right}
+; #IfWinActive
 
 
 ; Ctrl + Alt + Shift + K to switch to an open WezTerm window or start a new one
@@ -149,7 +152,7 @@ else
 return
 
 ; Unbind esc and use capslock for it instead as long as not in Dota or some game where I bind caps.
-#If !WinActive("ahk_exe dota2.exe")
+#If !WinActive("ahk_exe dota2.exe") and !WinActive("ahk_exe SC2.exe") and !WinActive("Deadlock")
 CapsLock::Esc
 Esc::CapsLock
 #If
