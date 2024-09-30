@@ -13,6 +13,7 @@ Set-Alias -Name paste -Value Restore-ItemFromBuffer
 # Path additions
 $env:PATH += ";C:\Users\ville\myfiles\dotfiles\scripts\batch"
 $env:Path += ";C:\Users\ville\myfiles\programs\PROGRAMS_ON_PATH\"
+$env:PATH = "$env:USERPROFILE\scoop\shims;$env:PATH"
 
 
 Set-PSReadLineOption -EditMode Vi
