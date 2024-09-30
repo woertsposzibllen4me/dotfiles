@@ -148,7 +148,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
 end)
 
 config.font = wezterm.font("BerkeleyMono Nerd Font", { weight = "Regular" })
-config.font_size = 12.0
+config.font_size = 11.5
 
 config.inactive_pane_hsb = {
 	hue = 1.0,
@@ -319,6 +319,7 @@ config.keys = {
 	{ key = "1", mods = "LEADER", action = wezterm.action({ ActivateTab = 0 }) },
 	{ key = "2", mods = "LEADER", action = wezterm.action({ ActivateTab = 1 }) },
 	{ key = "3", mods = "LEADER", action = wezterm.action({ ActivateTab = 2 }) },
+	{ key = "4", mods = "LEADER", action = wezterm.action({ ActivateTab = 3 }) },
 	{ key = "5", mods = "LEADER", action = wezterm.action({ ActivateTab = 4 }) },
 	{ key = "6", mods = "LEADER", action = wezterm.action({ ActivateTab = 5 }) },
 	{ key = "7", mods = "LEADER", action = wezterm.action({ ActivateTab = 6 }) },
