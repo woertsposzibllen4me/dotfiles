@@ -146,7 +146,7 @@ HandleNodeInput(input) {
     }
 return
 
-^+k:: ; [K]reations Hotkey: Ctrl+Shift+K (K rather than C to avoid conflicts with Ctrl+Shift+C)
+^+n:: ; [N]ew creations Hotkey: Ctrl+Shift+N (to avoid conflicts with Ctrl+Shift+C (idk what it is anymore) and with Ctrl+Shift+K (wezterm navigation))
     if WinActive(targetWindowTitle) {
         Input, NextKey, L1
         if (NextKey = "n") {
@@ -157,7 +157,7 @@ return
     }
 return
 
-^+s:: ; Set Hotkey: Ctrl+Shift+S 
+^+s:: ; Set Hotkey: Ctrl+Shift+S
     if WinActive(targetWindowTitle) {
         Input, NextKey, L1
         if (NextKey = "t") {
