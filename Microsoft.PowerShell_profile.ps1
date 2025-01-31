@@ -35,6 +35,24 @@ if (Get-Module -ListAvailable -Name posh-git) {
 
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t'
 
+function Invoke-FzfCd {
+  # navigate to the directory of selected file in fzf
+  $selected = fzf
+
+  if (-not $selected) {
+    Write-Host "No selection made."
+    return
+  }
+
+  if (Test-Path -Path $selected -PathType Container) {
+    z $selected
+  } else {
+    $parent = Split-Path -Path $selected -Parent
+    z $parent
+  }
+}
+
+
 function Set-PythonPath {
   $env:PYTHONPATH = (Get-Location).Path
   Write-Output "PYTHONPATH set to: $env:PYTHONPATH"
@@ -118,7 +136,7 @@ Set-Alias -Name rel -Value Update-Profile
 Set-Alias -Name cfg -Value Edit-Profile
 Set-Alias -Name wzcfg -Value Edit-Wezterm-Profile
 Set-Alias -Name d -Value dir
-
+Set-Alias -Name zf -Value Invoke-FzfCd
 
 
 # Path aliases (these are fine as-is since they're not cmdlets)
