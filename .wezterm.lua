@@ -111,20 +111,10 @@ local function get_process_name(process_name)
 end
 
 local function get_current_working_directory(tab)
-  -- Get the current working directory
   local cwd_url = tab.active_pane.current_working_dir
-
-  wezterm.log_info("Original CWD object: " .. tostring(cwd_url))
-
   if cwd_url then
-    -- Access the path field of the URL
     local path = cwd_url.path
-    wezterm.log_info("CWD path: " .. tostring(path))
-
-    -- Extract just the last part of the path (current folder name)
     local folder_name = string.match(path, "([^/\\]+)$")
-    wezterm.log_info("Extracted folder name: " .. tostring(folder_name))
-
     return folder_name or ""
   else
     wezterm.log_info("CWD is nil")
