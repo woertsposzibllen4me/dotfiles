@@ -2,6 +2,7 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local act = wezterm.action
+local manually_set_titles = {}
 
 config.default_prog = { "pwsh" }
 config.initial_cols = 120
@@ -136,12 +137,16 @@ end
 wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
   wezterm.log_info("\n")
 
-  -- Create tab number
-  local tab_number = tab.tab_index + 1 -- Wezterm uses 0-based indexing, so we add 1
+  if manually_set_titles[tostring(tab.tab_id)] then -- Keep the title if it was manually set
+    local process_name = get_process_name(tab.active_pane.foreground_process_name)
+    local process_icon = process_icons[process_name] or ""
+    local title = tab.tab_title or ""
+    local tab_number = tab.tab_index + 1
+    local zoom_icon = tab.active_pane.is_zoomed and " " or ""
 
-  local zoom_icon = ""
-  if tab.active_pane.is_zoomed then
-    zoom_icon = " "
+    return {
+      { Text = string.format("%s%d: %s%s ", zoom_icon, tab_number, process_icon, title) },
+    }
   end
 
   local process_name = get_process_name(tab.active_pane.foreground_process_name)
@@ -343,7 +348,9 @@ config.keys = {
       description = "Enter new name for tab",
       action = wezterm.action_callback(function(window, pane, line)
         if line then
-          window:active_tab():set_title(line)
+          local tab = window:active_tab()
+          manually_set_titles[tostring(tab:tab_id())] = true
+          tab:set_title(line)
         end
       end),
     }),
