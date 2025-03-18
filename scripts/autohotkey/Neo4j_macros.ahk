@@ -126,7 +126,7 @@ HandleNodeInput(input) {
     }
 }
 
-^+m:: ; Matches Hotkey: Ctrl+Shift+M (+G for groups)
+^+m:: ; Matches Hotkey: Ctrl+Shift+M, then G for Group, N for Node, R for Relationship, P for Property Key
     if WinActive(targetWindowTitle) {
         Input, NextKey, L1
         if (NextKey = "n") {
@@ -143,10 +143,12 @@ HandleNodeInput(input) {
                 MatchRelationshipGroup()
             }
         }
+    } else {
+        Send ^+m
     }
 return
 
-^+n:: ; [N]ew creations Hotkey: Ctrl+Shift+N (to avoid conflicts with Ctrl+Shift+C (idk what it is anymore) and with Ctrl+Shift+K (wezterm navigation))
+^+c:: ; Create Hotkey: Ctrl+Shift+C
     if WinActive(targetWindowTitle) {
         Input, NextKey, L1
         if (NextKey = "n") {
@@ -154,6 +156,8 @@ return
         } else if (NextKey = "r") {
             CreateRelationship()
         }
+    } else {
+        Send ^+c
     }
 return
 
@@ -163,11 +167,15 @@ return
         if (NextKey = "t") {
             SetText()
         }
+    } else {
+        Send ^+s
     }
 return
 
 ^+\:: ; Return all Hotkey: Ctrl+Shift+\
     if WinActive(targetWindowTitle) {
         SendInput, MATCH(a){Shift down}{Enter}{Shift up}RETURN a
+    } else {
+        Send ^+\
     }
 return
