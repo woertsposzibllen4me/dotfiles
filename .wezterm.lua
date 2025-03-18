@@ -150,11 +150,20 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
   local parent_folder = get_parent_directory_name(tab)
   local tab_number = tab.tab_index + 1 -- Wezterm uses 0-based indexing, so we add 1
   local zoom_icon = tab.active_pane.is_zoomed and " " or ""
+
+  -- Check if the tab has a custom title set by Neovim set through OSC sequences (should have "nvim" in the title)
+  if tab.active_pane.title and tab.active_pane.title:match("nvim") then
+    local title = string.format("%s%d: %s", zoom_icon, tab_number, tab.active_pane.title)
+    return {
+      { Text = " " .. title .. " " },
+    }
+  else
     local title =
       string.format("%s%d: %s%s (../%s/%s)", zoom_icon, tab_number, process_icon, process_name, parent_folder, cwd)
     return {
       { Text = " " .. title .. " " },
     }
+  end
 end)
 
 config.font = wezterm.font("BerkeleyMono Nerd Font", { weight = "Regular" })
