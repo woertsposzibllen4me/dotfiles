@@ -117,16 +117,24 @@ local function get_current_working_directory(tab)
     local folder_name = string.match(path, "([^/\\]+)$")
     return folder_name or ""
   else
-    wezterm.log_info("CWD is nil")
+    return ""
+  end
+end
+
+local function get_parent_directory_name(tab)
+  local cwd_url = tab.active_pane.current_working_dir
+  if cwd_url then
+    local path = cwd_url.path
+    local parent_path = string.match(path, "^(.+)/[^/]+$") or path
+    local parent_folder_name = string.match(parent_path, "([^/\\]+)$")
+    return parent_folder_name or ""
+  else
     return ""
   end
 end
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
   wezterm.log_info("\n")
-  local process_name = get_process_name(tab.active_pane.foreground_process_name)
-  local icon = process_icons[process_name] or ""
-  local cwd = get_current_working_directory(tab)
 
   -- Create tab number
   local tab_number = tab.tab_index + 1 -- Wezterm uses 0-based indexing, so we add 1
@@ -136,12 +144,17 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
     zoom_icon = " "
   end
 
-  -- Combine tab number, icon (if exists), and process name
-  local title = string.format("%s%d: %s%s - (../%s/)", zoom_icon, tab_number, icon, process_name, cwd)
-
-  return {
-    { Text = " " .. title .. " " },
-  }
+  local process_name = get_process_name(tab.active_pane.foreground_process_name)
+  local process_icon = process_icons[process_name] or ""
+  local cwd = get_current_working_directory(tab)
+  local parent_folder = get_parent_directory_name(tab)
+  local tab_number = tab.tab_index + 1 -- Wezterm uses 0-based indexing, so we add 1
+  local zoom_icon = tab.active_pane.is_zoomed and " " or ""
+    local title =
+      string.format("%s%d: %s%s (../%s/%s)", zoom_icon, tab_number, process_icon, process_name, parent_folder, cwd)
+    return {
+      { Text = " " .. title .. " " },
+    }
 end)
 
 config.font = wezterm.font("BerkeleyMono Nerd Font", { weight = "Regular" })
