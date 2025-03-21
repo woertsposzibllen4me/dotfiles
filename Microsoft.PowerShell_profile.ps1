@@ -141,7 +141,7 @@ Set-Alias -Name zf -Value Invoke-FzfCd
 
 # Path aliases (these are fine as-is since they're not cmdlets)
 function ahk{
-  Set-Location "C:\Users\ville\myfiles\scripts\autohotkey"
+  Set-Location "C:\Users\ville\myfiles\dotfiles\scripts\autohotkey"
 }
 
 function vidata {
