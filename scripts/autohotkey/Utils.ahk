@@ -73,7 +73,7 @@ else
 return
 
 ; Ctrl + Alt + Shift + J to switch to an open Chrome window or start a new one
-^!+j:: 
+^!+j::
 SetTitleMatchMode, 2
 IfWinExist, ahk_exe chrome.exe
 {
@@ -122,7 +122,7 @@ else
 return
 
 
-^!+e::
+^!+x::
 ; Check if an Explorer window exists
 if WinExist("ahk_class CabinetWClass")
 {
