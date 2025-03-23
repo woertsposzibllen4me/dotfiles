@@ -15,6 +15,7 @@ config.window_padding = {
   top = 0,
   bottom = 0,
 }
+config.max_fps = 144
 
 require("wezterm").on("format-window-title", function()
   return "Wezterm"
