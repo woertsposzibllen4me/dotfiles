@@ -29,11 +29,6 @@ gui:
   # showRandomTip: true
   # showIcons: true
 
-# Custom keybinding section - Shows shortcuts in Lazygit's interface
-keybinding:
-  universal:
-    edit-file-in-nvim: "<c-g>"
-
 # Custom commands section - Define what the keybindings actually do
 customCommands:
   - key: "<c-g>"
