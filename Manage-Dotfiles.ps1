@@ -32,11 +32,6 @@ $dotfilesConfig = @{
     "target" = "C:\Users\ville\.wezterm.lua"
   }
 
-  "Autohotkey scripts dir" = @{
-    "source" = "$dotfilesRepo\scripts\autohotkey\"
-    "target" = "C:\Users\ville\myfiles\scripts\autohotkey\"
-  }
-  # Add more configurations as needed
 }
 
 function Sync-Dotfiles {
