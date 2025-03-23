@@ -122,6 +122,10 @@ function Edit-Wezterm-Profile{
   nvim "C:\Users\ville\myfiles\dotfiles\.wezterm.lua"
 }
 
+function Edit-Lazygit-Config {
+  nvim "C:\Users\ville\AppData\Local\lazygit\config.yml"
+}
+
 # Function aliases
 Set-Alias -Name gpu -Value Get-PortUsage
 Set-Alias -Name spp -Value Set-PythonPath
@@ -135,6 +139,7 @@ Set-Alias -Name ex -Value explorer
 Set-Alias -Name rel -Value Update-Profile
 Set-Alias -Name cfg -Value Edit-Profile
 Set-Alias -Name wzcfg -Value Edit-Wezterm-Profile
+Set-Alias -Name lgcfg -Value Edit-Lazygit-Config
 Set-Alias -Name d -Value dir
 Set-Alias -Name zf -Value Invoke-FzfCd
 
@@ -150,10 +155,6 @@ function vidata {
 
 function vid {
   Set-Location "C:\Users\ville\AppData\Local\nvim"
-}
-
-function lgcfg {
-  Set-Location "C:\Users\ville\AppData\Local\lazygit\"
 }
 
 function roam {
