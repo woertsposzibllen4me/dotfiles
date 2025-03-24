@@ -20,6 +20,7 @@ gui:
       - "#FF9E64" # Neon orange for unstaged changes
     defaultFgColor:
       - "#c8d3f5"
+  scrollHeight: 4
 
   nerdFontsVersion: "3"
   border: "rounded"
