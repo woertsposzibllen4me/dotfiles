@@ -247,6 +247,20 @@ config.background = {
 
 config.leader = { key = " ", mods = "CTRL" }
 config.keys = {
+
+  -- Scrolling
+  {
+    key = "d",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action.ScrollByPage(1 / 2),
+  },
+  {
+    key = "u",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action.ScrollByPage(-1 / 2),
+  },
+
+  -- Fullscreen
   { key = "F11", action = wezterm.action.ToggleFullScreen },
 
   -- Navigate between panes
