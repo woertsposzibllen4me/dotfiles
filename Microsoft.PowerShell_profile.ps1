@@ -15,7 +15,7 @@ $env:PATH += ";C:\Users\ville\myfiles\dotfiles\scripts\batch"
 $env:Path += ";C:\Users\ville\myfiles\programs\PROGRAMS_ON_PATH\"
 $env:PATH = "$env:USERPROFILE\scoop\shims;$env:PATH"
 
-
+# General options
 Set-PSReadLineOption -EditMode Vi
 Set-PSReadLineKeyHandler -Chord 'U' -Function Redo -ViMode Command
 Set-PSReadLineOption -BellStyle None
@@ -52,7 +52,6 @@ function Invoke-FzfCd {
   }
 }
 
-
 function Set-PythonPath {
   $env:PYTHONPATH = (Get-Location).Path
   Write-Output "PYTHONPATH set to: $env:PYTHONPATH"
@@ -62,15 +61,6 @@ function Enter-MegaScriptEnvironment {
   Set-Location $MegaScriptPath
   Set-PythonPath
   .\venv\Scripts\activate
-}
-
-function Get-PortUsage {
-  param (
-    [Parameter(Mandatory=$true)]
-    [int]$Port
-  )
-
-  netstat -aon | findstr ":$Port"
 }
 
 function Copy-PathToClipboard {
@@ -127,12 +117,11 @@ function Edit-Lazygit-Config {
 }
 
 # Function aliases
-Set-Alias -Name gpu -Value Get-PortUsage
 Set-Alias -Name spp -Value Set-PythonPath
 Set-Alias -Name eme -Value Enter-MegaScriptEnvironment
 Set-Alias -Name c -Value Clear-Host
 Set-Alias -Name dsize -Value Get-DirectorySize
-Set-Alias -Name cpc -Value Copy-PathToClipboard
+Set-Alias -Name cpath -Value Copy-PathToClipboard
 Set-Alias -Name lg -Value lazygit
 Set-Alias -Name vi -Value nvim
 Set-Alias -Name ex -Value explorer
