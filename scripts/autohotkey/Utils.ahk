@@ -152,7 +152,8 @@ else
 return
 
 ; Unbind esc and use capslock for it instead as long as not in Dota or some game where I bind caps.
-#If !WinActive("ahk_exe dota2.exe") and !WinActive("ahk_exe SC2.exe") and !WinActive("Deadlock")
+#If !WinActive("ahk_exe dota2.exe")and !WinActive("Warcraft III")
+; and !WinActive("ahk_exe SC2.exe") and !WinActive("Deadlock") (comment out unplayed games for efficiency)
 CapsLock::Esc
 Esc::CapsLock
 #If
