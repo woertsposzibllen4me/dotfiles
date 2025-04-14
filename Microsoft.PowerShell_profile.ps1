@@ -117,6 +117,17 @@ function Edit-Lazygit-Config {
   nvim "C:\Users\ville\AppData\Local\lazygit\config.yml"
 }
 
+function Start-NvimBugRepro {
+  $ConfigPath = "$env:USERPROFILE\myfiles\nvim-bug-repro\init.lua"
+  if (-not (Test-Path $ConfigPath)) {
+    throw "Config file does not exist: $ConfigPath"
+  }
+  $ConfigDir = Split-Path -Parent $ConfigPath
+  Set-Location $ConfigDir
+  $normalizedConfigPath = $ConfigPath.Replace('\', '/')
+  nvim -u $normalizedConfigPath
+}
+
 # Function aliases
 Set-Alias -Name spp -Value Set-PythonPath
 Set-Alias -Name eme -Value Enter-MegaScriptEnvironment
@@ -132,7 +143,7 @@ Set-Alias -Name wzcfg -Value Edit-Wezterm-Profile
 Set-Alias -Name lgcfg -Value Edit-Lazygit-Config
 Set-Alias -Name d -Value dir
 Set-Alias -Name zf -Value Invoke-FzfCd
-
+Set-Alias -Name virepro -Value Start-NvimBugRepro
 
 # Path aliases (these are fine as-is since they're not cmdlets)
 function ahk{
