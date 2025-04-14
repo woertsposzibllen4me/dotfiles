@@ -248,6 +248,13 @@ config.background = {
 config.leader = { key = " ", mods = "CTRL" }
 config.keys = {
 
+  -- Search
+  {
+    key = "F",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action.Search({ CaseInSensitiveString = "" }),
+  },
+
   -- Scrolling
   {
     key = "d",
