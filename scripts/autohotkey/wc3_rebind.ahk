@@ -31,7 +31,6 @@ XButton1 & s::6
 XButton1 & d::7
 XButton1 & f::8
 XButton1 & c::9
-XButton1 & v::0
 g::0
 XButton2::l
 
