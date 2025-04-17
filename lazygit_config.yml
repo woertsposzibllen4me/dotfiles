@@ -41,9 +41,10 @@ customCommands:
     subprocess: true # Run as a subprocess
     loadingText: "Preparing file for Neovim..." # Shown while command runs
 
-# git:
-#   paging:
-#     colorArg: always
+git:
+  paging:
+    colorArg: always
+    pager: diff-so-fancy
 #     useConfig: true
 # os:
 #   editCommand: "nvim"
