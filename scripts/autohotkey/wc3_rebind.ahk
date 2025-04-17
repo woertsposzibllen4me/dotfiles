@@ -6,10 +6,36 @@ SetWorkingDir %A_ScriptDir%
 Menu, Tray, Icon, icons\wc3.png
 SendMode Event
 
-; Disable Mouse Wheel zoom and use it to scrub replays ( Pause/Play with Shift+Space )
-WheelUp::=
-WheelDown::-
-+Space::p
+; Configure togglable mouse wheel binding for +/- keys for ez replay scrubbing (Toggle off to avoid changing game speed in customs)
+WheelEnabled := false
++Space::Send, p
+WheelUp::
+    if WheelEnabled
+        Send, =
+    else
+        return
+return
+
+WheelDown::
+    if WheelEnabled
+        Send, -
+    else
+        return
+return
+
+End::
+    WheelEnabled := !WheelEnabled
+    if WheelEnabled
+        ToolTip, Wheel Enabled: Bound to +/- keys, 0, 0
+    else
+        ToolTip, Wheel Disabled, 0, 0
+    SetTimer, RemoveToolTip, 2000
+return
+
+RemoveToolTip:
+    SetTimer, RemoveToolTip, Off
+    ToolTip
+return
 
 ; Disable some alt combos temporarily
 !q::return
