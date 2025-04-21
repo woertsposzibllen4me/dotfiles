@@ -61,6 +61,47 @@ g::0
 XButton2::l
 
 
+; This whole mess is to fix an issue with keypress displayers when pressing and releasing the mouse button and the letter key in a weird unusual order
+MButton::
+  SendInput {a up}{s up}{d up}{f up}{c up}
+  SendInput {MButton down}
+return
+
+MButton up::
+  SendInput {MButton up}
+return
+
+a up::
+  SendInput {5 up}
+  SendInput {a up}
+return
+
+s up::
+  SendInput {6 up}
+  SendInput {s up}
+return
+
+d up::
+  SendInput {7 up}
+  SendInput {d up}
+return
+
+f up::
+  SendInput {8 up}
+  SendInput {f up}
+return
+
+c up::
+  SendInput {9 up}
+  SendInput {c up}
+return
+
+a::a
+s::s
+d::d
+f::f
+c::c
+
 ; Custom game quick cheats setup
 Home::
 {
