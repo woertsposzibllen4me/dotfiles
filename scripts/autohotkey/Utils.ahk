@@ -43,17 +43,26 @@ Run, pwsh.exe
 return
 
 ; Ctrl + Alt + Shift + A to open or focus an admin PowerShell window
-+^!a::
-adminTitle := "Administrator: C:\Program Files\PowerShell\7\pwsh.exe"
+^!+a::
+{
+    adminTitle := "Administrator: C:\Program Files\PowerShell\7\pwsh.exe"
+    selectAdminTitle := "Select " . adminTitle
 
-; Check if the window exists and activate it if it does
-if WinExist(adminTitle)
-{
-    WinActivate, %adminTitle%
-}
-else
-{
-    Run *RunAs pwsh.exe
+    ; Check if the regular window exists
+    if WinExist(adminTitle)
+    {
+        WinActivate, %adminTitle%
+    }
+    ; Check if the window exists in selection mode
+    else if WinExist(selectAdminTitle)
+    {
+        WinActivate, %selectAdminTitle%
+    }
+    ; If neither exists, open a new admin PowerShell
+    else
+    {
+        Run *RunAs pwsh.exe
+    }
 }
 return
 
