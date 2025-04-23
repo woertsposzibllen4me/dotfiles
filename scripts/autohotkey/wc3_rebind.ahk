@@ -1,51 +1,53 @@
-#SingleInstance force
-#MaxHotkeysPerInterval 50000
-SetTitleMatchMode, 3
-#ifWinActive, Warcraft III
-SetWorkingDir %A_ScriptDir%
-Menu, Tray, Icon, icons\wc3.png
-SendMode Event
+#SingleInstance Force
+A_MaxHotkeysPerInterval := 50000
+SetTitleMatchMode 3
+#HotIf WinActive("Warcraft III")
+SetWorkingDir A_ScriptDir
+TraySetIcon "icons\wc3.png"
+SendMode "Event"
 
 ; Configure togglable mouse wheel binding for +/- keys for ez replay scrubbing (Toggle off to avoid changing game speed in customs)
-WheelEnabled := false
-+Space::Send, p
-WheelUp::
-    if WheelEnabled
-        Send, =
-    else
-        return
-return
+global WheelEnabled := false
 
-WheelDown::
-    if WheelEnabled
-        Send, -
-    else
-        return
-return
++Space:: Send "p"
 
-End::
-    WheelEnabled := !WheelEnabled
-    if WheelEnabled
-        ToolTip, Wheel Enabled: Bound to +/- keys, 0, 0
-    else
-        ToolTip, Wheel Disabled, 0, 0
-    SetTimer, RemoveToolTip, 2000
-return
+WheelUp:: {
+  if WheelEnabled
+    Send "="
+  else
+    return
+}
 
-RemoveToolTip:
-    SetTimer, RemoveToolTip, Off
-    ToolTip
-return
+WheelDown:: {
+  if WheelEnabled
+    Send "-"
+  else
+    return
+}
+
+End:: {
+  global WheelEnabled := !WheelEnabled
+  if WheelEnabled
+    ToolTip("Wheel Enabled: Bound to +/- keys", 0, 0)
+  else
+    ToolTip("Wheel Disabled", 0, 0)
+  SetTimer RemoveToolTip, 2000
+}
+
+RemoveToolTip() {
+  SetTimer RemoveToolTip, 0
+  ToolTip
+}
 
 ; Disable some alt combos temporarily
-!q::return
-!a::return
-!s::return
-!d::return
-!f::return
-!c::return
-!v::return
-^s::return
+!q:: return
+!a:: return
+!s:: return
+!d:: return
+!f:: return
+!c:: return
+!v:: return
+^s:: return
 
 ; Inactive peons/Town hall navigation
 `::F8
@@ -62,39 +64,39 @@ XButton2::l
 
 
 ; This whole mess is to fix an issue with keypress displayers when pressing and releasing the mouse button and the letter key in a weird unusual order
-MButton::
-  SendInput {a up}{s up}{d up}{f up}{c up}
-  SendInput {MButton down}
-return
+MButton:: {
+  Send "{a up}{s up}{d up}{f up}{c up}"
+  Send "{MButton down}"
+}
 
-MButton up::
-  SendInput {MButton up}
-return
+MButton up:: {
+  Send "{MButton up}"
+}
 
-a up::
-  SendInput {5 up}
-  SendInput {a up}
-return
+a up:: {
+  Send "{5 up}"
+  Send "{a up}"
+}
 
-s up::
-  SendInput {6 up}
-  SendInput {s up}
-return
+s up:: {
+  Send "{6 up}"
+  Send "{s up}"
+}
 
-d up::
-  SendInput {7 up}
-  SendInput {d up}
-return
+d up:: {
+  Send "{7 up}"
+  Send "{d up}"
+}
 
-f up::
-  SendInput {8 up}
-  SendInput {f up}
-return
+f up:: {
+  Send "{8 up}"
+  Send "{f up}"
+}
 
-c up::
-  SendInput {9 up}
-  SendInput {c up}
-return
+c up:: {
+  Send "{9 up}"
+  Send "{c up}"
+}
 
 a::a
 s::s
@@ -103,66 +105,58 @@ f::f
 c::c
 
 ; Custom game quick cheats setup
-Home::
-{
-    Send, {Enter}
-    Send, greedisgood 900000
-    Send, {Enter}
+Home:: {
+  Send "{Enter}"
+  Send "greedisgood 900000"
+  Send "{Enter}"
 
-    Send, {Enter}
-    Send, pointbreak
-    Send, {Enter}
+  Send "{Enter}"
+  Send "pointbreak"
+  Send "{Enter}"
 
-    Send, {Enter}
-    Send, warpten
-    Send, {Enter}
+  Send "{Enter}"
+  Send "warpten"
+  Send "{Enter}"
 
-    Send, {Enter}
-    Send, synergy
-    Send, {Enter}
+  Send "{Enter}"
+  Send "synergy"
+  Send "{Enter}"
 
-    Send, {Enter}
-    Send, iocainepowder
-    Send, {Enter}
+  Send "{Enter}"
+  Send "iocainepowder"
+  Send "{Enter}"
 
-    Send, {Enter}
-    Send, Thereisnospoon
-    Send, {Enter}
-    return
+  Send "{Enter}"
+  Send "Thereisnospoon"
+  Send "{Enter}"
 }
 
-!Home::
-{
-    Send, {Enter}
-    Send, whosyourdaddy
-    Send, {Enter}
-    return
+!Home:: {
+  Send "{Enter}"
+  Send "whosyourdaddy"
+  Send "{Enter}"
 }
 
-+Home::
-{
-    Send, {Enter}
-    Send, warpten
-    Send, {Enter}
-    return
++Home:: {
+  Send "{Enter}"
+  Send "warpten"
+  Send "{Enter}"
 }
 
-^Home::
-{
-    Send, {Enter}
-    Send, thedudeabides
-    Send, {Enter}
+^Home:: {
+  Send "{Enter}"
+  Send "thedudeabides"
+  Send "{Enter}"
 
-    Send, {Enter}
-    Send, thedudeabides
-    Send, {Enter}
-    return
+  Send "{Enter}"
+  Send "thedudeabides"
+  Send "{Enter}"
 }
 
-^+Home::
-{
-    Send, {Enter}
-    Send, daylightsavings
-    Send, {Space}
-    return
+^+Home:: {
+  Send "{Enter}"
+  Send "daylightsavings"
+  Send "{Space}"
 }
+
+#HotIf
