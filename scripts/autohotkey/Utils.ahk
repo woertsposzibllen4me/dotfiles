@@ -35,7 +35,7 @@ SetTitleMatchMode, 2  ; Allows partial matching of window titles
 ; Try to find an existing PowerShell window
 IfWinExist, ahk_class CASCADIA_HOSTING_WINDOW_CLASS
 {
-    WinActivate  ; Activate the found window
+    WinActivate
     return
 }
 ; If no PowerShell window is found, start a new one
@@ -69,7 +69,6 @@ return
 ; Ctrl + Alt + Shift + L to switch to an open WSL window or start a new one
 ^!+l::
 SetTitleMatchMode, 2
-
 IfWinExist, crazyfrogdog@DEKSTOP-69URSS
 {
     WinActivate
@@ -94,13 +93,11 @@ else
 }
 return
 
-; Rebind Alt+J and Alt+K to Up and Down Arrow keys (added h and l for left and right to test too)
-; #IfWinActive ahk_exe chrome.exe
+; Rebind Alt+J, Alt+K, Alt+H, and Alt+L to arrow keys
 !j::Send {Down}
 !k::Send {Up}
 !h::Send {Left}
 !l::Send {Right}
-; #IfWinActive
 
 
 ; Ctrl + Alt + Shift + K to switch to an open WezTerm window or start a new one
@@ -131,31 +128,28 @@ else
 return
 
 
+; Ctrl + Alt + Shift + X to switch to an open Explorer window or start a new one
 ^!+x::
-; Check if an Explorer window exists
 if WinExist("ahk_class CabinetWClass")
 {
-    ; If it exists, activate (focus) it
     WinActivate
 }
 else
 {
-    ; If no Explorer window is found, open a new one
     Run, explorer.exe
 }
 return
 
 
+; Ctrl + Alt + Shift + N to switch to an open Neo4j window or start a new one
 ^!+n::
 SetTitleMatchMode, 2
 IfWinExist neo4j@bolt://localhost:7687
 {
-    ; If it exists, activate (focus) it
     WinActivate
 }
 else
 {
-    ; If no Explorer window is found, open a new one
     Run, "C:\Users\ville\AppData\Local\Programs\Neo4j Desktop\Neo4j Desktop.exe"
 }
 return
