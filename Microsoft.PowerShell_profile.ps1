@@ -1,10 +1,17 @@
 # Enable bracketed paste mode
 [Console]::Write("`e[?2004h")
-# Constants
-$global:MegaScriptPath = "C:\Users\ville\MyMegaScript"
+
+# Modules
 Import-Module Terminal-Icons
 Import-Module PSFzf
+
+# Constants
+$global:MegaScriptPath = "$env:USERPROFILE\MyMegaScript"
+$claudeApiKey = Get-Content -Path "$env:USERPROFILE\MyDocuments\API Keys\Anthropic\loïc-onboarding-api-key.txt" -Raw
+
+# Environment variables
 $env:PYTHONIOENCODING="utf-8"
+$env:ANTHROPIC_API_KEY = $claudeApiKey.Trim()
 
 # Importing my custom modules
 Import-Module "C:\Users\ville\myfiles\dotfiles\pwsh_modules\cut_paste.psm1"
