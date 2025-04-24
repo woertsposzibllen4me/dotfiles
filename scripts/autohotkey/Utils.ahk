@@ -78,10 +78,10 @@ TraySetIcon "icons\utils.png"
 }
 
 ; Rebind Alt+J, Alt+K, Alt+H, and Alt+L to arrow keys
-!j:: Down
-!k:: Send "{Up}"
-!h:: Send "{Left}"
-!l:: Send "{Right}"
+!j::Down
+!k::Up
+!h::Left
+!l::Right
 
 ; Ctrl + Alt + Shift + K to switch to an open WezTerm window or start a new one
 ^!+k:: {
