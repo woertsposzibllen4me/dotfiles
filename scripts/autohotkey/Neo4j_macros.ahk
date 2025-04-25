@@ -1,10 +1,9 @@
-﻿#Requires AutoHotkey v2.0
-#SingleInstance Force
+﻿#SingleInstance Force
+A_MaxHotkeysPerInterval := 500
 SetTitleMatchMode 2  ; Allows for partial matching of the window title
 SetWorkingDir A_ScriptDir  ; Ensures a consistent starting directory
 TraySetIcon "icons\neo4j.png"
-
-targetWindowTitle := "neo4j@bolt://localhost:7687/neo4j - Neo4j Browser"
+#HotIf WinActive("neo4j@bolt://localhost:7687/neo4j - Neo4j Browser")
 
 MatchNode() {
   SendInput "MATCH("
@@ -34,8 +33,8 @@ CreateNode() {
   input2.Start()
   input2.Wait()
   SendInput HandleNodeInput(input2.Input)
-  SendInput '{text:""}'
-  Send "{Left 3}"
+  SendText '{text:""}'
+  Send "{Left 2}"
 }
 
 MatchRelationship() {
@@ -152,70 +151,54 @@ HandleNodeInput(input) {
 
 ; Matches Hotkey: Ctrl+Shift+M, then G for Group, N for Node, R for Relationship, P for Property Key
 ^+m:: {
-  if WinActive(targetWindowTitle) {
-    nextKey := InputHook("L1")
-    nextKey.Start()
-    nextKey.Wait()
+  nextKey := InputHook("L1")
+  nextKey.Start()
+  nextKey.Wait()
 
-    if (nextKey.Input = "n") {
-      MatchNode()
-    } else if (nextKey.Input = "r") {
-      MatchRelationship()
-    } else if (nextKey.Input = "p") {
-      MatchPropertyKey()
-    } else if (nextKey.Input = "g") {
-      nextKey2 := InputHook("L1")
-      nextKey2.Start()
-      nextKey2.Wait()
+  if (nextKey.Input = "n") {
+    MatchNode()
+  } else if (nextKey.Input = "r") {
+    MatchRelationship()
+  } else if (nextKey.Input = "p") {
+    MatchPropertyKey()
+  } else if (nextKey.Input = "g") {
+    nextKey2 := InputHook("L1")
+    nextKey2.Start()
+    nextKey2.Wait()
 
-      if (nextKey2.Input = "n") {
-        MatchNodeGroup()
-      } else if (nextKey2.Input = "r") {
-        MatchRelationshipGroup()
-      }
+    if (nextKey2.Input = "n") {
+      MatchNodeGroup()
+    } else if (nextKey2.Input = "r") {
+      MatchRelationshipGroup()
     }
-  } else {
-    Send "^+m"
   }
 }
 
 ; Create Hotkey: Ctrl+Shift+C
 ^+c:: {
-  if WinActive(targetWindowTitle) {
-    nextKey := InputHook("L1")
-    nextKey.Start()
-    nextKey.Wait()
+  nextKey := InputHook("L1")
+  nextKey.Start()
+  nextKey.Wait()
 
-    if (nextKey.Input = "n") {
-      CreateNode()
-    } else if (nextKey.Input = "r") {
-      CreateRelationship()
-    }
-  } else {
-    Send "^+c"
+  if (nextKey.Input = "n") {
+    CreateNode()
+  } else if (nextKey.Input = "r") {
+    CreateRelationship()
   }
 }
 
 ; Set Hotkey: Ctrl+Shift+S
 ^+s:: {
-  if WinActive(targetWindowTitle) {
-    nextKey := InputHook("L1")
-    nextKey.Start()
-    nextKey.Wait()
+  nextKey := InputHook("L1")
+  nextKey.Start()
+  nextKey.Wait()
 
-    if (nextKey.Input = "t") {
-      SetText()
-    }
-  } else {
-    Send "^+s"
+  if (nextKey.Input = "t") {
+    SetText()
   }
 }
 
 ; Return all Hotkey: Ctrl+Shift+\
 ^+\:: {
-  if WinActive(targetWindowTitle) {
-    SendInput "MATCH(a){Shift down}{Enter}{Shift up}RETURN a"
-  } else {
-    Send "^+\"
-  }
+  SendInput "MATCH(a){Shift down}{Enter}{Shift up}RETURN a"
 }
