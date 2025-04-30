@@ -3,11 +3,14 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local act = wezterm.action
 local manually_set_titles = {}
+config.font = wezterm.font("BerkeleyMono Nerd Font", { weight = "Regular" })
+config.font_size = 11.5
+-- config.debug_key_events = true
 
 config.default_prog = { "pwsh" }
 config.initial_cols = 120
 config.initial_rows = 30
-config.enable_kitty_keyboard = true
+config.enable_kitty_keyboard = false
 config.enable_kitty_graphics = true
 config.window_padding = {
   left = 0,
@@ -95,6 +98,7 @@ local process_icons = {
   ["lua-language-server"] = "\u{f08b1} ",
   ["oh-my-posh"] = "\u{f0a0a} ",
   ["starship"] = "\u{f427} ",
+  ["wslhost"] = "\u{e712} ",
 }
 
 -- Updated function to get process name
@@ -171,9 +175,6 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
     }
   end
 end)
-
-config.font = wezterm.font("BerkeleyMono Nerd Font", { weight = "Regular" })
-config.font_size = 11.5
 
 config.inactive_pane_hsb = {
   hue = 1.0,
