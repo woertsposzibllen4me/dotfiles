@@ -27,7 +27,7 @@ $env:PATH = "$env:USERPROFILE\scoop\shims;$env:PATH"
 Set-PSReadLineOption -EditMode Vi
 Set-PSReadLineKeyHandler -Chord 'U' -Function Redo -ViMode Command
 Set-PSReadLineOption -BellStyle None
-Set-PSReadLineKeyHandler -Key RightArrow -Function AcceptNextSuggestionWord
+Set-PSReadLineKeyHandler -Chord 'Ctrl+g' -Function AcceptNextSuggestionWord
 Set-PSReadLineKeyHandler -Chord 'Ctrl+f' -Function AcceptSuggestion
 Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
 
