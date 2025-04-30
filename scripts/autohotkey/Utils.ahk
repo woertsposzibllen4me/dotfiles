@@ -11,7 +11,7 @@ TraySetIcon "icons\utils.png"
   A_Clipboard := RegExReplace(A_Clipboard, "\\", "/") ; Replace backslashes with forward slashes
 }
 
-; Alt + Ctrl + Shift + I to send a left mouse click
+;Alt + Ctrl + Shift + I to send a left mouse click
 !^+i:: {
   Click ; Sends a left mouse click at the current mouse position (using with tobi eye tracker)
 }
@@ -122,9 +122,19 @@ TraySetIcon "icons\utils.png"
   }
 }
 
+; Ctrl + Alt + Shift + M to send a messages
+^!+m:: {
+  nextKey := InputHook("L1")
+  nextKey.Start()
+  nextKey.Wait()
+  if (nextKey.Input = "m") {
+    SendText "Please only send back a minimal amount of code"
+  }
+}
+
 ; Unbind esc and use capslock for it instead as long as not in specific games
 #HotIf !WinActive("ahk_exe dota2.exe") and !WinActive("Warcraft III")
 ; and !WinActive("ahk_exe SC2.exe") and !WinActive("Deadlock") (comment out unplayed games for efficiency)
-CapsLock:: Send "{Esc}"
-Esc:: SetCapsLockState !GetKeyState("CapsLock", "T")
+CapsLock::Esc
+Esc::CapsLock
 #HotIf
