@@ -85,11 +85,19 @@ TraySetIcon "icons\utils.png"
 
 ; Ctrl + Alt + Shift + K to switch to an open WezTerm window or start a new one
 ^!+k:: {
-  SetTitleMatchMode 1
+  SetTitleMatchMode 2
+  primaryPath := "C:\Users\ville\scoop\apps\wezterm-nightly\current\wezterm-gui.exe"
+  fallbackPath := "C:\Users\ville\scoop\shims\wezterm - gui.exe"
   if WinExist("Wezterm") {
     WinActivate
   } else {
-    Run "C:\Program Files\WezTerm\wezterm-gui.exe"
+    if FileExist(primaryPath) {
+      Run primaryPath
+    } else if FileExist(fallbackPath) {
+      Run fallbackPath
+    } else {
+      MsgBox "Could not find WezTerm executable at either path."
+    }
   }
 }
 
