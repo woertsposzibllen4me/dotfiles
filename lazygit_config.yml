@@ -44,7 +44,7 @@ customCommands:
 git:
   paging:
     colorArg: always
-    pager: diff-so-fancy
+    pager: delta
 #     useConfig: true
 # os:
 #   editCommand: "nvim"

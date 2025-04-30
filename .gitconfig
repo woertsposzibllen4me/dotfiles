@@ -6,19 +6,29 @@
   st = status
 [core]
   editor = nvim
-	pager = diff-so-fancy | less --tabs=4 -RF
+	pager = delta
 [interactive]
-	diffFilter = diff-so-fancy --patch
+	diffFilter = delta --patch
 [color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+	; oldNormal = red bold
+	; oldHighlight = red bold 52
+	; newNormal = green bold
+	; newHighlight = green bold 22
 [color "diff"]
-	meta = 11
+	; meta = 11
 	frag = magenta bold
-	func = 146 bold
+	; func = 146 bold
 	commit = yellow bold
 	old = red bold
 	new = green bold
 	whitespace = red reverse
+[pull]
+	ff = only
+
+  [delta]
+    navigate = true
+    light = false
+    syntax-theme = Monokai Extended Bright
+    file-style = bold yellow
+    file-decoration-style = yellow box
+    hunk-header-style = line-number syntax
