@@ -34,7 +34,7 @@ TraySetIcon "icons\utils.png"
     return
   }
   ; If no PowerShell window is found, start a new one
-  Run "pwsh.exe"
+  Run "pwsh"
 }
 
 ; Ctrl + Alt + Shift + A to open or focus an admin PowerShell window
@@ -85,7 +85,7 @@ TraySetIcon "icons\utils.png"
 
 ; Ctrl + Alt + Shift + K to switch to an open WezTerm window or start a new one
 ^!+k:: {
-  SetTitleMatchMode 2
+  SetTitleMatchMode 3 ; Exact match mode to avoid issues with browser tab names etc.
   primaryPath := "C:\Users\ville\scoop\apps\wezterm-nightly\current\wezterm-gui.exe"
   fallbackPath := "C:\Users\ville\scoop\shims\wezterm - gui.exe"
   if WinExist("Wezterm") {
