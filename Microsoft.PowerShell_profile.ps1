@@ -14,7 +14,7 @@ $env:PYTHONIOENCODING="utf-8"
 $env:ANTHROPIC_API_KEY = $claudeApiKey.Trim()
 
 # Importing my custom modules
-Import-Module "C:\Users\ville\myfiles\dotfiles\pwsh_modules\cut_paste.psm1"
+Import-Module "C:\Users\ville\myfiles\dotfiles\modules\pwsh_modules\cut_paste.psm1"
 Set-Alias -Name cut -Value Move-ItemToBuffer
 Set-Alias -Name paste -Value Restore-ItemFromBuffer
 
