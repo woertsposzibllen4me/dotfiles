@@ -179,8 +179,8 @@ end)
 
 config.inactive_pane_hsb = {
   hue = 1.0,
-  saturation = 0.8,
-  brightness = 0.8,
+  saturation = 0.7,
+  brightness = 0.7,
 }
 
 local scheme_name = "tokyonight_moon"
