@@ -1,0 +1,6 @@
+[submodule "nvim-config3.0"]
+	path = nvim-config3.0
+	url = git@github.com:avario-cpu/nvim-config3.0.git
+[submodule "modules/fzf-tab-completion"]
+	path = modules/fzf-tab-completion
+	url = https://github.com/lincheney/fzf-tab-completion
