@@ -1,9 +1,8 @@
-# File: Manage-Dotfiles.ps1
 $dotfilesRepo = "C:\Users\ville\myfiles\dotfiles"
 $dotfilesConfig = @{
 
   "PowerShell profile" = @{
-    "source" = "$dotfilesRepo\Microsoft.PowerShell_profile.ps1"
+    "source" = "$dotfilesRepo\windows\scripts\pwsh\Microsoft.PowerShell_profile.ps1"
     "target" = "$HOME\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
   }
 
@@ -13,7 +12,7 @@ $dotfilesConfig = @{
   }
 
   "Lazygit config" = @{
-    "source" = "$dotfilesRepo\lazygit_config.yml"
+    "source" = "$dotfilesRepo\lazygit-config.yml"
     "target" = "C:\Users\ville\AppData\Local\lazygit\config.yml"
   }
 
@@ -34,7 +33,7 @@ $dotfilesConfig = @{
 
 }
 
-function Sync-Dotfiles {
+function Sync-Symlinks {
   foreach ($item in $dotfilesConfig.GetEnumerator()) {
     $source = $item.Value.source
     $target = $item.Value.target
@@ -73,4 +72,4 @@ function Sync-Dotfiles {
 }
 
 # Don't run automatically, require explicit execution
-Write-Host "To sync dotfiles, run the Sync-Dotfiles function."
+Write-Host "To sync dotfiles symlinks, run the Sync-Symlinks function."

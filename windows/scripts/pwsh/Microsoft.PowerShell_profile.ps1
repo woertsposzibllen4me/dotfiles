@@ -14,12 +14,12 @@ $env:PYTHONIOENCODING="utf-8"
 $env:ANTHROPIC_API_KEY = $claudeApiKey.Trim()
 
 # Importing my custom modules
-Import-Module "C:\Users\ville\myfiles\dotfiles\modules\pwsh_modules\cut_paste.psm1"
+Import-Module "C:\Users\ville\myfiles\dotfiles\windows\scripts\pwsh\Cut-Paste.psm1"
 Set-Alias -Name cut -Value Move-ItemToBuffer
 Set-Alias -Name paste -Value Restore-ItemFromBuffer
 
 # Path additions
-$env:PATH += ";C:\Users\ville\myfiles\dotfiles\scripts\batch"
+$env:PATH += ";C:\Users\ville\myfiles\dotfiles\windows\scripts\batch\"
 $env:Path += ";C:\Users\ville\myfiles\programs\PROGRAMS_ON_PATH\"
 $env:PATH = "$env:USERPROFILE\scoop\shims;$env:PATH"
 
@@ -162,7 +162,7 @@ function vidata {
 }
 
 function vid {
-  Set-Location "C:\Users\ville\AppData\Local\nvim"
+  Set-Location "C:\Users\ville\MyFiles\dotfiles\nvim-config3.0"
 }
 
 function roam {

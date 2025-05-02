@@ -1,5 +1,5 @@
 # Create a script to collect package information from different package managers
-$inventoryFile = "$env:USERPROFILE\myfiles\dotfiles\docs\package_inventory.md"
+$inventoryFile = "$env:USERPROFILE\myfiles\dotfiles\windows\docs\package-inventory.md"
 $directory = [System.IO.Path]::GetDirectoryName($inventoryFile)
 if (!(Test-Path -Path $directory)) {
   New-Item -ItemType Directory -Path $directory -Force | Out-Null
