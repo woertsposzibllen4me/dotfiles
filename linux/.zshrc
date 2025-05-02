@@ -1,5 +1,6 @@
 export PATH="$HOME/.local/bin:$PATH"
 source ~/bin/wsl-ssh-agent-relay.sh
+unsetopt beep
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -114,7 +115,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias clip='xclip -selection clipboard'
-
+alias vi='nvim'
+alias lg='lazygit'
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -138,6 +140,11 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-rust
 
 ### End of Zinit's installer chunk
+
+function zvm_config() {
+  ZVM_KEYTIMEOUT=0.01
+  ZVM_ESCAPE_KEYTIMEOUT=0.001
+}
 
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
