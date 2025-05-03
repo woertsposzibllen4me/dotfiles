@@ -141,18 +141,21 @@ Set-Alias -Name eme -Value Enter-MegaScriptEnvironment
 Set-Alias -Name c -Value Clear-Host
 Set-Alias -Name dsize -Value Get-DirectorySize
 Set-Alias -Name cpath -Value Copy-PathToClipboard
-Set-Alias -Name lg -Value lazygit
-Set-Alias -Name vi -Value nvim
-Set-Alias -Name ex -Value explorer
 Set-Alias -Name rel -Value Update-Profile
 Set-Alias -Name cfg -Value Edit-Profile
 Set-Alias -Name wzcfg -Value Edit-Wezterm-Profile
 Set-Alias -Name lgcfg -Value Edit-Lazygit-Config
-Set-Alias -Name d -Value dir
 Set-Alias -Name zf -Value Invoke-FzfCd
 Set-Alias -Name virepro -Value Start-NvimBugRepro
 
-# Path aliases (these are fine as-is since they're not cmdlets)
+# Path aliases
+Set-Alias -Name lg -Value lazygit
+Set-Alias -Name vi -Value nvim
+Set-Alias -Name ex -Value explorer
+Set-Alias -Name d -Value dir
+Set-Alias -Name wh -Value where.exe
+
+# Location aliases (these are fine as-is since they're not cmdlets)
 function ahk{
   Set-Location "C:\Users\ville\myfiles\dotfiles\scripts\autohotkey"
 }
