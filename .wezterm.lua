@@ -247,6 +247,21 @@ config.background = {
   },
 }
 
+config.key_tables = {
+  copy_mode = wezterm.gui.default_key_tables().copy_mode,
+  search_mode = wezterm.gui.default_key_tables().search_mode,
+}
+
+-- Clear search in copy mode
+table.insert(config.key_tables.copy_mode, {
+  key = "c",
+  mods = "CTRL",
+  action = act.Multiple({
+    act.CopyMode("ClearPattern"),
+    act.CopyMode("ClearSelectionMode"),
+  }),
+})
+
 config.leader = { key = " ", mods = "CTRL" }
 config.keys = {
 
