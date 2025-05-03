@@ -4,6 +4,7 @@ $claudeApiKey = Get-Content -Path "$env:USERPROFILE\MyDocuments\API Keys\Anthrop
 ## Environment variables
 $env:PYTHONIOENCODING="utf-8"
 $env:ANTHROPIC_API_KEY = $claudeApiKey.Trim()
+$env:FZF_DEFAULT_OPTS='--bind=esc:toggle-down,ctrl-c:abort' # avoid accidental exit from fzf (toggle-down does nothing)
 
 ## Modules
 Import-Module Terminal-Icons
@@ -24,11 +25,13 @@ $env:PATH = "$env:USERPROFILE\scoop\shims;$env:PATH"
 Set-PSReadLineOption -EditMode Vi
 Set-PSReadLineOption -BellStyle None
 Set-PSReadLineOption -ShowToolTips
+Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PSReadLineKeyHandler -Chord 'U' -Function Redo -ViMode Command
 Set-PSReadLineKeyHandler -Chord 'Ctrl+g' -Function AcceptNextSuggestionWord
 Set-PSReadLineKeyHandler -Chord 'Ctrl+f' -Function AcceptSuggestion
 
-Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t'
+## Module options
+Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r' -PSReadlineChordSetLocation 'Alt+c'
 
 
 ## Custom functions
