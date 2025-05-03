@@ -2,7 +2,8 @@
 palette = 'foo'
 [directory]
 truncation_length = 0
-truncate_to_repo = false
+truncate_to_repo = true
+truncation_symbol = "../"
 
 [git_metrics]
 disabled = false
