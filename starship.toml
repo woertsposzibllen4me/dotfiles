@@ -39,4 +39,4 @@ disabled = false
 [time]
 disabled = false
 format = "[$time]($style) "
-time_format = "%R"
+time_format = "%T"
