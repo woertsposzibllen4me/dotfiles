@@ -117,32 +117,26 @@ local function get_process_name(process_name)
   return name:lower()
 end
 
-local function get_current_working_directory(tab)
+local function get_last_two_path_segments(tab)
   local cwd_url = tab.active_pane.current_working_dir
+  wezterm.log_info("cwd_url : " .. tostring(cwd_url))
   if cwd_url then
     local path = cwd_url.path
-    local folder_name = string.match(path, "([^/\\]+)$")
-    return folder_name or ""
-  else
-    return ""
-  end
-end
 
-local function get_parent_directory_name(tab)
-  local cwd_url = tab.active_pane.current_working_dir
-  if cwd_url then
-    local path = cwd_url.path
-    local parent_path = string.match(path, "^(.+)/[^/]+$") or path
-    local parent_folder_name = string.match(parent_path, "([^/\\]+)$")
-    return parent_folder_name or ""
+    -- Extract last path segment (current directory)
+    local current_dir = string.match(path, "([^/]+)$") or "err"
+
+    -- Remove the last segment and extract the one before it (parent directory)
+    local path_without_last = string.match(path, "^(.+)/[^/]+$") or "err"
+    local parent_dir = string.match(path_without_last, "([^/]+)$") or "err"
+
+    return parent_dir, current_dir
   else
-    return ""
+    return "no_dir", "no_dir"
   end
 end
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
-  wezterm.log_info("\n")
-
   if manually_set_titles[tostring(tab.tab_id)] then -- Keep the title if it was manually set
     local process_name = get_process_name(tab.active_pane.foreground_process_name)
     local process_icon = process_icons[process_name] or ""
@@ -157,8 +151,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
 
   local process_name = get_process_name(tab.active_pane.foreground_process_name)
   local process_icon = process_icons[process_name] or ""
-  local cwd = get_current_working_directory(tab)
-  local parent_folder = get_parent_directory_name(tab)
+  local parent_folder, cwd = get_last_two_path_segments(tab)
   local tab_number = tab.tab_index + 1 -- Wezterm uses 0-based indexing, so we add 1
   local zoom_icon = tab.active_pane.is_zoomed and " " or ""
 
@@ -262,12 +255,40 @@ table.insert(config.key_tables.copy_mode, {
   }),
 })
 
+local function get_uri(window, pane)
+  local uri = pane:get_current_working_dir()
+  if uri then
+    wezterm.log_info(uri)
+  end
+end
+
 config.leader = { key = " ", mods = "CTRL" }
 config.keys = {
 
+  -- for testing
+  {
+    key = "?",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action_callback(get_uri),
+  },
+
+  -- Debug info
+  {
+    key = "i",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action.ShowDebugOverlay,
+  },
+
+  -- Emojis
+  {
+    key = "o",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action.CharSelect({}),
+  },
+
   -- Search
   {
-    key = "F",
+    key = "f",
     mods = "CTRL|SHIFT",
     action = wezterm.action.Search({ CaseInSensitiveString = "" }),
   },
