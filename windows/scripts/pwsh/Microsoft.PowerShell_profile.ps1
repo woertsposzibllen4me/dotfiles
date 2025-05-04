@@ -5,6 +5,7 @@ $claudeApiKey = Get-Content -Path "C:\Users\ville\myfiles\documents\api-keys\Ant
 $env:PYTHONIOENCODING="utf-8"
 $env:ANTHROPIC_API_KEY = $claudeApiKey.Trim()
 $env:FZF_DEFAULT_OPTS='--bind=esc:toggle-down,ctrl-c:abort' # avoid accidental exit from fzf (toggle-down does nothing)
+$env:YAZI_FILE_ONE="C:\Program Files\Git\usr\bin\file.exe"
 
 ## Modules
 Import-Module Terminal-Icons
@@ -110,6 +111,10 @@ function Start-NvimBugRepro {
   nvim -u $normalizedConfigPath
 }
 
+function Show-TreeList {
+  eza --icons -lT $args
+}
+
 ## Function aliases
 Set-Alias -Name spp -Value Set-PythonPath
 Set-Alias -Name eme -Value Enter-MegaScriptEnvironment
@@ -121,6 +126,7 @@ Set-Alias -Name wzcfg -Value Edit-Wezterm-Profile
 Set-Alias -Name lgcfg -Value Edit-Lazygit-Config
 Set-Alias -Name zf -Value Invoke-FzfCd
 Set-Alias -Name virepro -Value Start-NvimBugRepro
+Set-Alias -Name lst -Value Show-TreeList
 
 ## Exec aliases
 Set-Alias -Name lg -Value lazygit
@@ -128,6 +134,8 @@ Set-Alias -Name vi -Value nvim
 Set-Alias -Name ex -Value explorer
 Set-Alias -Name d -Value dir
 Set-Alias -Name wh -Value where.exe
+Set-Alias -Name lf -Value yazi
+
 
 ## Location aliases
 function ahk{
