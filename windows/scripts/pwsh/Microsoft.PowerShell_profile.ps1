@@ -139,7 +139,7 @@ Set-Alias -Name lf -Value yazi
 
 ## Location aliases
 function ahk{
-  Set-Location "C:\Users\ville\myfiles\dotfiles\scripts\autohotkey"
+  Set-Location "C:\Users\ville\myfiles\dotfiles\windows\scripts\autohotkey"
 }
 
 function vidata {
