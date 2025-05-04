@@ -29,3 +29,6 @@ windows_starship = "/mnt/c/Users/ville/scoop/shims/starship.exe"
 
 [palettes.foo]
 pink = "#ff69b4"
+
+[os]
+disabled = false
