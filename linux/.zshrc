@@ -23,6 +23,13 @@ source $ZSH/oh-my-zsh.sh
 alias clip='xclip -selection clipboard'
 alias vi='nvim'
 alias lg='lazygit'
+alias wh='which'
+alias lf='yazi'
+alias ls='eza --icons -l'
+alias lsa='eza --icons -la'
+alias lst='eza --icons -lT'
+alias lsat='eza --icons -laT'
+alias dot='cd $HOME/.dotfiles'
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
