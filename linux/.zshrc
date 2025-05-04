@@ -22,6 +22,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias clip='xclip -selection clipboard'
 alias vi='nvim'
+alias vid='cd $HOME/.config/nvim'
 alias lg='lazygit'
 alias wh='which'
 alias lf='yazi'
