@@ -32,3 +32,11 @@ pink = "#ff69b4"
 
 [os]
 disabled = false
+
+[sudo]
+disabled = false
+
+[time]
+disabled = false
+format = "[$time]($style) "
+time_format = "%R"
