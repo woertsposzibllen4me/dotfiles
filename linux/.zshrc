@@ -20,6 +20,8 @@ ZSH_THEME="robbyrussell"
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
+export dotfiles="$HOME/dotfiles"
+
 alias clip='xclip -selection clipboard'
 alias vi='nvim'
 alias vid='cd $HOME/.config/nvim'
@@ -30,7 +32,27 @@ alias ls='eza --icons -l'
 alias lsa='eza --icons -la'
 alias lst='eza --icons -lT'
 alias lsat='eza --icons -laT'
-alias dot='cd $HOME/.dotfiles'
+alias dot='cd $HOME/dotfiles'
+
+function edit-wezterm-profile() {
+  nvim "$dotfiles/.wezterm.lua"
+}
+
+function edit-lazygit-config() {
+  nvim "$dotfiles/lazygit-config.yml"
+}
+
+alias wzcfg='edit-wezterm-profile'
+alias lgcfg='edit-lazygit-config'
+
+function lfcd() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
