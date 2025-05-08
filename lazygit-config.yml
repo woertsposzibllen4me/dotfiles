@@ -24,28 +24,12 @@ gui:
 
   nerdFontsVersion: "3"
   border: "rounded"
-  # showCommandLog: true
-  # showBottomLine: true
-  # showFileTree: true
-  # showRandomTip: true
-  # showIcons: true
-
-# Custom commands section - Define what the keybindings actually do
-customCommands:
-  - key: "<c-g>"
-    command: "echo {{ .Repo.FileDir() }}/{{ .SelectedFile.Name }} | tr -d '\\n' | pbcopy"
-    # ^ Copies the full file path to clipboard without newline
-    # Use 'xclip -selection clipboard' or 'xsel -b' instead of pbcopy on Linux
-    context: "files" # Only active in the file view
-    description: "Edit in Neovim current running instance" # Appears in Lazygit's keybinding help
-    subprocess: true # Run as a subprocess
-    loadingText: "Preparing file for Neovim..." # Shown while command runs
 
 git:
   paging:
     # colorArg: always
     pager: delta --dark --paging=never
     # useConfig: true
-# os:
-#   editCommand: "nvim"
-#   editCommandTemplate: '{{editor}} --server \\\\.\\pipe\\nvim-server --remote-tab "{{filename}}"'
+
+# os: # will figure it out eventually but rn it's commented out
+#   editPreset: nvim-remote
