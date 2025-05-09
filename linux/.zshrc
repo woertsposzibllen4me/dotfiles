@@ -40,14 +40,30 @@ alias dot='cd $HOME/dotfiles'
 alias gitcfg='git config --global -e'
 alias zf="__zoxide_zi"
 
+## Quick edit functions for various config files
 function edit-wezterm-profile() {
   nvim "$dotfiles/.wezterm.lua"
 }
 
 function edit-lazygit-config() {
-  nvim "$dotfiles/lazygit-config.yml"
+  nvim "$HOME/.config/lazygit/config.yml"
 }
 
+function edit-tmux-config() {
+  nvim "$HOME/.tmux.conf"
+}
+
+funciton edit-zshrc() {
+  nvim "$HOME/.zshrc"
+}
+
+# Edit aliases
+alias wzcfg='edit-wezterm-profile'
+alias lgcfg='edit-lazygit-config'
+alias tmcfg='edit-tmux-config'
+alias zscfg='edit-zshrc'
+
+## Utility functions
 start-nvim-bug-repro() {
   local config_path="$HOME/dotfiles/nvim-config3.0/bug-repro/init.lua"
    if [[ ! -f "$config_path" ]]; then
@@ -59,9 +75,34 @@ start-nvim-bug-repro() {
   nvim -u "$config_path"
 }
 
-alias wzcfg='edit-wezterm-profile'
-alias lgcfg='edit-lazygit-config'
+function copy-path-to-clipboard() {
+  if [ -z "$1" ]; then
+    echo "Error: Please provide a file or directory path"
+    return 1
+  fi
+
+  fullPath=$(realpath "$1" 2>/dev/null)
+
+  if [ $? -ne 0 ]; then
+    echo "Error: File or directory not found"
+    return 1
+  fi
+
+  if command -v xclip &>/dev/null; then
+    echo -n "$fullPath" | xclip -selection clipboard
+  elif command -v xsel &>/dev/null; then
+    echo -n "$fullPath" | xsel -b
+  else
+    echo "Error: Please install xclip or xsel"
+    return 1
+  fi
+
+  echo "Copied to clipboard: $fullPath"
+}
+
+# Utility aliases
 alias virepro='start-nvim-bug-repro'
+alias cpath='copy-path-to-clipboard'
 
 function lfcd() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
