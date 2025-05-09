@@ -146,9 +146,16 @@ zinit light jeffreytse/zsh-vi-mode
 zinit ice depth=1
 zinit light Aloxaf/fzf-tab
 
+zinit ice depth=1
+zinit light zsh-users/zsh-autosuggestions
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#757575"
+
 # zinit ice depth=1
 # zinit light romkatv/powerlevel10k
 
+function zvm_after_init() {
+  bindkey '^g' forward-word
+}
 
 source <(fzf --zsh)
 eval "$(starship init zsh)"
