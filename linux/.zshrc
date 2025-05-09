@@ -11,6 +11,8 @@ unsetopt beep
 
 export ZSH="$HOME/.oh-my-zsh"
 export PATH="$HOME/bin:$PATH"
+export PATH=~/.npm-global/bin:$PATH
+
 # Update starship config for WSL mounted path module
 ~/bin/update-starship-config.sh
 
