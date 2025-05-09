@@ -135,23 +135,3 @@ disabled = false
 disabled = false
 format = "[$time]($style) "
 time_format = "%T"
-
-[custom.mounted_path]
-description = "Mounted path indicator"
-when = """sh -c '
-if [ "$(uname)" = "Linux" ]; then
-  findmnt --target "$PWD" | grep -q "/mnt/"
-else
-  exit 1
-fi'
-"""
-command = """sh -c '
-drive_letter=$(echo "$PWD" | grep -o "/mnt/[a-zA-Z]" | tr -d "/mnt/" | tr "[:lower:]" "[:upper:]")
-if [ -n "$drive_letter" ]; then
-  echo "on 💿$drive_letter:"
-else
-  echo "💿"
-fi'
-"""
-format = "[$output]($style) "
-style = "bold blue"
