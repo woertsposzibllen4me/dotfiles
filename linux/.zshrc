@@ -33,6 +33,8 @@ alias lsa='eza --icons -la'
 alias lst='eza --icons -lT'
 alias lsat='eza --icons -laT'
 alias dot='cd $HOME/dotfiles'
+alias gitcfg='git config --global -e'
+alias zf="__zoxide_zi"
 
 function edit-wezterm-profile() {
   nvim "$dotfiles/.wezterm.lua"
@@ -42,8 +44,20 @@ function edit-lazygit-config() {
   nvim "$dotfiles/lazygit-config.yml"
 }
 
+start-nvim-bug-repro() {
+  local config_path="$HOME/dotfiles/nvim-config3.0/bug-repro/init.lua"
+   if [[ ! -f "$config_path" ]]; then
+    echo "Config file does not exist: $config_path"
+    return 1
+  fi
+  local config_dir=$(dirname "$config_path")
+  cd "$config_dir"
+  nvim -u "$config_path"
+}
+
 alias wzcfg='edit-wezterm-profile'
 alias lgcfg='edit-lazygit-config'
+alias virepro='start-nvim-bug-repro'
 
 function lfcd() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
