@@ -83,6 +83,11 @@ TraySetIcon "icons\utils.png"
 !h::Left
 !l::Right
 
+; Rebind C-; to c-\ in wezterm
+#HotIf WinActive("Wezterm")
+^;::^\
+#HotIf
+
 ; Ctrl + Alt + Shift + K to switch to an open WezTerm window or start a new one
 ^!+k:: {
   SetTitleMatchMode 3 ; Exact match mode to avoid issues with browser tab names etc.
