@@ -174,6 +174,31 @@ function my {
 }
 
 ## Starship
+$global:lastDirectory = (Get-Location).Path
+
+function Invoke-Starship-TransientFunction {
+  $currentDirectory = (Get-Location).Path
+
+  # Get time and character modules (always shown)
+  $time = &starship module time
+  $char = &starship module character
+
+  # If directory has changed, show directory module
+  if ($global:lastDirectory -ne $currentDirectory) {
+    $dir = &starship module directory
+    $global:lastDirectory = $currentDirectory
+    return "`n$dir`n$time$char"
+  } else {
+    # If same directory, only show time and character
+    return "$time$char"
+  }
+}
+
+# Update directory tracking after each command
+function Invoke-Starship-PostCommand {
+  $global:lastDirectory = (Get-Location).Path
+}
+
 Invoke-Expression (&starship init powershell)
 Enable-TransientPrompt
 
