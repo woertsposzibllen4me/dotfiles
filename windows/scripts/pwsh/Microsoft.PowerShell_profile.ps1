@@ -1,5 +1,6 @@
 ## Constants
 $claudeApiKey = Get-Content -Path "C:\Users\ville\myfiles\documents\api-keys\Anthropic\loïc-onboarding-api-key.txt" -Raw
+$dotfiles = "$env:USERPROFILE\myfiles\dotfiles"
 
 ## Environment variables
 $env:PYTHONIOENCODING="utf-8"
@@ -81,7 +82,7 @@ function Get-DirectorySize {
   } | Format-Table -AutoSize
 }
 
-function Update-Profile{
+function Update-Profile {
   Add-Type -AssemblyName System.Windows.Forms
   [System.Windows.Forms.SendKeys]::SendWait(". $")
   [System.Windows.Forms.SendKeys]::SendWait("PROFILE")
@@ -92,23 +93,26 @@ function Edit-Profile {
   nvim $PROFILE
 }
 
-function Edit-Wezterm-Profile{
-  nvim "C:\Users\ville\myfiles\dotfiles\.wezterm.lua"
+function Edit-Wezterm-Profile {
+  nvim "$dotfiles\.wezterm.lua"
 }
 
 function Edit-Lazygit-Config {
-  nvim "C:\Users\ville\AppData\Local\lazygit\config.yml"
+  nvim "$dotfiles\lazygit-config.yml"
+}
+
+function Edit-Git-Config {
+  git config --global -e
 }
 
 function Start-NvimBugRepro {
-  $ConfigPath = "$env:USERPROFILE\myfiles\nvim-bug-repro\init.lua"
+  $ConfigPath = "$env:USERPROFILE\myfiles\dotfiles\nvim-config3.0\bug-repro\init.lua"
   if (-not (Test-Path $ConfigPath)) {
     throw "Config file does not exist: $ConfigPath"
   }
   $ConfigDir = Split-Path -Parent $ConfigPath
   Set-Location $ConfigDir
-  $normalizedConfigPath = $ConfigPath.Replace('\', '/')
-  nvim -u $normalizedConfigPath
+  nvim -u $ConfigPath
 }
 
 function Show-TreeList {
@@ -124,6 +128,7 @@ Set-Alias -Name rel -Value Update-Profile
 Set-Alias -Name cfg -Value Edit-Profile
 Set-Alias -Name wzcfg -Value Edit-Wezterm-Profile
 Set-Alias -Name lgcfg -Value Edit-Lazygit-Config
+Set-Alias -Name gitcfg -Value Edit-Git-Config
 Set-Alias -Name zf -Value Invoke-FzfCd
 Set-Alias -Name virepro -Value Start-NvimBugRepro
 Set-Alias -Name lst -Value Show-TreeList
@@ -138,7 +143,7 @@ Set-Alias -Name lf -Value yazi
 
 
 ## Location aliases
-function ahk{
+function ahk {
   Set-Location "C:\Users\ville\myfiles\dotfiles\windows\scripts\autohotkey"
 }
 
