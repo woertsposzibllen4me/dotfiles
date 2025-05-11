@@ -141,7 +141,7 @@ TraySetIcon "icons\utils.png"
   nextKey.Start()
   nextKey.Wait()
   if (nextKey.Input = "m") {
-    SendText "Please only send back a minimal amount of code"
+    SendText "Please only send back only as much code as is really needed, avoid being too verbose."
   }
 }
 
