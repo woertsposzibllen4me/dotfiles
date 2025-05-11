@@ -9,7 +9,7 @@
 	editor = nvim
 	pager = delta
 [interactive]
-	diffFilter = delta --patch
+	diffFilter = cat
 [color "diff-highlight"]
 [color "diff"]
 	meta = yellow bold
