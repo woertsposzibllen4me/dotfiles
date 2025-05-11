@@ -29,8 +29,10 @@ Set-PSReadLineOption -BellStyle None
 Set-PSReadLineOption -ShowToolTips
 Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PSReadLineKeyHandler -Chord 'U' -Function Redo -ViMode Command
-Set-PSReadLineKeyHandler -Chord 'Ctrl+g' -Function AcceptNextSuggestionWord
+Set-PSReadLineKeyHandler -Chord 'Ctrl+w' -Function BackwardKillWord -ViMode Insert
+Set-PSReadLineKeyHandler -Key 'RightArrow' -Function AcceptNextSuggestionWord
 Set-PSReadLineKeyHandler -Chord 'Ctrl+f' -Function AcceptSuggestion
+Set-PSReadLineKeyHandler -Chord 'Alt-;' -Function AcceptSuggestion
 
 ## Module options
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r' -PSReadlineChordSetLocation 'Alt+c'
