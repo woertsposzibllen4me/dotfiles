@@ -92,7 +92,7 @@ TraySetIcon "icons\utils.png"
 ^!+k:: {
   SetTitleMatchMode 3 ; Exact match mode to avoid issues with browser tab names etc.
   primaryPath := "C:\Users\ville\scoop\apps\wezterm-nightly\current\wezterm-gui.exe"
-  fallbackPath := "C:\Users\ville\scoop\shims\wezterm - gui.exe"
+  fallbackPath := "C:\Users\ville\scoop\shims\wezterm-gui.exe"
   if WinExist("Wezterm") {
     WinActivate
   } else {
