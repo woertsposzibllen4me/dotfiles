@@ -4,8 +4,9 @@ local config = wezterm.config_builder()
 local act = wezterm.action
 local manually_set_titles = {}
 config.font = wezterm.font("BerkeleyMono Nerd Font", { weight = "Regular" })
-config.font_size = 11.8
+config.font_size = 12.0
 config.default_cursor_style = "SteadyBlock"
+-- config.cursor_blink_rate = 0
 -- config.debug_key_events = true
 
 config.default_prog = { "pwsh" }
