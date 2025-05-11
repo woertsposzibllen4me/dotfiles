@@ -1,34 +1,43 @@
 [user]
 	name = Loïc Villet
-  email = villet.loic@gmail.com
-
+	email = villet.loic@gmail.com
 [alias]
-  st = status
+	st = status
+	diffs = -c delta.features=side-by-side diff
+	dft = difftool -d --tool=difft
 [core]
-  editor = nvim
+	editor = nvim
 	pager = delta
 [interactive]
 	diffFilter = delta --patch
 [color "diff-highlight"]
-	; oldNormal = red bold
-	; oldHighlight = red bold 52
-	; newNormal = green bold
-	; newHighlight = green bold 22
 [color "diff"]
 	meta = yellow bold
 	frag = magenta bold
-	; func = 146 bold
 	commit = yellow bold
 	old = red bold
 	new = green bold
 	whitespace = red reverse
-
-  [delta]
-    navigate = true
-    light = false
-    syntax-theme = Monokai Extended Bright
-    file-style = bold yellow
-    file-decoration-style = yellow box
-    hunk-header-style = line-number syntax
+	colorMoved = default
+[delta]
+	navigate = true
+	light = false
+	file-style = bold yellow
+	file-decoration-style = yellow box
+	hunk-header-style = line-number syntax
+	map-styles = "bold purple => syntax \"#473618\", bold cyan => syntax \"#153d37\"" # Purple: move start, Cyan: move end
+	line-numbers = true
 [init]
 	defaultBranch = main
+[difftool "bc"]
+	cmd = \"C:/Users/ville/AppData/Local/Programs/Beyond Compare 5/BCompare.exe\" \"$LOCAL\" \"$REMOTE\"
+[difftool "difft"]
+	cmd = difft "$LOCAL" "$REMOTE"
+[diff]
+	tool = bc
+	colormoved = default
+	colormovedws = allow-indentation-change
+[difftool]
+	prompt = false
+[pager]
+	difftool = delta
