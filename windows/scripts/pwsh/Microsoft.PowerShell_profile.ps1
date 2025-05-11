@@ -1,3 +1,7 @@
+# Keep prompt at the bottom of the terminal during startup
+$consoleHeight = $host.UI.RawUI.WindowSize.Height
+Write-Host ("`n" * $consoleHeight)
+
 ## Constants
 $claudeApiKey = Get-Content -Path "C:\Users\ville\myfiles\documents\api-keys\Anthropic\loïc-onboarding-api-key.txt" -Raw
 $dotfiles = "$env:USERPROFILE\myfiles\dotfiles"
@@ -121,6 +125,13 @@ function Show-TreeList {
   eza --icons -lT $args
 }
 
+function Clear-AndPutPromptAtBottom {
+  $host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0, 0
+  Clear-Host
+  $consoleHeight = $host.UI.RawUI.WindowSize.Height
+  Write-Host "$([char]27)[${consoleHeight}B" -NoNewline
+}
+
 ## Function aliases
 Set-Alias -Name spp -Value Set-PythonPath
 Set-Alias -Name eme -Value Enter-MegaScriptEnvironment
@@ -134,6 +145,7 @@ Set-Alias -Name gitcfg -Value Edit-Git-Config
 Set-Alias -Name zf -Value Invoke-FzfCd
 Set-Alias -Name virepro -Value Start-NvimBugRepro
 Set-Alias -Name lst -Value Show-TreeList
+Set-Alias -Name clear -Value Clear-AndPutPromptAtBottom
 
 ## Exec aliases
 Set-Alias -Name lg -Value lazygit
@@ -212,6 +224,8 @@ function Invoke-Starship-PreCommand {
     $prompt = "$ansi_escape]7;file://${env:COMPUTERNAME}/${provider_path}$ansi_escape\"
   }
   $host.ui.Write($prompt)
+  Write-Host "`n`n`n`n`n`n`n`n" -NoNewline
+  Write-Host "$([char]27)[8A" -NoNewline
 }
 
 ## Zoxide
