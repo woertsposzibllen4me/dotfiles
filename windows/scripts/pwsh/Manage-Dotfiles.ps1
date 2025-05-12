@@ -1,4 +1,4 @@
-$dotfilesRepo = "C:\Users\ville\myfiles\dotfiles"
+$dotfilesRepo = "C:\Users\ville\dotfiles"
 $dotfilesConfig = @{
 
   "PowerShell profile" = @{
@@ -13,22 +13,32 @@ $dotfilesConfig = @{
 
   "Lazygit config" = @{
     "source" = "$dotfilesRepo\lazygit-config.yml"
-    "target" = "C:\Users\ville\AppData\Local\lazygit\config.yml"
+    "target" = "$HOME\AppData\Local\lazygit\config.yml"
   }
 
   "VS Code keybinds" = @{
     "source" = "$dotfilesRepo\vscode\keybindings.json"
-    "target" = "C:\Users\ville\AppData\Roaming\Code\User\keybindings.json"
+    "target" = "$HOME\AppData\Roaming\Code\User\keybindings.json"
   }
 
   "VS Code settings" = @{
     "source" = "$dotfilesRepo\vscode\settings.json"
-    "target" = "C:\Users\ville\AppData\Roaming\Code\User\settings.json"
+    "target" = "$HOME\AppData\Roaming\Code\User\settings.json"
   }
 
   "Wezterm config" = @{
     "source" = "$dotfilesRepo\.wezterm.lua"
-    "target" = "C:\Users\ville\.wezterm.lua"
+    "target" = "$HOME\.wezterm.lua"
+  }
+
+  "Nvim config" = @{
+    "source"  = "$dotfilesRepo\nvim-config3.0"
+    "target" = "C:\Users\ville\AppData\Local\nvim\"
+  }
+
+  "Starship config" = @{
+    "source"  = "$dotfilesRepo\starship.toml"
+    "target" = "C:\Users\ville\.config\starship.toml"
   }
 
 }
