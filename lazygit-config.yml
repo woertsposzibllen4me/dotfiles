@@ -21,13 +21,11 @@ gui:
     defaultFgColor:
       - "#c8d3f5"
   scrollHeight: 4
-
   nerdFontsVersion: "3"
   border: "rounded"
-
 git:
   paging:
-    # colorArg: always
+    colorArg: always
     pager: delta --dark --paging=never
     # useConfig: true
 
