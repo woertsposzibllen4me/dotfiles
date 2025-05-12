@@ -12,20 +12,24 @@
 	diffFilter = cat
 [color "diff-highlight"]
 [color "diff"]
-	meta = yellow bold
-	frag = magenta bold
-	commit = yellow bold
+  plain = white
+  context = white
+  func = white
+	meta = "#575553"
+	frag = brightblack
+	commit = magenta
 	old = red bold
 	new = green bold
 	whitespace = red reverse
-	colorMoved = default
+  oldMoved = brightblack bold
+  newMoved = blue bold
 [delta]
 	navigate = true
 	light = false
 	file-style = bold yellow
 	file-decoration-style = yellow box
 	hunk-header-style = line-number syntax
-	map-styles = "bold purple => syntax \"#473618\", bold cyan => syntax \"#153d37\"" # Purple: move start, Cyan: move end
+	map-styles = "bold brightblack => syntax \"#473618\", bold blue => syntax \"#153d37\"" # Original pos first, new pos second
 	line-numbers = true
 [init]
 	defaultBranch = main
