@@ -28,6 +28,62 @@ git:
     colorArg: always
     pager: delta --dark --paging=never
     # useConfig: true
-
 # os: # will figure it out eventually but rn it's commented out
 #   editPreset: nvim-remote
+
+customCommands:
+  # For files panel
+  - key: "O"
+    command: "git -c delta.features=side-by-side diff {{.SelectedPath}}"
+    context: "files"
+    description: "Delta diff of selected item"
+    loadingText: "Opening diff in Delta..."
+    subprocess: true
+
+  # For commits panel
+  - key: "O"
+    command: "git -c delta.features=side-by-side show {{.SelectedCommit.Sha}} -p"
+    context: "commits"
+    description: "Show commit with Delta side-by-side"
+    loadingText: "Opening commit diff in Delta..."
+    subprocess: true
+
+  # For files within a commit or stash
+  - key: "O"
+    command: "git -c delta.features=side-by-side show {{.SelectedCommit.Sha}} -- {{.SelectedCommitFilePath}}"
+    context: "commitFiles"
+    description: "Show file in commit/stash with Delta side-by-side"
+    loadingText: "Opening file diff in Delta..."
+    subprocess: true
+
+  # For stash entries
+  - key: "O"
+    command: "git -c delta.features=side-by-side stash show -p {{.SelectedStashEntry.Index}}"
+    context: "stash"
+    description: "Show stash with Delta side-by-side"
+    loadingText: "Opening stash in Delta..."
+    subprocess: true
+
+  # For local branches
+  - key: "O"
+    command: "git -c delta.features=side-by-side diff {{.CheckedOutBranch.Name}}..{{.SelectedLocalBranch.Name}}"
+    context: "localBranches"
+    description: "Compare current branch with selected branch"
+    loadingText: "Comparing branches with Delta..."
+    subprocess: true
+
+  # For remote branches
+  - key: "O"
+    command: "git -c delta.features=side-by-side diff {{.CheckedOutBranch.Name}}..{{.SelectedRemoteBranch.RemoteName}}/{{.SelectedRemoteBranch.Name}}"
+    context: "remoteBranches"
+    description: "Compare current branch with selected remote branch"
+    loadingText: "Comparing with remote branch..."
+    subprocess: true
+
+  # For tags
+  - key: "O"
+    command: "git -c delta.features=side-by-side show {{.SelectedTag.Name}} -p"
+    context: "tags"
+    description: "Show tag with Delta side-by-side"
+    loadingText: "Opening tag diff in Delta..."
+    subprocess: true
