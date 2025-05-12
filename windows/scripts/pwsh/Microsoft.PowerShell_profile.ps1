@@ -4,7 +4,7 @@ Write-Host ("`n" * $consoleHeight)
 
 ## Constants
 $claudeApiKey = Get-Content -Path "C:\Users\ville\myfiles\documents\api-keys\Anthropic\loïc-onboarding-api-key.txt" -Raw
-$dotfiles = "$env:USERPROFILE\myfiles\dotfiles"
+$dotfiles = "$env:USERPROFILE\dotfiles"
 
 ## Environment variables
 $env:PYTHONIOENCODING="utf-8"
@@ -18,12 +18,12 @@ Import-Module PSFzf
 Import-Module posh-git
 
 ## Custom modules
-Import-Module "C:\Users\ville\myfiles\dotfiles\windows\scripts\pwsh\Cut-Paste.psm1"
+Import-Module "$dotfiles\windows\scripts\pwsh\Cut-Paste.psm1"
 Set-Alias -Name cut -Value Move-ItemToBuffer
 Set-Alias -Name paste -Value Restore-ItemFromBuffer
 
 ## Path additions
-$env:PATH += ";C:\Users\ville\myfiles\dotfiles\windows\scripts\batch\"
+$env:PATH += "$dotfiles\windows\scripts\batch\"
 $env:Path += ";C:\Users\ville\myfiles\programs\PROGRAMS_ON_PATH\"
 $env:PATH = "$env:USERPROFILE\scoop\shims;$env:PATH"
 
@@ -49,7 +49,7 @@ function Set-PythonPath {
 }
 
 function Enter-MegaScriptEnvironment {
-  Set-Location "C:\Users\ville\MyMegaScript\"
+  Set-Location "$HOME\MyMegaScript\"
   Set-PythonPath
   .\venv\Scripts\activate
 }
@@ -112,7 +112,7 @@ function Edit-Git-Config {
 }
 
 function Start-NvimBugRepro {
-  $ConfigPath = "$env:USERPROFILE\myfiles\dotfiles\nvim-config3.0\bug-repro\init.lua"
+  $ConfigPath = "$dotfiles\nvim-config3.0\bug-repro\init.lua"
   if (-not (Test-Path $ConfigPath)) {
     throw "Config file does not exist: $ConfigPath"
   }
@@ -158,31 +158,31 @@ Set-Alias -Name lf -Value yazi
 
 ## Location aliases
 function ahk {
-  Set-Location "C:\Users\ville\myfiles\dotfiles\windows\scripts\autohotkey"
+  Set-Location "$dotfiles\windows\scripts\autohotkey"
 }
 
 function vidata {
-  Set-Location "C:\Users\ville\AppData\Local\nvim-data"
+  Set-Location "$HOME\AppData\Local\nvim-data"
 }
 
 function vid {
-  Set-Location "C:\Users\ville\MyFiles\dotfiles\nvim-config3.0"
+  Set-Location "$dotfiles\nvim-config3.0"
 }
 
 function roam {
-  Set-Location "C:\Users\ville\AppData\Roaming"
+  Set-Location "$HOME\AppData\Roaming"
 }
 
 function loc {
-  Set-Location "C:\Users\ville\AppData\Local"
+  Set-Location "$HOME\AppData\Local"
 }
 
 function dot {
-  Set-Location "C:\Users\ville\myfiles\dotfiles\"
+  Set-Location "$dotfiles"
 }
 
 function my {
-  Set-Location "C:\Users\ville\myfiles"
+  Set-Location "$HOME\myfiles"
 }
 
 ## Starship
