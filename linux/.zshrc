@@ -9,20 +9,29 @@ unsetopt beep
 #   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # fi
 
+# keep prompt at the bottom of the terminal
+printf '\n%.0s' {1..$LINES}
+
+# Update starship config for WSL mounted path module
+# ~/bin/update-starship-config.sh
+
 export ZSH="$HOME/.oh-my-zsh"
 export PATH="$HOME/bin:$PATH"
 export PATH=~/.npm-global/bin:$PATH
 
-# Update starship config for WSL mounted path module
-~/bin/update-starship-config.sh
+# History
+# HISTSIZE=5000
+# HISTFILE=~/.zsh_history
+# SAVEHIST=$HISTSIZE
+# HISTDUP=erase
+# setopt appendhistory
+# setopt sharehistory
+# # setopt hist_ignore_space
+# setopt hist_ignore_all_dups
+# setopt hist_save_no_dups
+# setopt hist_ignore_dups
+# setopt hist_find_no_dups
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
-plugins=(git)
-source $ZSH/oh-my-zsh.sh
 
 export dotfiles="$HOME/dotfiles"
 
@@ -31,7 +40,6 @@ alias vi='nvim'
 alias vid='cd $HOME/.config/nvim'
 alias lg='lazygit'
 alias wh='which'
-alias lf='yazi'
 alias ls='eza --icons -l'
 alias lsa='eza --icons -la'
 alias lst='eza --icons -lT'
@@ -53,7 +61,7 @@ function edit-tmux-config() {
   nvim "$HOME/.tmux.conf"
 }
 
-funciton edit-zshrc() {
+function edit-zshrc() {
   nvim "$HOME/.zshrc"
 }
 
@@ -64,7 +72,7 @@ alias tmcfg='edit-tmux-config'
 alias zscfg='edit-zshrc'
 
 ## Utility functions
-start-nvim-bug-repro() {
+function start-nvim-bug-repro() {
   local config_path="$HOME/dotfiles/nvim-config3.0/bug-repro/init.lua"
    if [[ ! -f "$config_path" ]]; then
     echo "Config file does not exist: $config_path"
@@ -100,11 +108,17 @@ function copy-path-to-clipboard() {
   echo "Copied to clipboard: $fullPath"
 }
 
+function clear-and-put-prompt-at-bottom() {
+  printf "\e[H\ec\e[${LINES}B"
+}
+
 # Utility aliases
 alias virepro='start-nvim-bug-repro'
 alias cpath='copy-path-to-clipboard'
+alias clear='clear-and-put-prompt-at-bottom'
 
-function lfcd() {
+# yazi for file navigation 
+function lf() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"
 	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
@@ -135,31 +149,60 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-rust
 ### End of Zinit's installer chunk
 
-function zvm_config() {
-  ZVM_KEYTIMEOUT=0.01
-  ZVM_ESCAPE_KEYTIMEOUT=0.001
-}
 
+zinit snippet OMZP::git
+
+# vi mode
 zinit ice depth=1
 zinit light jeffreytse/zsh-vi-mode
+# bindkey -v
+# zinit ice depth=1
+# zinit light zsh-vi-more/vi-motions
+function zvm_config() {
+  ZVM_KEYTIMEOUT=0.5
+  ZVM_ESCAPE_KEYTIMEOUT=0.001
+}
+# function zvm_after_init() {
+#   bindkey '^[[C' forward-word # Right arrow
+#   bindkey '\e;' end-of-line # Alt-;
+#   zvm_bindkey viins '^p' history-search-backward
+#   zvm_bindkey viins '^n' history-search-forward
+# }
 
-zinit ice depth=1
-zinit light Aloxaf/fzf-tab
+# bindkey '^p' history-search-backward
+# bindkey '^n' history-search-forward
 
-zinit ice depth=1
-zinit light zsh-users/zsh-autosuggestions
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#757575"
+# # Enable autocomplete explicitly
+# autoload -Uz compinit
+# compinit
 
+
+# # autosuggestions
+# zinit ice depth=1
+# zinit light zsh-users/zsh-autosuggestions
+# ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#757575"
+#
+# # syntax highlighting
+# zinit ice depth=1
+# zinit light zsh-users/zsh-syntax-highlighting
+
+# powerlevel10k
 # zinit ice depth=1
 # zinit light romkatv/powerlevel10k
 
-function zvm_after_init() {
-  bindkey '^g' forward-word
-}
+# fzf-tab
+zinit ice depth=1
+zinit light Aloxaf/fzf-tab
+
+
+# precmd() {
+#     print $'\n\n\n\n\n\n\n\n\e[9A'
+# }
 
 source <(fzf --zsh)
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
