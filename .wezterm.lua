@@ -178,18 +178,15 @@ config.inactive_pane_hsb = {
 }
 
 local scheme_name = "tokyonight_moon"
-local scheme = wezterm.color.get_builtin_schemes()[scheme_name]
+local scheme = wezterm.get_builtin_color_schemes()[scheme_name]
 
--- config.color_scheme = scheme_name
-
-scheme.brights[1] = "#ff69b4" -- Set pwsh args comments to pink !
-scheme.brights[2] = "#fc5858" -- more saturated reds
-scheme.ansi[2] = "#fc5858"
-scheme.brights[3] = "#b4ed77" -- more saturated greens
-scheme.ansi[3] = "#b4ed77"
-scheme.brights[8] = "#67e6e6" -- more saturated greens
-
-scheme.ansi[8] = "#c2d0f2"
+-- scheme.brights[1] = "#ff69b4" -- set pwsh args comments to pink ! (brightblack)
+scheme.brights[2] = "#fc5858" -- more saturated reds (brightred)
+scheme.ansi[2] = "#fc6565" -- (red)
+scheme.brights[3] = "#b4ed77" -- more saturated greens (brightgreen)
+-- scheme.ansi[3] = "#b4ed77" -- (green)
+-- scheme.brights[8] = "#67e6e6" -- (brightwhite)
+-- scheme.ansi[8] = "#c2d0f2" -- (white)
 
 config.colors = scheme
 
