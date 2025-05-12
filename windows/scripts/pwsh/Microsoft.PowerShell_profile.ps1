@@ -125,6 +125,16 @@ function Show-TreeList {
   eza --icons -lT $args
 }
 
+function lf {
+  $tmp = [System.IO.Path]::GetTempFileName()
+  yazi $args --cwd-file="$tmp"
+  $cwd = Get-Content -Path $tmp -Encoding UTF8
+  if (-not [String]::IsNullOrEmpty($cwd) -and $cwd -ne $PWD.Path) {
+    Set-Location -LiteralPath ([System.IO.Path]::GetFullPath($cwd))
+  }
+  Remove-Item -Path $tmp
+}
+
 function Clear-AndPutPromptAtBottom {
   $host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0, 0
   Clear-Host
@@ -153,7 +163,6 @@ Set-Alias -Name vi -Value nvim
 Set-Alias -Name ex -Value explorer
 Set-Alias -Name d -Value dir
 Set-Alias -Name wh -Value where.exe
-Set-Alias -Name lf -Value yazi
 
 
 ## Location aliases
