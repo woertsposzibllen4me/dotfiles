@@ -20,7 +20,7 @@
 	old = red bold
 	new = green bold
 	whitespace = red reverse
-  oldMoved = brightblack bold
+  oldMoved = "#541d1d" bold
   newMoved = blue bold
 [delta]
 	navigate = true
