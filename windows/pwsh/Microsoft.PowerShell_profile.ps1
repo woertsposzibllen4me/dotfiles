@@ -37,12 +37,10 @@ $env:PATH = "$env:USERPROFILE\scoop\shims;$env:PATH"
 
 ## Vi mode options
 $OnViModeChange = [scriptblock]{
-  if ($args[0] -eq 'Command')
-  {
+  if ($args[0] -eq 'Command') {
     # Set the cursor to a steady block.
     Write-Host -NoNewLine "`e[0 q"
-  } else
-  {
+  } else {
     # Set the cursor to a steady line.
     Write-Host -NoNewLine "`e[6 q"
   }
@@ -66,59 +64,49 @@ Set-PSReadLineKeyHandler -Chord 'Alt-;' -Function AcceptSuggestion
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r' -PSReadlineChordSetLocation 'Alt+c'
 
 ## Minor utility functions
-function Update-Profile
-{
+function Update-Profile {
   Add-Type -AssemblyName System.Windows.Forms
   [System.Windows.Forms.SendKeys]::SendWait(". $")
   [System.Windows.Forms.SendKeys]::SendWait("PROFILE")
   [System.Windows.Forms.SendKeys]::SendWait("{ENTER}")
 }
 
-function Edit-Profile
-{
+function Edit-Profile {
   nvim $PROFILE
 }
 
-function Edit-Wezterm-Profile
-{
+function Edit-Wezterm-Profile {
   nvim "$env:DOTFILES\.wezterm.lua"
 }
 
-function Edit-Lazygit-Config
-{
+function Edit-Lazygit-Config {
   nvim "$env:DOTFILES\lazygit-config.yml"
 }
 
-function Edit-Git-Config
-{
+function Edit-Git-Config {
   git config --global -e
 }
 
-function Edit-Kanata-Config
-{
+function Edit-Kanata-Config {
   nvim "$env:DOTFILES\kanata.kbd"
 }
 
-function Show-TreeList
-{
+function Show-TreeList {
   eza --icons -lT $args
 }
 
-function Clear-AndPutPromptAtBottom
-{
+function Clear-AndPutPromptAtBottom {
   $host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0, 0
   Clear-Host
   $consoleHeight = $host.UI.RawUI.WindowSize.Height
   Write-Host "$([char]27)[${consoleHeight}B" -NoNewline
 }
 
-function Hide-Taskbar
-{
+function Hide-Taskbar {
   Start-Process -FilePath "nircmd.exe" -ArgumentList "win trans class Shell_TrayWnd 256" -NoNewWindow
 }
 
-function Show-Taskbar
-{
+function Show-Taskbar {
   Start-Process -FilePath "nircmd.exe" -ArgumentList "win trans class Shell_TrayWnd 255" -NoNewWindow
 }
 
@@ -145,65 +133,54 @@ Set-Alias -Name kan -Value kanata
 
 
 ## Location functions
-function ahk
-{
+function ahk {
   Set-Location "$env:DOTFILES\windows\autohotkey"
 }
 
-function vidata
-{
+function vidata {
   Set-Location "$HOME\AppData\Local\nvim-data"
 }
 
-function vid
-{
+function vid {
   Set-Location "$env:DOTFILES\nvim-config3.0"
 }
 
-function roam
-{
+function roam {
   Set-Location "$HOME\AppData\Roaming"
 }
 
-function loc
-{
+function loc {
   Set-Location "$HOME\AppData\Local"
 }
 
-function dot
-{
+function dot {
   Set-Location "$env:DOTFILES"
 }
 
-function my
-{
+function my {
   Set-Location "$HOME\myfiles"
 }
 
 ## Starship
 $global:lastDirectory = (Get-Location).Path
 
-function Invoke-Starship-TransientFunction
-{
+function Invoke-Starship-TransientFunction {
   $currentDirectory = (Get-Location).Path
 
   $time = &starship module time
   $char = &starship module character
 
-  if ($global:lastDirectory -ne $currentDirectory)
-  {
+  if ($global:lastDirectory -ne $currentDirectory) {
     $dir = &starship module directory
     $global:lastDirectory = $currentDirectory
     return "`n$dir`n$time$char"
-  } else
-  {
+  } else {
     return "$time$char"
   }
 }
 
 # Update directory tracking after each command
-function Invoke-Starship-PostCommand
-{
+function Invoke-Starship-PostCommand {
   $global:lastDirectory = (Get-Location).Path
 }
 
@@ -212,11 +189,9 @@ Enable-TransientPrompt
 
 # OSC compatible prompt
 $prompt = ""
-function Invoke-Starship-PreCommand
-{
+function Invoke-Starship-PreCommand {
   $current_location = $executionContext.SessionState.Path.CurrentLocation
-  if ($current_location.Provider.Name -eq "FileSystem")
-  {
+  if ($current_location.Provider.Name -eq "FileSystem") {
     $ansi_escape = [char]27
     $provider_path = $current_location.ProviderPath -replace "\\", "/"
     $prompt = "$ansi_escape]7;file://${env:COMPUTERNAME}/${provider_path}$ansi_escape\"
