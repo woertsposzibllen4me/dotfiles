@@ -95,6 +95,7 @@ function Show-TreeList {
   eza --icons -lT $args
 }
 
+
 function Clear-AndPutPromptAtBottom {
   $host.UI.RawUI.CursorPosition = New-Object System.Management.Automation.Host.Coordinates 0, 0
   Clear-Host
@@ -116,7 +117,7 @@ Set-Alias -Name rel -Value Update-Profile
 Set-Alias -Name cfg -Value Edit-Profile
 Set-Alias -Name wzcfg -Value Edit-Wezterm-Profile
 Set-Alias -Name lgcfg -Value Edit-Lazygit-Config
-Set-Alias -Name gitcfg -Value Edit-Git-Config
+Set-Alias -Name gtcfg -Value Edit-Git-Config
 Set-Alias -Name kacfg -Value Edit-Kanata-Config
 
 Set-Alias -Name zf -Value Invoke-FzfCd
