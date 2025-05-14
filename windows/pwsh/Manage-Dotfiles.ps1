@@ -2,7 +2,7 @@ $dotfilesRepo = "C:\Users\ville\dotfiles"
 $dotfilesConfig = @{
 
   "PowerShell profile" = @{
-    "source" = "$dotfilesRepo\windows\scripts\pwsh\Microsoft.PowerShell_profile.ps1"
+    "source" = "$dotfilesRepo\windows\pwsh\Microsoft.PowerShell_profile.ps1"
     "target" = "$HOME\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
   }
 

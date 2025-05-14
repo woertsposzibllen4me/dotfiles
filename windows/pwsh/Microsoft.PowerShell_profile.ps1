@@ -18,12 +18,12 @@ Import-Module PSFzf
 Import-Module posh-git
 
 ## Custom modules
-Import-Module "$dotfiles\windows\scripts\pwsh\Cut-Paste.psm1"
+Import-Module "$dotfiles\windows\pwsh\Cut-Paste.psm1"
 Set-Alias -Name cut -Value Move-ItemToBuffer
 Set-Alias -Name paste -Value Restore-ItemFromBuffer
 
 ## Path additions
-$env:PATH += "$dotfiles\windows\scripts\batch\"
+$env:PATH += "$dotfiles\windows\batch\"
 $env:Path += ";C:\Users\ville\myfiles\programs\PROGRAMS_ON_PATH\"
 $env:PATH = "$env:USERPROFILE\scoop\shims;$env:PATH"
 
@@ -195,7 +195,7 @@ Set-Alias -Name kan -Value kanata
 
 ## Location aliases
 function ahk {
-  Set-Location "$dotfiles\windows\scripts\autohotkey"
+  Set-Location "$dotfiles\windows\autohotkey"
 }
 
 function vidata {
