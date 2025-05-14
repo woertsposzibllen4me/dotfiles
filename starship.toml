@@ -132,6 +132,10 @@ pink = "#ff69b4"
 [os]
 disabled = false
 
+[os.symbols]
+# Arch = "🎗️ " # has issue with wezterm stable emoji rendering, good on nightly
+Arch = "🐧"
+
 [sudo]
 disabled = false
 

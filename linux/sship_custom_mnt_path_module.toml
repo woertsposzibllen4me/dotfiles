@@ -1,5 +1,3 @@
-# WSL-specific mounted path module (wsl_mounted_path.toml)
-
 [custom.mounted_path]
 description = "Mounted path indicator"
 when = """sh -c '

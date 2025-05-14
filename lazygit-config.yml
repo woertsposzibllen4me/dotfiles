@@ -1,32 +1,36 @@
 gui:
   theme:
     activeBorderColor:
-      - "#FF9E64" # Neon orange for active elements
-      - bold
-    searchingActiveBorderColor:
-      - "#ff966c"
+      - "#ff9e64"
       - "bold"
     inactiveBorderColor:
-      - "#4db0c9" # Balanced cyan-blue for inactive elements
+      - "#29a4bd"
+    searchingActiveBorderColor:
+      - "#ff9e64"
+      - "bold"
     optionsTextColor:
-      - "#4db0c9" # Matching inactive border color
+      - "#7aa2f7"
     selectedLineBgColor:
-      - "#4877ab" # Balanced blue for selected lines
-    cherryPickedCommitBgColor:
-      - "#3D99FF" # Matching selected line color
+      - "#2e3c64"
     cherryPickedCommitFgColor:
-      - "#FFFFFF" # White text for contrast
+      - "#7aa2f7"
+    cherryPickedCommitBgColor:
+      - "#bb9af7"
+    markedBaseCommitFgColor:
+      - "#7aa2f7"
+    markedBaseCommitBgColor:
+      - "#e0af68"
     unstagedChangesColor:
-      - "#FF9E64" # Neon orange for unstaged changes
+      - "#db4b4b"
     defaultFgColor:
-      - "#c8d3f5"
+      - "#c0caf5"
   scrollHeight: 4
   nerdFontsVersion: "3"
   border: "rounded"
 git:
   paging:
     colorArg: always
-    pager: delta --dark --paging=never
+    # pager: delta --dark --paging=never
     # useConfig: true
 # os: # will figure it out eventually but rn it's commented out
 #   editPreset: nvim-remote

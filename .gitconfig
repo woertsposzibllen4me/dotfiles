@@ -20,7 +20,7 @@
 	old = red bold
 	new = green bold
 	whitespace = red reverse
-  oldMoved = brightblack bold
+  oldMoved = "#541d1d" bold
   newMoved = blue bold
 [delta]
 	navigate = true
@@ -28,8 +28,10 @@
 	file-style = bold yellow
 	file-decoration-style = yellow box
 	hunk-header-style = line-number syntax
-	map-styles = "bold brightblack => syntax \"#473618\", bold blue => syntax \"#153d37\"" # Original pos first, new pos second
-	line-numbers = true
+	; map-styles = "bold brightblack => syntax \"#473618\", bold blue => syntax \"#153d37\"" # Original pos first, new pos second
+	map-styles = "bold brightblack => syntax \"#2b0228\", bold blue => syntax \"#012738\"" # Dark purple/blue
+	; map-styles = "bold brightblack => syntax \"#1c0505\", bold blue => syntax \"#011705\"" # Dark red/green
+	line-numbers = false
 [init]
 	defaultBranch = main
 [difftool "bc"]
