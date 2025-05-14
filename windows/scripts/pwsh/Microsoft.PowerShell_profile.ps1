@@ -27,6 +27,20 @@ $env:PATH += "$dotfiles\windows\scripts\batch\"
 $env:Path += ";C:\Users\ville\myfiles\programs\PROGRAMS_ON_PATH\"
 $env:PATH = "$env:USERPROFILE\scoop\shims;$env:PATH"
 
+# Vi mode options
+$OnViModeChange = [scriptblock]{
+  if ($args[0] -eq 'Command') {
+    # Set the cursor to a steady block.
+    Write-Host -NoNewLine "`e[0 q"
+  } else {
+    # Set the cursor to a steady line.
+    Write-Host -NoNewLine "`e[6 q"
+  }
+}
+Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $OnViModeChange
+# Start in insert mode cursor
+Write-Host -NoNewLine "`e[6 q"
+
 ## PSReadLine options
 Set-PSReadLineOption -EditMode Vi
 Set-PSReadLineOption -BellStyle None
