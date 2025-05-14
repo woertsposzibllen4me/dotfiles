@@ -31,8 +31,12 @@ setopt hist_find_no_dups
 # Terminal position setup
 printf '\n%.0s' {1..$LINES}
 precmd() {
-    print $'\n\n\n\n\n\n\n\n\e[9A'
+    print $'\n\n\n\n\e[5A'
 }
+function clear-and-put-prompt-at-bottom() {
+  printf "\e[H\ec\e[${LINES}B"
+}
+alias clear='clear-and-put-prompt-at-bottom'
 
 # Initialize zinit
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -99,12 +103,13 @@ alias vi='nvim'
 alias vid='cd $HOME/.config/nvim'
 alias lg='lazygit'
 alias wh='which'
-alias ls='eza --icons -l'
-alias lsa='eza --icons -la'
-alias lst='eza --icons -lT'
-alias lsat='eza --icons -laT'
+alias l='eza --icons -l'
+alias la='eza --icons -la'
+alias lt='eza --icons -T'
+alias lat='eza --icons -laT'
 alias dot='cd $HOME/dotfiles'
 alias zf="__zoxide_zi"
+alias zz="z -"
 
 ## Custom functions
 ## Quick edit functions
@@ -161,10 +166,6 @@ function copy-path-to-clipboard() {
   echo "Copied to clipboard: $fullPath"
 }
 
-function clear-and-put-prompt-at-bottom() {
-  printf "\e[H\ec\e[${LINES}B"
-}
-
 # Yazi file navigation
 function lf() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -178,8 +179,6 @@ function lf() {
 # Utility aliases
 alias virepro='start-nvim-bug-repro'
 alias cpath='copy-path-to-clipboard'
-alias clear='clear-and-put-prompt-at-bottom'
-
 
 # Initialize final tools
 eval "$(zoxide init zsh)"
