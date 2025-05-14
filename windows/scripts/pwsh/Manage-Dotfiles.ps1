@@ -33,14 +33,18 @@ $dotfilesConfig = @{
 
   "Nvim config" = @{
     "source"  = "$dotfilesRepo\nvim-config3.0"
-    "target" = "C:\Users\ville\AppData\Local\nvim\"
+    "target" = "$HOME\AppData\Local\nvim\"
   }
 
   "Starship config" = @{
     "source"  = "$dotfilesRepo\starship.toml"
-    "target" = "C:\Users\ville\.config\starship.toml"
+    "target" = "$HOME\.config\starship.toml"
   }
 
+  "Kanata config" = @{
+    "source"  = "$dotfilesRepo\kanata.kbd"
+    "target" = "$HOME\AppData\Roaming\kanata\kanata.kbd"
+  }
 }
 
 function Sync-Symlinks {

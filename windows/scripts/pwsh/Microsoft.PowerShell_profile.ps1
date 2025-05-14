@@ -125,6 +125,10 @@ function Edit-Git-Config {
   git config --global -e
 }
 
+function Edit-Kanata-Config {
+  nvim "$dotfiles\kanata.kbd"
+}
+
 function Start-NvimBugRepro {
   $ConfigPath = "$dotfiles\nvim-config3.0\bug-repro\init.lua"
   if (-not (Test-Path $ConfigPath)) {
@@ -156,6 +160,14 @@ function Clear-AndPutPromptAtBottom {
   Write-Host "$([char]27)[${consoleHeight}B" -NoNewline
 }
 
+function Hide-Taskbar {
+  Start-Process -FilePath "nircmd.exe" -ArgumentList "win trans class Shell_TrayWnd 256" -NoNewWindow
+}
+
+function Show-Taskbar {
+  Start-Process -FilePath "nircmd.exe" -ArgumentList "win trans class Shell_TrayWnd 255" -NoNewWindow
+}
+
 ## Function aliases
 Set-Alias -Name spp -Value Set-PythonPath
 Set-Alias -Name eme -Value Enter-MegaScriptEnvironment
@@ -166,6 +178,7 @@ Set-Alias -Name cfg -Value Edit-Profile
 Set-Alias -Name wzcfg -Value Edit-Wezterm-Profile
 Set-Alias -Name lgcfg -Value Edit-Lazygit-Config
 Set-Alias -Name gitcfg -Value Edit-Git-Config
+Set-Alias -Name kacfg -Value Edit-Kanata-Config
 Set-Alias -Name zf -Value Invoke-FzfCd
 Set-Alias -Name virepro -Value Start-NvimBugRepro
 Set-Alias -Name lst -Value Show-TreeList
@@ -177,6 +190,7 @@ Set-Alias -Name vi -Value nvim
 Set-Alias -Name ex -Value explorer
 Set-Alias -Name d -Value dir
 Set-Alias -Name wh -Value where.exe
+Set-Alias -Name kan -Value kanata
 
 
 ## Location aliases
