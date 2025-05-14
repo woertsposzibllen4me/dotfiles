@@ -261,8 +261,8 @@ function Invoke-Starship-PreCommand {
     $prompt = "$ansi_escape]7;file://${env:COMPUTERNAME}/${provider_path}$ansi_escape\"
   }
   $host.ui.Write($prompt)
-  Write-Host "`n`n`n`n`n`n`n`n" -NoNewline
-  Write-Host "$([char]27)[8A" -NoNewline
+  Write-Host "`n`n`n`n" -NoNewline
+  Write-Host "$([char]27)[4A" -NoNewline
 }
 
 ## Zoxide
