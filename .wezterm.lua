@@ -106,7 +106,7 @@ local process_icons = {
 -- Updated function to get process name
 local function get_process_name(process_name)
   -- Extract just the executable name without path or extension
-  wezterm.log_info("process_name : " .. tostring(process_name))
+  -- wezterm.log_info("process_name : " .. tostring(process_name))
   local name
   if process_name and process_name ~= "" then
     name = process_name:match("([^\\]+)%.?[^.]*$")
@@ -120,7 +120,7 @@ end
 
 local function get_last_two_path_segments(tab)
   local cwd_url = tab.active_pane.current_working_dir
-  wezterm.log_info("cwd_url : " .. tostring(cwd_url))
+  -- wezterm.log_info("cwd_url : " .. tostring(cwd_url))
   if cwd_url then
     local path = cwd_url.path
 
@@ -156,8 +156,8 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
   local tab_number = tab.tab_index + 1 -- Wezterm uses 0-based indexing, so we add 1
   local zoom_icon = tab.active_pane.is_zoomed and " " or ""
 
-  -- Check if the tab has a custom title set by Neovim set through OSC sequences (should have "nvim" in the title)
-  if tab.active_pane.title and tab.active_pane.title:match("nvim") then
+  -- Check if the tab has a custom title set by Neovim set through OSC sequences (should have "[nvim]" in the title)
+  if tab.active_pane.title and tab.active_pane.title:match("%[nvim%]") then
     local title = string.format("%s%d: %s", zoom_icon, tab_number, tab.active_pane.title)
     return {
       { Text = " " .. title .. " " },
@@ -260,6 +260,15 @@ local function get_uri(window, pane)
   end
 end
 
+local function log_all_user_vars(window)
+  local tab = window:active_tab()
+  for _, pane in ipairs(tab:panes()) do
+    local user_vars = pane:get_user_vars()
+    local pane_id = pane:pane_id()
+    wezterm.log_info("Pane " .. pane_id .. " user vars: " .. wezterm.json_encode(user_vars))
+  end
+end
+
 config.leader = { key = " ", mods = "CTRL" }
 config.keys = {
 
@@ -267,7 +276,9 @@ config.keys = {
   {
     key = "?",
     mods = "CTRL|SHIFT",
-    action = wezterm.action_callback(get_uri),
+    action = wezterm.action_callback(function(window, pane)
+      log_all_user_vars(window)
+    end),
   },
 
   -- Debug info
@@ -307,25 +318,85 @@ config.keys = {
   { key = "F11", action = wezterm.action.ToggleFullScreen },
 
   -- Navigate between panes
+  -- {
+  --   key = "h",
+  --   mods = "CTRL|SHIFT",
+  --   action = wezterm.action.ActivatePaneDirection("Left"),
+  -- },
   {
     key = "h",
-    mods = "CTRL|SHIFT",
-    action = wezterm.action.ActivatePaneDirection("Left"),
+    mods = "CTRL",
+    action = wezterm.action_callback(function(window, pane)
+      local vars = pane:get_user_vars() or {}
+      local title = pane:get_title() or ""
+      local in_Windows_nvim = vars.in_Windows_nvim
+      local in_wsl = vars.in_wsl
+      if in_Windows_nvim == "1" or in_wsl == "1" then
+        window:perform_action(wezterm.action.SendKey({ key = "h", mods = "CTRL" }), pane)
+      else
+        window:perform_action(wezterm.action.ActivatePaneDirection("Left"), pane)
+      end
+    end),
   },
+  -- {
+  --   key = "j",
+  --   mods = "CTRL|SHIFT",
+  --   action = wezterm.action.ActivatePaneDirection("Down"),
+  -- },
   {
     key = "j",
-    mods = "CTRL|SHIFT",
-    action = wezterm.action.ActivatePaneDirection("Down"),
+    mods = "CTRL",
+    action = wezterm.action_callback(function(window, pane)
+      local vars = pane:get_user_vars() or {}
+      local title = pane:get_title() or ""
+      local in_Windows_nvim = vars.in_Windows_nvim
+      local in_wsl = vars.in_wsl
+      if in_Windows_nvim == "1" or in_wsl == "1" then
+        window:perform_action(wezterm.action.SendKey({ key = "j", mods = "CTRL" }), pane)
+      else
+        window:perform_action(wezterm.action.ActivatePaneDirection("Down"), pane)
+      end
+    end),
   },
+  -- {
+  --   key = "k",
+  --   mods = "CTRL|SHIFT",
+  --   action = wezterm.action.ActivatePaneDirection("Up"),
+  -- },
   {
     key = "k",
-    mods = "CTRL|SHIFT",
-    action = wezterm.action.ActivatePaneDirection("Up"),
+    mods = "CTRL",
+    action = wezterm.action_callback(function(window, pane)
+      local vars = pane:get_user_vars() or {}
+      local title = pane:get_title() or ""
+      local in_Windows_nvim = vars.in_Windows_nvim
+      local in_wsl = vars.in_wsl
+      if in_Windows_nvim == "1" or in_wsl == "1" then
+        window:perform_action(wezterm.action.SendKey({ key = "k", mods = "CTRL" }), pane)
+      else
+        window:perform_action(wezterm.action.ActivatePaneDirection("Up"), pane)
+      end
+    end),
   },
+  -- {
+  --   key = "l",
+  --   mods = "CTRL|SHIFT",
+  --   action = wezterm.action.ActivatePaneDirection("Right"),
+  -- },
   {
     key = "l",
-    mods = "CTRL|SHIFT",
-    action = wezterm.action.ActivatePaneDirection("Right"),
+    mods = "CTRL",
+    action = wezterm.action_callback(function(window, pane)
+      local vars = pane:get_user_vars() or {}
+      local title = pane:get_title() or ""
+      local in_Windows_nvim = vars.in_Windows_nvim
+      local in_wsl = vars.in_wsl
+      if in_Windows_nvim == "1" or in_wsl == "1" then
+        window:perform_action(wezterm.action.SendKey({ key = "l", mods = "CTRL" }), pane)
+      else
+        window:perform_action(wezterm.action.ActivatePaneDirection("Right"), pane)
+      end
+    end),
   },
 
   -- Split panes
@@ -461,25 +532,5 @@ for i = 1, 8 do
     action = wezterm.action.MoveTab(i - 1),
   })
 end
-
--- Plugins
-
--- Smart Splits
-local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
--- NOTE : disabled in wezterm in favor of use in tmux right now
-smart_splits.apply_to_config(config, {
-  -- direction_keys = { "h", "j", "k", "l" },
-  direction_keys = {},
-  -- direction_keys = {
-  --   move = { 'h', 'j', 'k', 'l' },
-  --   resize = { 'LeftArrow', 'DownArrow', 'UpArrow', 'RightArrow' },
-  -- },
-  modifiers = {
-    move = "CTRL",
-    resize = "META",
-  },
-  -- log level to use: info, warn, error
-  log_level = "info",
-})
 
 return config
