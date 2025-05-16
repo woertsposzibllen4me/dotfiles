@@ -27,6 +27,8 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
+# Wezterm user vars setup
+printf "\033]1337;SetUserVar=%s=%s\007" in_wsl $(echo -n 1 | base64)
 
 # Terminal position setup
 printf '\n%.0s' {1..$LINES}
@@ -186,3 +188,7 @@ eval "$(zoxide init zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+TRAPEXIT() {
+  printf "\033]1337;SetUserVar=%s=%s\007" in_wsl $(echo -n 0 | base64)
+}
