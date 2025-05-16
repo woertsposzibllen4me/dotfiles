@@ -12,10 +12,48 @@ global LeaderKeyActive := false
 global LeaderKeyBuffer := ""
 global LeaderKeyTimeout := 2000  ; 2 seconds
 
+
 ; Variables for windows
-global ChromeAI_ID := 0  ; Window for AI sites (GPT + Claude)
-global GoogleSearches_ID := 0
-global GoogleMainPage_ID := 0
+global BrowserAI_ID := 0  ; Window for AI sites (GPT + Claude)
+global BrowserSearches_ID := 0
+global BrowserMainPage_ID := 0
+global SpotifyWindow_ID := 0
+global ConfigFile := A_ScriptDir "\window_ids.ini"
+
+LoadWindowIDs()
+OnExit((*) => SaveWindowIDs())
+
+SaveWindowIDs() {
+  global BrowserAI_ID, BrowserSearches_ID, BrowserMainPage_ID, ConfigFile
+  IniWrite(BrowserAI_ID, ConfigFile, "WindowIDs", "BrowserAI_ID")
+  IniWrite(BrowserSearches_ID, ConfigFile, "WindowIDs", "BrowserSearches_ID")
+  IniWrite(BrowserMainPage_ID, ConfigFile, "WindowIDs", "BrowserMainPage_ID")
+  IniWrite(SpotifyWindow_ID, ConfigFile, "WindowIDs", "Spotify")
+}
+
+LoadWindowIDs() {
+  global BrowserAI_ID, BrowserSearches_ID, BrowserMainPage_ID, ConfigFile
+
+  ; Default to 0 if not found
+  BrowserAI_ID := IniRead(ConfigFile, "WindowIDs", "BrowserAI_ID", 0)
+  BrowserSearches_ID := IniRead(ConfigFile, "WindowIDs", "BrowserSearches_ID", 0)
+  BrowserMainPage_ID := IniRead(ConfigFile, "WindowIDs", "BrowserMainPage_ID", 0)
+  SpotifyWindow_ID := IniRead(ConfigFile, "WindowIDs", "Spotify", 0)
+
+  ; Verify IDs still exist
+  if (BrowserAI_ID && !WinExist("ahk_id " BrowserAI_ID))
+    BrowserAI_ID := 0
+
+  if (BrowserSearches_ID && !WinExist("ahk_id " BrowserSearches_ID))
+    BrowserSearches_ID := 0
+
+  if (BrowserMainPage_ID && !WinExist("ahk_id " BrowserMainPage_ID))
+    BrowserMainPage_ID := 0
+
+  if (SpotifyWindow_ID && !WinExist("ahk_id " SpotifyWindow_ID))
+    SpotifyWindow_ID := 0
+}
+
 
 ; Shift+Space activates leader key mode
 +Space:: ActivateLeaderKey()
@@ -103,6 +141,7 @@ ActivateLeaderKey() {
   SetTimer(CancelLeaderKeyFunc, LeaderKeyTimeout)
 
   ToolTip("Leader mode active")
+  SoundPlay("C:\Windows\Media\ding.wav")
 }
 
 ; Timer function to cancel leader key mode
@@ -117,13 +156,13 @@ AppendLeaderKey(key) {
 
   ; Process leader key combinations
   if (LeaderKeyBuffer = "a") {
-    ActivateOrCreateAIWindow()
+    ActivateOrCreateBrowserAIWindow()
     CancelLeaderKey()
   } else if (LeaderKeyBuffer = "s") {
-    ActivateOrCreateGoogleSearchesWindow()
+    ActivateOrCreateBrowserSearchesWindow()
     CancelLeaderKey()
   } else if (LeaderKeyBuffer = "d") {
-    ActivateOrCreateGoogleMainPageWindow()
+    ActivateOrCreateBrowserMainPageWindow()
     CancelLeaderKey()
   } else if (LeaderKeyBuffer = "c") {
     ActivateVSCode()
@@ -133,6 +172,9 @@ AppendLeaderKey(key) {
     CancelLeaderKey()
   } else if (LeaderKeyBuffer = "p") {
     ActivatePowerShell()
+    CancelLeaderKey()
+  } else if (LeaderKeyBuffer = "g") {
+    ActivateSpotify()
     CancelLeaderKey()
   } else if (LeaderKeyBuffer = "x") {
     ActivateExplorer()
@@ -174,74 +216,62 @@ CancelLeaderKey() {
 ; WINDOWS ACTIVATION AND UTILITY FUNCTIONS
 ; =======================================
 
-ActivateOrCreateWindow(&windowID, runCommand, windowClass, windowTitle := "", urls := "") {
-  ; Check if the window ID is still valid
+ActivateOrCreateWindow(&windowID, runCommand, exeName, urls := "") {
   if (IsSet(windowID) && windowID && WinExist("ahk_id " windowID)) {
-    ; Window exists, so activate it
     WinActivate("ahk_id " windowID)
     return true
   }
 
-  ; Create a new window
-  ; Modify the run command if we have URLs (for Chrome or other browsers)
   if (urls) {
     runCommand := runCommand " --new-window " urls
   }
 
-  ; Launch the application
   Run(runCommand)
-  Sleep(1000)  ; Wait for the application to start
-
-  ; Get the ID of the new window
-  if (windowTitle) {
-    ; If we have a title, try to find the window with both class and title
-    newWindowID := WinWait("ahk_class " windowClass " " windowTitle, , 5)
-    if (newWindowID) {
-      windowID := newWindowID
-      WinActivate("ahk_id " windowID)
-      return true
-    }
-  }
-
-  ; Try to get the most recent window of this class
-  windows := WinGetList("ahk_class " windowClass)
-  if (windows.Length > 0) {
-    windowID := windows[1]
+  winID := WinWait("ahk_exe " exeName, 5)
+  if (winID) {
+    windowID := winID
     WinActivate("ahk_id " windowID)
+    SaveWindowIDs()
     return true
   }
-
   return false
 }
 
-ActivateOrCreateAIWindow() {
-  global ChromeAI_ID
+
+ActivateSpotify() {
+  global SpotifyWindow_ID
   return ActivateOrCreateWindow(
-    &ChromeAI_ID,
+    &SpotifyWindow_ID,
+    "spotify.exe",
+    "spotify.exe",
+  )
+}
+
+ActivateOrCreateBrowserAIWindow() {
+  global BrowserAI_ID
+  return ActivateOrCreateWindow(
+    &BrowserAI_ID,
     "chrome.exe",
-    "Chrome_WidgetWin_1",
-    "",
+    "chrome.exe",
     "https://claude.ai https://chat.openai.com"
   )
 }
 
-ActivateOrCreateGoogleSearchesWindow() {
-  global GoogleSearches_ID
+ActivateOrCreateBrowserSearchesWindow() {
+  global BrowserSearches_ID
   return ActivateOrCreateWindow(
-    &GoogleSearches_ID,
+    &BrowserSearches_ID,
     "chrome.exe",
-    "Chrome_WidgetWin_1",
-    "",
+    "chrome.exe",
   )
 }
 
-ActivateOrCreateGoogleMainPageWindow() {
-  global GoogleMainPage_ID
+ActivateOrCreateBrowserMainPageWindow() {
+  global BrowserMainPage_ID
   return ActivateOrCreateWindow(
-    &GoogleMainPage_ID,
+    &BrowserMainPage_ID,
     "chrome.exe",
-    "Chrome_WidgetWin_1",
-    "",
+    "chrome.exe",
   )
 }
 
