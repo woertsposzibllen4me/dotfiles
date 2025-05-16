@@ -14,7 +14,8 @@ global LeaderKeyTimeout := 2000  ; 2 seconds
 
 ; Variables for windows
 global ChromeAI_ID := 0  ; Window for AI sites (GPT + Claude)
-global GoogleWindow_ID := 0
+global GoogleSearches_ID := 0
+global GoogleMainPage_ID := 0
 
 ; Shift+Space activates leader key mode
 +Space:: ActivateLeaderKey()
@@ -118,6 +119,12 @@ AppendLeaderKey(key) {
   if (LeaderKeyBuffer = "a") {
     ActivateOrCreateAIWindow()
     CancelLeaderKey()
+  } else if (LeaderKeyBuffer = "s") {
+    ActivateOrCreateGoogleSearchesWindow()
+    CancelLeaderKey()
+  } else if (LeaderKeyBuffer = "d") {
+    ActivateOrCreateGoogleMainPageWindow()
+    CancelLeaderKey()
   } else if (LeaderKeyBuffer = "c") {
     ActivateVSCode()
     CancelLeaderKey()
@@ -141,9 +148,6 @@ AppendLeaderKey(key) {
     CancelLeaderKey()
   } else if (LeaderKeyBuffer = "\") {
     ReplaceBackslashes()
-    CancelLeaderKey()
-  } else if (LeaderKeyBuffer = "s") {
-    ActivateOrCreateGoogleWindow()
     CancelLeaderKey()
   } else if (LeaderKeyBuffer = "mc") {
     Click  ; Mouse click for eye tracker
@@ -221,10 +225,20 @@ ActivateOrCreateAIWindow() {
   )
 }
 
-ActivateOrCreateGoogleWindow() {
-  global GoogleWindow_ID
+ActivateOrCreateGoogleSearchesWindow() {
+  global GoogleSearches_ID
   return ActivateOrCreateWindow(
-    &GoogleWindow_ID,
+    &GoogleSearches_ID,
+    "chrome.exe",
+    "Chrome_WidgetWin_1",
+    "",
+  )
+}
+
+ActivateOrCreateGoogleMainPageWindow() {
+  global GoogleMainPage_ID
+  return ActivateOrCreateWindow(
+    &GoogleMainPage_ID,
     "chrome.exe",
     "Chrome_WidgetWin_1",
     "",
