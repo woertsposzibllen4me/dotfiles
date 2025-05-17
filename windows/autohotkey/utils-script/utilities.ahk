@@ -25,7 +25,7 @@ global SpotifyWindow_ID := 0
 
 ; Chrome‑tracking (persisted as a list)
 global ChromeWindowList := []
-global ChromeWindowsFile := A_ScriptDir "\\chrome_windows.txt"
+global ChromeWindowsFile := A_ScriptDir "\\chrome_windows.ini"
 
 ; Config file for single‑value IDs
 global ConfigFile := A_ScriptDir "\\window_ids.ini"
@@ -68,25 +68,31 @@ LoadWindowIDs() {
 
 }
 
-
 SaveChromeWindowList() {
   global ChromeWindowList, ChromeWindowsFile
-  if FileExist(ChromeWindowsFile)
-    FileDelete ChromeWindowsFile
-  for _, id in ChromeWindowList {
-    FileAppend id "`n", ChromeWindowsFile
-  }
+
+  ; wipe existing section
+  IniDelete(ChromeWindowsFile, "ChromeWindows")
+
+  ids := ""
+  for _, id in ChromeWindowList
+    ids .= id . ","
+  if ids
+    ids := SubStr(ids, 1, StrLen(ids) - 1)
+
+  IniWrite(ids, ChromeWindowsFile, "ChromeWindows", "IDs")
 }
 
 LoadChromeWindowList() {
   global ChromeWindowList, ChromeWindowsFile
+  ChromeWindowList := []
   if !FileExist(ChromeWindowsFile)
     return
-  ChromeWindowList := []
-  lines := FileRead(ChromeWindowsFile)
-  Loop Parse, lines, "`n", "`r" {
-    if (A_LoopField != "")
-      ChromeWindowList.Push(A_LoopField + 0)   ; make sure IDs are numeric
+
+  ids := IniRead(ChromeWindowsFile, "ChromeWindows", "IDs", "")
+  if ids {
+    Loop Parse, ids, ","
+      ChromeWindowList.Push(A_LoopField + 0)
   }
 }
 
@@ -96,6 +102,19 @@ AddToChromeWindowList(winID) {
     if (id = winID)
       return             ; already tracked
   ChromeWindowList.Push(winID)
+  SaveChromeWindowList()
+}
+
+ResetChromeWindowList() {
+  global ChromeWindowList
+  for idx, id in ChromeWindowList {
+    if WinExist("ahk_id " id) {
+      WinClose("ahk_id " id)
+      ChromeWindowList.Remove(idx)
+    }
+  }
+  ChromeWindowList := []
+  SaveChromeWindowList()
 }
 
 ; =======================================
@@ -170,6 +189,7 @@ Space:: AppendLeaderKey("Space")
 8:: AppendLeaderKey("8")
 9:: AppendLeaderKey("9")
 0:: AppendLeaderKey("0")
+/:: AppendLeaderKey("/")
 ; Using CapsLock for canceling since you rebind Escape
 CapsLock:: CancelLeaderKeyFunc()
 #HotIf
@@ -219,13 +239,14 @@ AppendLeaderKey(key) {
     ReplaceBackslashes()
   } else if (LeaderKeyBuffer = "mc") {
     Click
+  } else if (LeaderKeyBuffer = "Space/") {
+    ResetChromeWindowList()
   } else {
     ToolTip("Leader mode: " LeaderKeyBuffer)   ; show progress
     return                                    ; wait for more keys
   }
   CancelLeaderKey()                             ; after any recognised command
 }
-
 CancelLeaderKey() {
   global LeaderKeyActive, LeaderKeyBuffer
   LeaderKeyActive := false
