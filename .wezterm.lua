@@ -15,8 +15,8 @@ config.initial_rows = 30
 config.enable_kitty_keyboard = false
 config.enable_kitty_graphics = true
 config.window_padding = {
-  left = 0,
-  right = 0,
+  left = 4,
+  right = 4,
   top = 0,
   bottom = 0,
 }
