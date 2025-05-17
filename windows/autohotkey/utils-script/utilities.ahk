@@ -18,9 +18,9 @@ global LeaderKeyBuffer := ""
 global LeaderKeyTimeout := 2000
 
 ; Window IDs (persisted individually)
-global BrowserAI_ID := 0
-global BrowserSearches_ID := 0
-global BrowserMainPage_ID := 0
+global Browser1_ID := 0
+global Browser2_ID := 0
+global Browser3_ID := 0
 global SpotifyWindow_ID := 0
 
 ; Chrome‑tracking (persisted as a list)
@@ -45,23 +45,23 @@ OnExit((*) => (
 ; PERSISTENCE HELPERS
 ; =======================================
 SaveWindowIDs() {
-  global BrowserAI_ID, BrowserSearches_ID, BrowserMainPage_ID, SpotifyWindow_ID, ConfigFile
-  IniWrite(BrowserAI_ID, ConfigFile, "WindowIDs", "BrowserAI_ID")
-  IniWrite(BrowserSearches_ID, ConfigFile, "WindowIDs", "BrowserSearches_ID")
-  IniWrite(BrowserMainPage_ID, ConfigFile, "WindowIDs", "BrowserMainPage_ID")
+  global Browser1_ID, Browser2_ID, Browser3_ID, SpotifyWindow_ID, ConfigFile
+  IniWrite(Browser1_ID, ConfigFile, "WindowIDs", "Browser1_ID")
+  IniWrite(Browser2_ID, ConfigFile, "WindowIDs", "Browser2_ID")
+  IniWrite(Browser3_ID, ConfigFile, "WindowIDs", "Browser3_ID")
   IniWrite(SpotifyWindow_ID, ConfigFile, "WindowIDs", "Spotify")
 }
 
 LoadWindowIDs() {
-  global BrowserAI_ID, BrowserSearches_ID, BrowserMainPage_ID, SpotifyWindow_ID, ConfigFile
+  global Browser1_ID, Browser2_ID, Browser3_ID, SpotifyWindow_ID, ConfigFile
 
   ; Default to 0 if not found
-  BrowserAI_ID := IniRead(ConfigFile, "WindowIDs", "BrowserAI_ID", 0)
-  BrowserSearches_ID := IniRead(ConfigFile, "WindowIDs", "BrowserSearches_ID", 0)
-  BrowserMainPage_ID := IniRead(ConfigFile, "WindowIDs", "BrowserMainPage_ID", 0)
+  Browser1_ID := IniRead(ConfigFile, "WindowIDs", "Browser1_ID", 0)
+  Browser2_ID := IniRead(ConfigFile, "WindowIDs", "Browser2_ID", 0)
+  Browser3_ID := IniRead(ConfigFile, "WindowIDs", "Browser3_ID", 0)
   SpotifyWindow_ID := IniRead(ConfigFile, "WindowIDs", "Spotify", 0)
 
-  for k, v in [&BrowserAI_ID, &BrowserSearches_ID, &BrowserMainPage_ID, &SpotifyWindow_ID] {
+  for k, v in [&Browser1_ID, &Browser2_ID, &Browser3_ID, &SpotifyWindow_ID] {
     if (%v% && !WinExist("ahk_id " . %v%))
       %v% := 0
   }
@@ -194,11 +194,11 @@ AppendLeaderKey(key) {
   LeaderKeyBuffer .= key
 
   if (LeaderKeyBuffer = "a") {
-    ActivateOrCreateBrowserAIWindow()
+    ActivateOrCreateBrowser1Window()
   } else if (LeaderKeyBuffer = "s") {
-    ActivateOrCreateBrowserSearchesWindow()
+    ActivateOrCreateBrowser2Window()
   } else if (LeaderKeyBuffer = "d") {
-    ActivateOrCreateBrowserMainPageWindow()
+    ActivateOrCreateBrowser3Window()
   } else if (LeaderKeyBuffer = "c") {
     ActivateVSCode()
   } else if (LeaderKeyBuffer = "w") {
@@ -247,14 +247,14 @@ ActivateOrCreateWindow(&windowID, runCommand, exeName, urls := "") {
     runCommand := runCommand " --new-window " urls
 
   Run(runCommand)
-  winID := WinWait("ahk_exe " exeName, , 5)
+  Sleep 200
+  winID := WinActive()
 
   if (winID) {
-    windowID := winID
-    WinActivate("ahk_id " windowID)
     if (exeName = "chrome.exe")
       AddToChromeWindowList(winID)
-
+    windowID := winID
+    WinActivate("ahk_id " windowID)
     SaveWindowIDs()
     return true
   }
@@ -267,22 +267,28 @@ ActivateSpotify() {
   return ActivateOrCreateWindow(&SpotifyWindow_ID, "spotify.exe", "spotify.exe")
 }
 
-ActivateOrCreateBrowserAIWindow() {
-  global BrowserAI_ID
-  return ActivateOrCreateWindow(&BrowserAI_ID,
+ActivateOrCreateBrowser1Window() {
+  global Browser1_ID
+  return ActivateOrCreateWindow(&Browser1_ID,
     "chrome.exe",
     "chrome.exe",
     "https://claude.ai https://chat.openai.com")
 }
 
-ActivateOrCreateBrowserSearchesWindow() {
-  global BrowserSearches_ID
-  return ActivateOrCreateWindow(&BrowserSearches_ID, "chrome.exe", "chrome.exe")
+ActivateOrCreateBrowser2Window() {
+  global Browser2_ID
+  return ActivateOrCreateWindow(&Browser2_ID,
+    "chrome.exe",
+    "chrome.exe",
+    "https://claude.ai https://chat.openai.com")
 }
 
-ActivateOrCreateBrowserMainPageWindow() {
-  global BrowserMainPage_ID
-  return ActivateOrCreateWindow(&BrowserMainPage_ID, "chrome.exe", "chrome.exe")
+ActivateOrCreateBrowser3Window() {
+  global Browser3_ID
+  return ActivateOrCreateWindow(&Browser3_ID,
+    "chrome.exe",
+    "chrome.exe",
+    "https://claude.ai https://chat.openai.com")
 }
 
 ActivateVSCode() {
