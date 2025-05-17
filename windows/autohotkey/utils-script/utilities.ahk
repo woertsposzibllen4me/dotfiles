@@ -35,16 +35,17 @@ global ConfigFile := A_ScriptDir "\\window_ids.ini"
 ; =======================================
 LoadWindowIDs()
 LoadChromeWindowList()
+VerifyWindowIDs()
 
 OnExit((*) => (
-  SaveWindowIDs(),
+  WriteWindowIDs(),
   SaveChromeWindowList()
 ))
 
 ; =======================================
 ; PERSISTENCE HELPERS
 ; =======================================
-SaveWindowIDs() {
+WriteWindowIDs() {
   global Browser1_ID, Browser2_ID, Browser3_ID, SpotifyWindow_ID, ConfigFile
   IniWrite(Browser1_ID, ConfigFile, "WindowIDs", "Browser1_ID")
   IniWrite(Browser2_ID, ConfigFile, "WindowIDs", "Browser2_ID")
@@ -52,34 +53,45 @@ SaveWindowIDs() {
   IniWrite(SpotifyWindow_ID, ConfigFile, "WindowIDs", "Spotify")
 }
 
+VerifyWindowIDs() {
+  global Browser1_ID, Browser2_ID, Browser3_ID, SpotifyWindow_ID
+  windowsLost := []
+  for k, v in [&Browser1_ID, &Browser2_ID, &Browser3_ID, &SpotifyWindow_ID] {
+    if (%v% && !WinExist("ahk_id " . %v%)) {
+      %v% := 0
+      windowsLost.Push(k)
+    }
+  }
+  if (windowsLost.Length) {
+    lostList := ""
+    for idx, name in windowsLost {
+      lostList .= (idx > 1 ? ", " : "") . name
+    }
+    MsgBox("Lost window(s): " lostList)
+    ; SetTimer(ToolTip, 3000, 0)
+  }
+
+  WriteWindowIDs()
+}
+
 LoadWindowIDs() {
   global Browser1_ID, Browser2_ID, Browser3_ID, SpotifyWindow_ID, ConfigFile
-
   ; Default to 0 if not found
   Browser1_ID := IniRead(ConfigFile, "WindowIDs", "Browser1_ID", 0)
   Browser2_ID := IniRead(ConfigFile, "WindowIDs", "Browser2_ID", 0)
   Browser3_ID := IniRead(ConfigFile, "WindowIDs", "Browser3_ID", 0)
   SpotifyWindow_ID := IniRead(ConfigFile, "WindowIDs", "Spotify", 0)
-
-  for k, v in [&Browser1_ID, &Browser2_ID, &Browser3_ID, &SpotifyWindow_ID] {
-    if (%v% && !WinExist("ahk_id " . %v%))
-      %v% := 0
-  }
-
 }
 
 SaveChromeWindowList() {
   global ChromeWindowList, ChromeWindowsFile
-
   ; wipe existing section
   IniDelete(ChromeWindowsFile, "ChromeWindows")
-
   ids := ""
   for _, id in ChromeWindowList
     ids .= id . ","
   if ids
     ids := SubStr(ids, 1, StrLen(ids) - 1)
-
   IniWrite(ids, ChromeWindowsFile, "ChromeWindows", "IDs")
 }
 
@@ -108,10 +120,8 @@ AddToChromeWindowList(winID) {
 ResetChromeWindowList() {
   global ChromeWindowList
   for idx, id in ChromeWindowList {
-    if WinExist("ahk_id " id) {
+    if (WinExist("ahk_id " id))
       WinClose("ahk_id " id)
-      ChromeWindowList.Remove(idx)
-    }
   }
   ChromeWindowList := []
   SaveChromeWindowList()
@@ -247,6 +257,7 @@ AppendLeaderKey(key) {
   }
   CancelLeaderKey()                             ; after any recognised command
 }
+
 CancelLeaderKey() {
   global LeaderKeyActive, LeaderKeyBuffer
   LeaderKeyActive := false
@@ -259,27 +270,51 @@ CancelLeaderKey() {
 ; WINDOW HELPERS
 ; =======================================
 ActivateOrCreateWindow(&windowID, runCommand, exeName, urls := "") {
-  if (IsSet(windowID) && windowID && WinExist("ahk_id " windowID)) {
-    WinActivate("ahk_id " windowID)
-    return true
+  if (IsSet(windowID) && windowID) {
+    VerifyWindowIDs()
+    if WinExist("ahk_id " windowID) {
+      WinActivate("ahk_id " windowID)
+      return true
+    }
   }
 
   if (urls)
     runCommand := runCommand " --new-window " urls
 
+  beforeHWNDs := WinGetList("List", "ahk_exe " exeName)
   Run(runCommand)
-  Sleep 200
-  winID := WinActive()
 
-  if (winID) {
-    if (exeName = "chrome.exe")
-      AddToChromeWindowList(winID)
-    windowID := winID
-    WinActivate("ahk_id " windowID)
-    SaveWindowIDs()
-    return true
+  newHWND := 0
+  Loop 50 {
+    Sleep 100
+    afterHWNDs := WinGetList("ahk_exe " . exeName)
+    for _, hwnd in afterHWNDs {
+      found := false
+      for _, old in beforeHWNDs {
+        if hwnd = old {
+          found := true
+          break
+        }
+      }
+      if !found {
+        newHWND := hwnd
+        break 2
+      }
+    }
   }
-  return false
+
+  if !newHWND {
+    MsgBox "❌ Could not detect the new Chrome window."
+    return false
+  }
+
+  windowID := newHWND
+  WinActivate("ahk_id " newHWND)
+  if (exeName = "chrome.exe") {
+    AddToChromeWindowList(windowID)
+  }
+  VerifyWindowIDs()
+  return true
 }
 
 ; ---------- SPECIFIC LAUNCHERS ----------
