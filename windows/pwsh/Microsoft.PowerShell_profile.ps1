@@ -13,7 +13,6 @@ $env:DOTFILES = "$HOME\dotfiles"
 
 ## Modules
 Import-Module Terminal-Icons
-Import-Module PSFzf
 Import-Module posh-git
 
 ## Custom modules
@@ -54,15 +53,22 @@ Write-Host -NoNewLine "`e[6 q"
 Set-PSReadLineOption -EditMode Vi
 Set-PSReadLineOption -BellStyle None
 Set-PSReadLineOption -ShowToolTips
-Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
 Set-PSReadLineKeyHandler -Chord 'U' -Function Redo -ViMode Command
 Set-PSReadLineKeyHandler -Chord 'Ctrl+w' -Function BackwardKillWord -ViMode Insert
 Set-PSReadLineKeyHandler -Key 'RightArrow' -Function AcceptNextSuggestionWord
 Set-PSReadLineKeyHandler -Chord 'Ctrl+f' -Function AcceptSuggestion
 Set-PSReadLineKeyHandler -Chord 'Alt-;' -Function AcceptSuggestion
 
-## Module options
-Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r' -PSReadlineChordSetLocation 'Alt+c'
+## Fzf options
+Import-Module PSFzf
+$env:_PSFZF_FZF_DEFAULT_OPTS = '--layout=reverse --height=50% --preview-window=hidden'
+Set-PsFzfOption `
+  -PSReadlineChordProvider 'Ctrl+t' `
+  -PSReadlineChordReverseHistory 'Ctrl+r' `
+  -PSReadlineChordSetLocation 'Alt+c' `
+
+Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
+
 
 ## Minor utility functions
 function Update-Profile {
