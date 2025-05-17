@@ -46,7 +46,9 @@ $OnViModeChange = [scriptblock]{
   }
 }
 Set-PSReadLineOption -ViModeIndicator Script -ViModeChangeHandler $OnViModeChange
-# Start in insert mode cursor
+
+# Set initial mode
+$global:_LastViMode = 'Insert'
 Write-Host -NoNewLine "`e[6 q"
 
 ## PSReadLine options
@@ -191,6 +193,13 @@ Enable-TransientPrompt
 # OSC compatible prompt
 $prompt = ""
 function Invoke-Starship-PreCommand {
+  # Cursor shape
+  if ($global:_LastViMode -eq 'Command') {
+    Write-Host -NoNewLine "`e[0 q"
+  } else {
+    Write-Host -NoNewLine "`e[6 q"
+  }
+  # OSC
   $current_location = $executionContext.SessionState.Path.CurrentLocation
   if ($current_location.Provider.Name -eq "FileSystem") {
     $ansi_escape = [char]27
@@ -198,8 +207,11 @@ function Invoke-Starship-PreCommand {
     $prompt = "$ansi_escape]7;file://${env:COMPUTERNAME}/${provider_path}$ansi_escape\"
   }
   $host.ui.Write($prompt)
-  Write-Host "`n`n`n`n" -NoNewline
-  Write-Host "$([char]27)[4A" -NoNewline
+  # Prompt positioning
+  if ($Host.UI.RawUI.WindowSize.Height -gt 40) {
+    Write-Host "`n`n`n`n" -NoNewline
+    Write-Host "$([char]27)[4A" -NoNewline
+  }
 }
 
 ## Zoxide
