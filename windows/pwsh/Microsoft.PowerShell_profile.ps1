@@ -8,7 +8,6 @@ $claudeApiKey = Get-Content -Path "C:\Users\ville\myfiles\documents\api-keys\Ant
 ## Environment variables
 $env:PYTHONIOENCODING="utf-8"
 $env:ANTHROPIC_API_KEY = $claudeApiKey.Trim()
-$env:FZF_DEFAULT_OPTS='--bind=esc:toggle-down,ctrl-c:abort' # avoid accidental exit from fzf (toggle-down does nothing)
 $env:YAZI_FILE_ONE="C:\Program Files\Git\usr\bin\file.exe"
 $env:DOTFILES = "$HOME\dotfiles"
 
@@ -113,6 +112,10 @@ function Show-Taskbar {
   Start-Process -FilePath "nircmd.exe" -ArgumentList "win trans class Shell_TrayWnd 255" -NoNewWindow
 }
 
+function Set-LastDirectory {
+  z "-"
+}
+
 ## Minor functions aliases
 Set-Alias -Name rel -Value Update-Profile
 
@@ -121,8 +124,8 @@ Set-Alias -Name wzcfg -Value Edit-Wezterm-Profile
 Set-Alias -Name lgcfg -Value Edit-Lazygit-Config
 Set-Alias -Name gtcfg -Value Edit-Git-Config
 Set-Alias -Name kacfg -Value Edit-Kanata-Config
+Set-Alias -Name zz -Value Set-LastDirectory
 
-Set-Alias -Name zf -Value Invoke-FzfCd
 Set-Alias -Name lst -Value Show-TreeList
 Set-Alias -Name clear -Value Clear-AndPutPromptAtBottom
 
@@ -133,6 +136,7 @@ Set-Alias -Name ex -Value explorer
 Set-Alias -Name d -Value dir
 Set-Alias -Name wh -Value where.exe
 Set-Alias -Name kan -Value kanata
+Set-Alias -Name zf -Value zi
 
 
 ## Location functions
