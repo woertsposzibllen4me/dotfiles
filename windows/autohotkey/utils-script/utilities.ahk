@@ -56,19 +56,57 @@ WriteWindowIDs() {
 VerifyWindowIDs() {
   global Browser1_ID, Browser2_ID, Browser3_ID, SpotifyWindow_ID
   windowsLost := []
-  for k, v in [&Browser1_ID, &Browser2_ID, &Browser3_ID, &SpotifyWindow_ID] {
-    if (%v% && !WinExist("ahk_id " . %v%)) {
-      %v% := 0
-      windowsLost.Push(k)
+  idMap := Map()
+
+  ; First check for invalid windows and build an ID map
+  windowVars := [&Browser1_ID, &Browser2_ID, &Browser3_ID, &SpotifyWindow_ID]
+  varNames := ["Browser1_ID", "Browser2_ID", "Browser3_ID", "SpotifyWindow_ID"]
+
+  for i, v in windowVars {
+    if (%v%) {
+      if (!WinExist("ahk_id " . %v%)) {
+        %v% := 0
+        windowsLost.Push(varNames[i] . " (lost)")
+      } else {
+        ; Track which variables point to which window IDs
+        if (!idMap.Has(%v%)) {
+          idMap[%v%] := [i]
+        } else {
+          idMap[%v%].Push(i)
+        }
+      }
     }
   }
+
+  ; Handle duplicates - keep only the first variable with each ID
+  for id, indexList in idMap {
+    if (indexList.Length > 1) {
+      ; Keep the first variable, reset the rest
+      Loop indexList.Length - 1 {
+        dupIndex := indexList[A_Index + 1]
+        varName := varNames[dupIndex]
+
+        ; Reset the duplicate using the actual variable name
+        if (varName = "Browser1_ID")
+          Browser1_ID := 0
+        else if (varName = "Browser2_ID")
+          Browser2_ID := 0
+        else if (varName = "Browser3_ID")
+          Browser3_ID := 0
+        else if (varName = "SpotifyWindow_ID")
+          SpotifyWindow_ID := 0
+
+        windowsLost.Push(varName . " (duplicate)")
+      }
+    }
+  }
+
   if (windowsLost.Length) {
     lostList := ""
     for idx, name in windowsLost {
       lostList .= (idx > 1 ? ", " : "") . name
     }
-    MsgBox("Lost window(s): " lostList)
-    ; SetTimer(ToolTip, 3000, 0)
+    MsgBox("Lost/duplicate window(s): " . lostList)
   }
 
   WriteWindowIDs()
@@ -131,7 +169,7 @@ ResetChromeWindowList() {
 ; LEADER‑KEY DEFINITIONS
 ; =======================================
 ; Shift+Space activates leader key mode
-+Space:: ActivateLeaderKey()
+$+Space:: ActivateLeaderKey()
 
 ; Process keystrokes while in leader mode
 #HotIf LeaderKeyActive
