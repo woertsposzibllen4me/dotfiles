@@ -1,30 +1,51 @@
+; ==================================================
+; Leader‑Key Window Manager with Chrome Window Tracking
+; (AutoHotkey v2)
+; ==================================================
+
 #SingleInstance Force
 A_MaxHotkeysPerInterval := 3000
 SendMode "Input"
-SetWorkingDir A_ScriptDir ; Ensures a consistent starting directory.
-TraySetIcon "icons\utils.png"
+SetWorkingDir A_ScriptDir        ; Consistent starting directory
+TraySetIcon "..\\icons\\utils.png"
 
 ; =======================================
-; LEADER KEY SYSTEM
+; GLOBALS
 ; =======================================
-; Variables for leader key system
+; Leader‑key system
 global LeaderKeyActive := false
 global LeaderKeyBuffer := ""
-global LeaderKeyTimeout := 2000  ; 2 seconds
+global LeaderKeyTimeout := 2000
 
-
-; Variables for windows
-global BrowserAI_ID := 0  ; Window for AI sites (GPT + Claude)
+; Window IDs (persisted individually)
+global BrowserAI_ID := 0
 global BrowserSearches_ID := 0
 global BrowserMainPage_ID := 0
 global SpotifyWindow_ID := 0
-global ConfigFile := A_ScriptDir "\window_ids.ini"
 
+; Chrome‑tracking (persisted as a list)
+global ChromeWindowList := []
+global ChromeWindowsFile := A_ScriptDir "\\chrome_windows.txt"
+
+; Config file for single‑value IDs
+global ConfigFile := A_ScriptDir "\\window_ids.ini"
+
+; =======================================
+; STARTUP / SHUTDOWN
+; =======================================
 LoadWindowIDs()
-OnExit((*) => SaveWindowIDs())
+LoadChromeWindowList()
 
+OnExit((*) => (
+  SaveWindowIDs(),
+  SaveChromeWindowList()
+))
+
+; =======================================
+; PERSISTENCE HELPERS
+; =======================================
 SaveWindowIDs() {
-  global BrowserAI_ID, BrowserSearches_ID, BrowserMainPage_ID, ConfigFile
+  global BrowserAI_ID, BrowserSearches_ID, BrowserMainPage_ID, SpotifyWindow_ID, ConfigFile
   IniWrite(BrowserAI_ID, ConfigFile, "WindowIDs", "BrowserAI_ID")
   IniWrite(BrowserSearches_ID, ConfigFile, "WindowIDs", "BrowserSearches_ID")
   IniWrite(BrowserMainPage_ID, ConfigFile, "WindowIDs", "BrowserMainPage_ID")
@@ -32,7 +53,7 @@ SaveWindowIDs() {
 }
 
 LoadWindowIDs() {
-  global BrowserAI_ID, BrowserSearches_ID, BrowserMainPage_ID, ConfigFile
+  global BrowserAI_ID, BrowserSearches_ID, BrowserMainPage_ID, SpotifyWindow_ID, ConfigFile
 
   ; Default to 0 if not found
   BrowserAI_ID := IniRead(ConfigFile, "WindowIDs", "BrowserAI_ID", 0)
@@ -40,21 +61,46 @@ LoadWindowIDs() {
   BrowserMainPage_ID := IniRead(ConfigFile, "WindowIDs", "BrowserMainPage_ID", 0)
   SpotifyWindow_ID := IniRead(ConfigFile, "WindowIDs", "Spotify", 0)
 
-  ; Verify IDs still exist
-  if (BrowserAI_ID && !WinExist("ahk_id " BrowserAI_ID))
-    BrowserAI_ID := 0
+  for k, v in [&BrowserAI_ID, &BrowserSearches_ID, &BrowserMainPage_ID, &SpotifyWindow_ID] {
+    if (%v% && !WinExist("ahk_id " . %v%))
+      %v% := 0
+  }
 
-  if (BrowserSearches_ID && !WinExist("ahk_id " BrowserSearches_ID))
-    BrowserSearches_ID := 0
-
-  if (BrowserMainPage_ID && !WinExist("ahk_id " BrowserMainPage_ID))
-    BrowserMainPage_ID := 0
-
-  if (SpotifyWindow_ID && !WinExist("ahk_id " SpotifyWindow_ID))
-    SpotifyWindow_ID := 0
 }
 
 
+SaveChromeWindowList() {
+  global ChromeWindowList, ChromeWindowsFile
+  if FileExist(ChromeWindowsFile)
+    FileDelete ChromeWindowsFile
+  for _, id in ChromeWindowList {
+    FileAppend id "`n", ChromeWindowsFile
+  }
+}
+
+LoadChromeWindowList() {
+  global ChromeWindowList, ChromeWindowsFile
+  if !FileExist(ChromeWindowsFile)
+    return
+  ChromeWindowList := []
+  lines := FileRead(ChromeWindowsFile)
+  Loop Parse, lines, "`n", "`r" {
+    if (A_LoopField != "")
+      ChromeWindowList.Push(A_LoopField + 0)   ; make sure IDs are numeric
+  }
+}
+
+AddToChromeWindowList(winID) {
+  global ChromeWindowList
+  for _, id in ChromeWindowList
+    if (id = winID)
+      return             ; already tracked
+  ChromeWindowList.Push(winID)
+}
+
+; =======================================
+; LEADER‑KEY DEFINITIONS
+; =======================================
 ; Shift+Space activates leader key mode
 +Space:: ActivateLeaderKey()
 
@@ -133,217 +179,168 @@ ActivateLeaderKey() {
   global LeaderKeyActive, LeaderKeyBuffer, LeaderKeyTimeout
   LeaderKeyActive := true
   LeaderKeyBuffer := ""
-
-  ; Cancel any existing timer
-  SetTimer(CancelLeaderKeyFunc, 0)
-
-  ; Set new timer
+  SetTimer(CancelLeaderKeyFunc, 0)            ; reset existing
   SetTimer(CancelLeaderKeyFunc, LeaderKeyTimeout)
-
   ToolTip("Leader mode active")
-  SoundPlay("C:\Windows\Media\ding.wav")
+  SoundPlay("C:\\Windows\\Media\\ding.wav")
 }
 
-; Timer function to cancel leader key mode
 CancelLeaderKeyFunc() {
   CancelLeaderKey()
 }
 
-; Append key to leader sequence and process commands
 AppendLeaderKey(key) {
   global LeaderKeyBuffer
   LeaderKeyBuffer .= key
 
-  ; Process leader key combinations
   if (LeaderKeyBuffer = "a") {
     ActivateOrCreateBrowserAIWindow()
-    CancelLeaderKey()
   } else if (LeaderKeyBuffer = "s") {
     ActivateOrCreateBrowserSearchesWindow()
-    CancelLeaderKey()
   } else if (LeaderKeyBuffer = "d") {
     ActivateOrCreateBrowserMainPageWindow()
-    CancelLeaderKey()
   } else if (LeaderKeyBuffer = "c") {
     ActivateVSCode()
-    CancelLeaderKey()
   } else if (LeaderKeyBuffer = "w") {
     ActivateWezTerm()
-    CancelLeaderKey()
   } else if (LeaderKeyBuffer = "p") {
     ActivatePowerShell()
-    CancelLeaderKey()
   } else if (LeaderKeyBuffer = "g") {
     ActivateSpotify()
-    CancelLeaderKey()
   } else if (LeaderKeyBuffer = "x") {
     ActivateExplorer()
-    CancelLeaderKey()
   } else if (LeaderKeyBuffer = "mm") {
     SendCodeMessage()
-    CancelLeaderKey()
   } else if (LeaderKeyBuffer = "Spacep") {
     ActivateAdminPowerShell()
-    CancelLeaderKey()
   } else if (LeaderKeyBuffer = "n") {
     ActivateNeo4j()
-    CancelLeaderKey()
-  } else if (LeaderKeyBuffer = "\") {
+  } else if (LeaderKeyBuffer = "") {
     ReplaceBackslashes()
-    CancelLeaderKey()
   } else if (LeaderKeyBuffer = "mc") {
-    Click  ; Mouse click for eye tracker
-    CancelLeaderKey()
+    Click
   } else {
-    ; Optional: Update tooltip to show current sequence
-    ToolTip("Leader mode: " LeaderKeyBuffer)
+    ToolTip("Leader mode: " LeaderKeyBuffer)   ; show progress
+    return                                    ; wait for more keys
   }
+  CancelLeaderKey()                             ; after any recognised command
 }
 
-; Cancel leader key mode
 CancelLeaderKey() {
   global LeaderKeyActive, LeaderKeyBuffer
   LeaderKeyActive := false
   LeaderKeyBuffer := ""
-
-  ; Turn off the timer
   SetTimer(CancelLeaderKeyFunc, 0)
-
-  ToolTip("")  ; Clear the tooltip
+  ToolTip()
 }
 
 ; =======================================
-; WINDOWS ACTIVATION AND UTILITY FUNCTIONS
+; WINDOW HELPERS
 ; =======================================
-
 ActivateOrCreateWindow(&windowID, runCommand, exeName, urls := "") {
   if (IsSet(windowID) && windowID && WinExist("ahk_id " windowID)) {
     WinActivate("ahk_id " windowID)
     return true
   }
 
-  if (urls) {
+  if (urls)
     runCommand := runCommand " --new-window " urls
-  }
 
   Run(runCommand)
-  winID := WinWait("ahk_exe " exeName, 5)
+  winID := WinWait("ahk_exe " exeName, , 5)
+
   if (winID) {
     windowID := winID
     WinActivate("ahk_id " windowID)
+    if (exeName = "chrome.exe")
+      AddToChromeWindowList(winID)
+
     SaveWindowIDs()
     return true
   }
   return false
 }
 
-
+; ---------- SPECIFIC LAUNCHERS ----------
 ActivateSpotify() {
   global SpotifyWindow_ID
-  return ActivateOrCreateWindow(
-    &SpotifyWindow_ID,
-    "spotify.exe",
-    "spotify.exe",
-  )
+  return ActivateOrCreateWindow(&SpotifyWindow_ID, "spotify.exe", "spotify.exe")
 }
 
 ActivateOrCreateBrowserAIWindow() {
   global BrowserAI_ID
-  return ActivateOrCreateWindow(
-    &BrowserAI_ID,
+  return ActivateOrCreateWindow(&BrowserAI_ID,
     "chrome.exe",
     "chrome.exe",
-    "https://claude.ai https://chat.openai.com"
-  )
+    "https://claude.ai https://chat.openai.com")
 }
 
 ActivateOrCreateBrowserSearchesWindow() {
   global BrowserSearches_ID
-  return ActivateOrCreateWindow(
-    &BrowserSearches_ID,
-    "chrome.exe",
-    "chrome.exe",
-  )
+  return ActivateOrCreateWindow(&BrowserSearches_ID, "chrome.exe", "chrome.exe")
 }
 
 ActivateOrCreateBrowserMainPageWindow() {
   global BrowserMainPage_ID
-  return ActivateOrCreateWindow(
-    &BrowserMainPage_ID,
-    "chrome.exe",
-    "chrome.exe",
-  )
+  return ActivateOrCreateWindow(&BrowserMainPage_ID, "chrome.exe", "chrome.exe")
 }
 
 ActivateVSCode() {
   SetTitleMatchMode 2
-  if WinExist("ahk_exe Code.exe") {
+  if WinExist("ahk_exe Code.exe")
     WinActivate
-  } else {
-    Run "C:\Users\" A_UserName "\AppData\Local\Programs\Microsoft VS Code\Code.exe"
-  }
+  else
+    Run "C:\\Users" A_UserName "\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
 }
 
 ActivateWezTerm() {
   SetTitleMatchMode 3
-  primaryPath := "C:\Users\ville\scoop\apps\wezterm-nightly\current\wezterm-gui.exe"
-  fallbackPath := "C:\Users\ville\scoop\shims\wezterm-gui.exe"
+  primaryPath := "C:\\Users\\ville\\scoop\\apps\\wezterm-nightly\\current\\wezterm-gui.exe"
+  fallbackPath := "C:\\Users\\ville\\scoop\\shims\\wezterm-gui.exe"
 
-  if WinExist("Wezterm") {
+  if WinExist("Wezterm")
     WinActivate
-  } else {
-    if FileExist(primaryPath) {
-      Run primaryPath
-    } else if FileExist(fallbackPath) {
-      Run fallbackPath
-    } else {
-      MsgBox "Could not find WezTerm executable at either path."
-    }
-  }
+  else if FileExist(primaryPath)
+    Run primaryPath
+  else if FileExist(fallbackPath)
+    Run fallbackPath
+  else
+    MsgBox "Could not find WezTerm executable at either path."
 }
 
 ActivatePowerShell() {
   SetTitleMatchMode 2
-  if WinExist("ahk_class CASCADIA_HOSTING_WINDOW_CLASS") {
+  if WinExist("ahk_class CASCADIA_HOSTING_WINDOW_CLASS")
     WinActivate
-  } else {
+  else
     Run "pwsh"
-  }
 }
 
 ActivateAdminPowerShell() {
-  adminTitle := "Administrator: C:\Program Files\PowerShell\7\pwsh.exe"
-  selectAdminTitle := "Select " . adminTitle
+  adminTitle := "Administrator: C:\\Program Files\\PowerShell\\7\\pwsh.exe"
+  selectAdminTitle := "Select " adminTitle
 
-  ; Check if the regular window exists
-  if WinExist(adminTitle) {
+  if WinExist(adminTitle)
     WinActivate adminTitle
-  }
-  ; Check if the window exists in selection mode
-  else if WinExist(selectAdminTitle) {
+  else if WinExist(selectAdminTitle)
     WinActivate selectAdminTitle
-  }
-  ; If neither exists, open a new admin PowerShell
-  else {
+  else
     Run "*RunAs pwsh.exe"
-  }
 }
 
 ActivateExplorer() {
-  if WinExist("ahk_class CabinetWClass") {
+  if WinExist("ahk_class CabinetWClass")
     WinActivate
-  } else {
+  else
     Run "explorer.exe"
-  }
 }
 
 ActivateNeo4j() {
   SetTitleMatchMode 2
-  if WinExist("neo4j@bolt://localhost:7687") {
+  if WinExist("neo4j@bolt://localhost:7687")
     WinActivate
-  } else {
-    Run "C:\Users\ville\AppData\Local\Programs\Neo4j Desktop\Neo4j Desktop.exe"
-  }
+  else
+    Run "C:\\Users\\ville\\AppData\\Local\\Programs\\Neo4j Desktop\\Neo4j Desktop.exe"
 }
 
 SendCodeMessage() {
@@ -351,28 +348,25 @@ SendCodeMessage() {
 }
 
 ReplaceBackslashes() {
-  A_Clipboard := ClipboardAll()  ; Save the original clipboard content
-  Sleep 50  ; Small delay to ensure clipboard content is ready
-  A_Clipboard := RegExReplace(A_Clipboard, "\", "/")  ; Replace backslashes with forward slashes
+  clip := ClipboardAll()         ; save original clipboard
+  Sleep 50
+  Clipboard := RegExReplace(Clipboard, "\\", "/")
+  ; restore? If wanted, copy back original with clip
 }
 
 ; =======================================
-; ADDITIONAL UTILITY HOTKEYS
+; ADDITIONAL HOTKEYS
 ; =======================================
-
-; Rebind Alt+J, Alt+K, Alt+H, and Alt+L to arrow keys
 !j::Down
 !k::Up
 !h::Left
 !l::Right
 
-; Rebind C-; to c-\ in wezterm
 #HotIf WinActive("Wezterm")
 ^;::^
 #HotIf
 
-; Unbind esc and use capslock for it instead as long as not in specific games
-#HotIf !WinActive("ahk_exe dota2.exe") and !WinActive("Warcraft III")
+#HotIf !WinActive("ahk_exe dota2.exe") && !WinActive("Warcraft III")
 CapsLock::Esc
 Esc::CapsLock
 #HotIf
