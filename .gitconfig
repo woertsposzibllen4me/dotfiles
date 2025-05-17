@@ -7,6 +7,7 @@
 [core]
 	editor = nvim
 	pager = delta
+	safecrlf = false
 [interactive]
 	diffFilter = cat
 [color "diff-highlight"]
