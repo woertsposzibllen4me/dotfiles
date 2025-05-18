@@ -269,7 +269,7 @@ local function log_all_user_vars(window)
   end
 end
 
-config.leader = { key = " ", mods = "CTRL" }
+config.leader = { key = " ", mods = "SHIFT" }
 config.keys = {
 
   -- for testing

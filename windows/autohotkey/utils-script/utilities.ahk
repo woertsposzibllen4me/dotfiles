@@ -168,8 +168,8 @@ ResetChromeWindowList() {
 ; =======================================
 ; LEADER‑KEY DEFINITIONS
 ; =======================================
-; Shift+Space activates leader key mode
-$+Space:: ActivateLeaderKey()
+; Ctrl+Space activates leader key mode
+$^Space:: ActivateLeaderKey()
 
 ; Process keystrokes while in leader mode
 #HotIf LeaderKeyActive
@@ -226,7 +226,7 @@ y:: AppendLeaderKey("y")
 z:: AppendLeaderKey("z")
 +z:: AppendLeaderKey("z")
 Space:: AppendLeaderKey("Space")
-+Space:: AppendLeaderKey("Space")
+^Space:: AppendLeaderKey("Space")
 1:: AppendLeaderKey("1")
 2:: AppendLeaderKey("2")
 3:: AppendLeaderKey("3")
