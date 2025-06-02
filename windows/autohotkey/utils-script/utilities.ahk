@@ -238,6 +238,9 @@ Space:: AppendLeaderKey("Space")
 9:: AppendLeaderKey("9")
 0:: AppendLeaderKey("0")
 /:: AppendLeaderKey("/")
+\:: AppendLeaderKey("\")
+]:: AppendLeaderKey("]")
+[:: AppendLeaderKey("[")
 ; Using CapsLock for canceling since you rebind Escape
 CapsLock:: CancelLeaderKeyFunc()
 #HotIf
@@ -250,7 +253,7 @@ ActivateLeaderKey() {
   SetTimer(CancelLeaderKeyFunc, 0)            ; reset existing
   SetTimer(CancelLeaderKeyFunc, LeaderKeyTimeout)
   ToolTip("Leader mode active")
-  SoundPlay("C:\\Windows\\Media\\ding.wav")
+  SoundPlay("C:\\Windows\\Media\\Windows Balloon.wav")
 }
 
 CancelLeaderKeyFunc() {
@@ -283,11 +286,13 @@ AppendLeaderKey(key) {
     ActivateAdminPowerShell()
   } else if (LeaderKeyBuffer = "n") {
     ActivateNeo4j()
-  } else if (LeaderKeyBuffer = "") {
-    ReplaceBackslashes()
+  } else if (LeaderKeyBuffer = "\") {
+    ReplaceSlashes("\")
+  } else if (LeaderKeyBuffer = "/") {
+    ReplaceSlashes("/")
   } else if (LeaderKeyBuffer = "mc") {
     Click
-  } else if (LeaderKeyBuffer = "Space/") {
+  } else if (LeaderKeyBuffer = "Space]") {
     ResetChromeWindowList()
   } else {
     ToolTip("Leader mode: " LeaderKeyBuffer)   ; show progress
@@ -447,11 +452,18 @@ SendCodeMessage() {
   SendText "Please only send back only as much code as is really needed, avoid being too verbose."
 }
 
-ReplaceBackslashes() {
-  clip := ClipboardAll()         ; save original clipboard
-  Sleep 50
-  Clipboard := RegExReplace(Clipboard, "\\", "/")
-  ; restore? If wanted, copy back original with clip
+ReplaceSlashes(direction := "/") {
+  originalClip := ClipboardAll()
+  ClipWait(1)
+  currentText := A_Clipboard
+  if (direction = "/") {
+    newText := StrReplace(currentText, "\", "/")
+    A_Clipboard := newText
+  }
+  else if (direction = "\") {
+    newText := StrReplace(currentText, "/", "\")
+    A_Clipboard := newText
+  }
 }
 
 ; =======================================
