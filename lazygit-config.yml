@@ -1,4 +1,6 @@
 gui:
+  mainPanelSplitMode: horizontal
+  skipRewordInEditorWarning: true
   theme:
     activeBorderColor:
       - "#ff9e64"
