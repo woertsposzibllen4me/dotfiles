@@ -155,7 +155,7 @@ function vidata {
 }
 
 function vid {
-  Set-Location "$env:DOTFILES\nvim-config3.0"
+  Set-Location "$HOME\AppData\Local\nvim"
 }
 
 function roam {
