@@ -100,16 +100,19 @@ function zvm_after_init() {
 source <(fzf --zsh)
 
 # Aliases
+alias dot='cd $HOME/dotfiles'
+alias vid='cd $HOME/.config/nvim'
+
 alias clip='xclip -selection clipboard'
 alias vi='nvim'
-alias vid='cd $HOME/.config/nvim'
 alias lg='lazygit'
 alias wh='which'
+
 alias l='eza --icons -l'
 alias la='eza --icons -la'
 alias lt='eza --icons -T'
 alias lat='eza --icons -laT'
-alias dot='cd $HOME/dotfiles'
+
 alias zf="__zoxide_zi"
 alias zz="z -"
 
