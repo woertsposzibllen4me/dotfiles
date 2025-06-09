@@ -59,10 +59,8 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-patch-dl \
     zdharma-continuum/zinit-annex-rust
 
-# Load oh-my-zsh git plugin
-zinit snippet OMZP::git
+# Load plugins here
 
-# Load plugins
 
 # powerlevel10k
 zinit ice depth=1
