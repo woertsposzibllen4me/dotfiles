@@ -475,7 +475,8 @@ ReplaceSlashes(direction := "/") {
 !l::Right
 
 #HotIf WinActive("Wezterm")
-^;::^
+^;::F13
+^,::+F13
 #HotIf
 
 #HotIf !WinActive("ahk_exe dota2.exe") && !WinActive("Warcraft III")
