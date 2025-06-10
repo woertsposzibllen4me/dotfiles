@@ -1,9 +1,5 @@
-# Basic environment setup
-export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-export PATH=~/.npm-global/bin:$PATH
-export dotfiles="$HOME/dotfiles"
+# Relay ssh key (must be on top)
 source ~/bin/wsl-ssh-agent-relay.sh
-unsetopt beep
 
 # Update starship config for WSL mounted path module
 # ~/bin/update-starship-config.sh
@@ -14,6 +10,12 @@ unsetopt beep
 # if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
 #   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # fi
+
+# Basic environment setup
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+export PATH=~/.npm-global/bin:$PATH
+export dotfiles="$HOME/dotfiles"
+unsetopt BEEP
 
 # History settings
 HISTSIZE=5000
