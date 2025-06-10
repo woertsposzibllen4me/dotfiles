@@ -395,7 +395,7 @@ ActivateVSCode() {
   if WinExist("ahk_exe Code.exe")
     WinActivate
   else
-    Run "C:\\Users" A_UserName "\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+    Run "C:\\Users\\" A_UserName "\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
 }
 
 ActivateWezTerm() {
