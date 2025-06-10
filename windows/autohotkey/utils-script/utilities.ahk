@@ -281,7 +281,9 @@ AppendLeaderKey(key) {
   } else if (LeaderKeyBuffer = "x") {
     ActivateExplorer()
   } else if (LeaderKeyBuffer = "mm") {
-    SendCodeMessage()
+    WriteMessageAvoidTooVerbose()
+  } else if (LeaderKeyBuffer = "mw") {
+    WriteMessageWorstUserName()
   } else if (LeaderKeyBuffer = "Spacep") {
     ActivateAdminPowerShell()
   } else if (LeaderKeyBuffer = "n") {
@@ -448,8 +450,12 @@ ActivateNeo4j() {
     Run "C:\\Users\\ville\\AppData\\Local\\Programs\\Neo4j Desktop\\Neo4j Desktop.exe"
 }
 
-SendCodeMessage() {
+WriteMessageAvoidTooVerbose() {
   SendText "Please only send back only as much code as is really needed, avoid being too verbose."
+}
+
+WriteMessageWorstUserName() {
+  SendText "woertsposzibllen4me"
 }
 
 ReplaceSlashes(direction := "/") {
