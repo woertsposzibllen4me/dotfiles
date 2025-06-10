@@ -26,12 +26,20 @@ Set-Alias -Name spp -Value Set-PythonPath
 Set-Alias -Name eme -Value Enter-MegaScriptEnvironment
 Set-Alias -Name cpath -Value Copy-PathToClipboard
 Set-Alias -Name dsize -Value Get-DirectorySize
-Set-Alias -Name virepro -Value Start-NvimBugRepro
+Set-Alias -Name startvirepro -Value Start-NvimBugRepro
 
 ## Path additions
-$env:PATH += "$env:DOTFILES\windows\batch\"
-$env:Path += ";C:\Users\ville\myfiles\programs\PROGRAMS_ON_PATH\"
-$env:PATH = "$env:USERPROFILE\scoop\shims;$env:PATH"
+$pathsToAdd = @(
+  "$env:DOTFILES\windows\batch"
+  "$HOME\myfiles\programs\PROGRAMS_ON_PATH"
+  "C:\Program Files\Git\bin"
+)
+
+foreach ($path in $pathsToAdd) {
+  if ((Test-Path $path) -and ($env:PATH -notlike "*$path*")) {
+    $env:PATH += ";$path"
+  }
+}
 
 ## Vi mode options
 $OnViModeChange = [scriptblock]{
@@ -155,7 +163,11 @@ function vidata {
 }
 
 function vid {
-  Set-Location "$HOME\AppData\Local\nvim"
+  Set-Location "$env:DOTFILES\nvim-config3.0" # better than if in $HOME for lazydev nvim plugin usage
+}
+
+function virepro {
+  Set-Location "$env:DOTFILES\nvim-config3.0\bug-repro"
 }
 
 function roam {
