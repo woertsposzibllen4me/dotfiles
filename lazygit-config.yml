@@ -86,6 +86,14 @@ customCommands:
     loadingText: "Comparing with remote branch..."
     subprocess: true
 
+  # For commits when viewing branch history (after pressing Enter on a branch)
+  - key: "O"
+    command: "git -c delta.features=side-by-side show {{.SelectedCommit.Sha}} -p"
+    context: "subCommits"
+    description: "Show commit with Delta side-by-side"
+    loadingText: "Opening commit diff in Delta..."
+    subprocess: true
+
   # For tags
   - key: "O"
     command: "git -c delta.features=side-by-side show {{.SelectedTag.Name}} -p"
