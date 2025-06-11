@@ -3,6 +3,8 @@
 linux/** text eol=lf
 *.sh text eol=lf
 *.py text eol=lf
+.gitconfig text eol=lf
+.gitattributes text eol=lf
 
 windows/** text eol=crlf
 *.bat text eol=crlf
