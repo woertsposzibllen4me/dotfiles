@@ -7,7 +7,6 @@
 [core]
 	editor = nvim
 	pager = delta
-	safecrlf = true
 [interactive]
 	diffFilter = cat
 [color "diff-highlight"]
@@ -21,27 +20,23 @@
 	old = red bold
 	new = green bold
 	whitespace = red reverse
-  oldMoved = "#541d1d" bold
+  oldMoved = brightblack bold
+  ; oldMoved = "#541d1d" bold ; dark red alternative
   newMoved = blue bold
 [delta]
+  minus-style = syntax "#3f0001"
+  ; plus-style = syntax
 	navigate = true
 	light = false
 	file-style = bold yellow
 	file-decoration-style = yellow box
 	hunk-header-style = line-number syntax
-	; map-styles = "bold brightblack => syntax \"#473618\", bold blue => syntax \"#153d37\"" # Original pos first, new pos second
-	map-styles = "bold brightblack => syntax \"#2b0228\", bold blue => syntax \"#012738\"" # Dark purple/blue
-	; map-styles = "bold brightblack => syntax \"#1c0505\", bold blue => syntax \"#011705\"" # Dark red/green
+  map-styles = "bold brightblack => bold #9d39b3 #3f0001, bold blue => bold blue #002800"
 	line-numbers = false
 [init]
 	defaultBranch = main
-[difftool "bc"]
-	cmd = \"C:/Users/ville/AppData/Local/Programs/Beyond Compare 5/BCompare.exe\" \"$LOCAL\" \"$REMOTE\"
-[difftool "difft"]
-	cmd = difft "$LOCAL" "$REMOTE"
 [diff]
-	tool = bc
-	colormoved = default
+	colorMoved = default
 	colormovedws = allow-indentation-change
 [difftool]
 	prompt = false
@@ -49,3 +44,5 @@
 	difftool = delta
 [include]
 	path = ~/dotfiles/gitaliases.txt
+; [difftool "bc"] ; Unused, but kept for reference
+; 	cmd = "C:/Users/ville/AppData/Local/Programs/Beyond Compare 5/BCompare.exe" "$LOCAL" "$REMOTE"
