@@ -38,6 +38,7 @@
 [diff]
 	colorMoved = default
 	colormovedws = allow-indentation-change
+	tool = vscode
 [difftool]
 	prompt = false
 [pager]
@@ -46,3 +47,9 @@
 	path = ~/dotfiles/gitaliases.txt
 ; [difftool "bc"] ; Unused, but kept for reference
 ; 	cmd = "C:/Users/ville/AppData/Local/Programs/Beyond Compare 5/BCompare.exe" "$LOCAL" "$REMOTE"
+[merge]
+	tool = vscode
+[difftool "vscode"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
