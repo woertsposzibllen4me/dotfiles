@@ -6,7 +6,7 @@
     "editor.fontFamily": "Maple Mono NF CN Light",
     "editor.fastScrollSensitivity": 2,
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Monokai Pro (Filter Octagon)",
+    "workbench.colorTheme": "Tokyo Night Storm",
     "workbench.settings.applyToAllProfiles": [
         "editor.fontFamily"
     ],
@@ -76,6 +76,7 @@
         "jsons",
         "levelname",
         "lockb",
+        "Loïc",
         "Monokai",
         "mypy",
         "nitiate",
@@ -118,6 +119,7 @@
         "unprimes",
         "vectorizer",
         "ville",
+        "Villet",
         "voicelines",
         "websockets"
     ],
@@ -168,4 +170,7 @@
         ]
     },
     "python.defaultInterpreterPath": "C:\\Users\\ville\\MyMegaScript\\venv",
+    "diffEditor.ignoreTrimWhitespace": true,
+    "diffEditor.renderSideBySide": true,
+    "diffEditor.experimental.showMoves": true,
 }
