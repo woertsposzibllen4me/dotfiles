@@ -17,6 +17,10 @@ export PATH=~/.npm-global/bin:$PATH
 export dotfiles="$HOME/dotfiles"
 unsetopt BEEP
 
+# case insensitive completions
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+
 # History settings
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
@@ -136,7 +140,7 @@ alias wzcfg='edit-wezterm-profile'
 alias lgcfg='edit-lazygit-config'
 alias tmcfg='edit-tmux-config'
 alias zscfg='edit-zshrc'
-alias gtcfg='git config --global -e'
+alias gitcfg='git config --global -e'
 
 ## Utility functions
 function start-nvim-bug-repro() {
