@@ -1,10 +1,18 @@
-* text eol=auto
+* text=auto
 
-# Windows specific
+linux/** text eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+
+windows/** text eol=crlf
 *.bat text eol=crlf
 *.cmd text eol=crlf
 *.ps1 text eol=crlf
 *.psm1 text eol=crlf
 
-# Unix specific
-*.sh text eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.exe binary
