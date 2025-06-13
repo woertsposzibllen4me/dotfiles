@@ -109,6 +109,7 @@ alias vid='cd $HOME/.config/nvim'
 
 alias clip='xclip -selection clipboard'
 alias vi='nvim'
+alias vir='nvim -u repro.lua'
 alias lg='lazygit'
 alias wh='which'
 
@@ -142,17 +143,6 @@ alias tmcfg='edit-tmux-config'
 alias zscfg='edit-zshrc'
 alias gitcfg='git config --global -e'
 
-## Utility functions
-function start-nvim-bug-repro() {
-  local config_path="$HOME/dotfiles/nvim-config3.0/bug-repro/init.lua"
-  if [[ ! -f "$config_path" ]]; then
-    echo "Config file does not exist: $config_path"
-    return 1
-  fi
-  local config_dir=$(dirname "$config_path")
-  cd "$config_dir"
-  nvim -u "$config_path"
-}
 
 function copy-path-to-clipboard() {
   if [ -z "$1" ]; then
