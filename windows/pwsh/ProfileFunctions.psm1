@@ -43,15 +43,6 @@ function Get-DirectorySize {
   } | Format-Table -AutoSize
 }
 
-function Start-NvimBugRepro {
-  $ConfigPath = "$env:DOTFILES\nvim-config3.0\bug-repro\init.lua"
-  if (-not (Test-Path $ConfigPath)) {
-    throw "Config file does not exist: $ConfigPath"
-  }
-  $ConfigDir = Split-Path -Parent $ConfigPath
-  Set-Location $ConfigDir
-  nvim -u $ConfigPath
-}
 
 function lf {
   $tmp = [System.IO.Path]::GetTempFileName()

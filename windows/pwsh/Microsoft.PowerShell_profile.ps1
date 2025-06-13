@@ -26,7 +26,6 @@ Set-Alias -Name spp -Value Set-PythonPath
 Set-Alias -Name eme -Value Enter-MegaScriptEnvironment
 Set-Alias -Name cpath -Value Copy-PathToClipboard
 Set-Alias -Name dsize -Value Get-DirectorySize
-Set-Alias -Name startvirepro -Value Start-NvimBugRepro
 
 ## Path additions
 $pathsToAdd = @(
@@ -166,8 +165,8 @@ function vid {
   Set-Location "$env:DOTFILES\nvim-config3.0" # better than if in $HOME for lazydev nvim plugin usage
 }
 
-function virepro {
-  Set-Location "$env:DOTFILES\nvim-config3.0\bug-repro"
+function vir {
+  nvim -u repro.lua $args
 }
 
 function roam {
