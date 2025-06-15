@@ -44,7 +44,7 @@ foreach ($path in $pathsToAdd) {
 $OnViModeChange = [scriptblock]{
   if ($args[0] -eq 'Command') {
     # Set the cursor to a steady block.
-    Write-Host -NoNewLine "`e[0 q"
+    Write-Host -NoNewLine "`e[2 q"
   } else {
     # Set the cursor to a steady line.
     Write-Host -NoNewLine "`e[6 q"
