@@ -314,6 +314,16 @@ config.keys = {
     mods = "CTRL|SHIFT",
     action = wezterm.action.ScrollByPage(-1 / 2),
   },
+  {
+    key = "k",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action.ScrollByLine(-1),
+  },
+  {
+    key = "j",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action.ScrollByLine(1),
+  },
 
   -- Fullscreen
   { key = "F11", action = wezterm.action.ToggleFullScreen },
