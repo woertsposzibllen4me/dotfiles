@@ -6,7 +6,7 @@ function Set-PythonPath {
 function Enter-MegaScriptEnvironment {
   Set-Location "C:\Users\ville\woertsposzibllen4me"
   Set-PythonPath
-  .\venv\Scripts\activate
+  .\.venv\Scripts\activate
 }
 
 function Copy-PathToClipboard {
