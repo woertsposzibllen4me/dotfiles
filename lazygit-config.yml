@@ -40,56 +40,56 @@ git:
 #   editPreset: nvim-remote
 customCommands:
   # For files panel
-  - key: "O"
+  - key: "I"
     command: "git -c delta.features=side-by-side diff {{.SelectedPath}}"
     context: "files"
     description: "Delta diff of selected item"
     loadingText: "Opening diff in Delta..."
     output: terminal
   # For commits panel
-  - key: "O"
+  - key: "I"
     command: "git -c delta.features=side-by-side show {{.SelectedCommit.Sha}} -p"
     context: "commits"
     description: "Show commit with Delta side-by-side"
     loadingText: "Opening commit diff in Delta..."
     output: terminal
   # For files within a commit or stash
-  - key: "O"
+  - key: "I"
     command: "git -c delta.features=side-by-side show {{.SelectedCommit.Sha}} -- {{.SelectedCommitFilePath}}"
     context: "commitFiles"
     description: "Show file in commit/stash with Delta side-by-side"
     loadingText: "Opening file diff in Delta..."
     output: terminal
   # For stash entries
-  - key: "O"
+  - key: "I"
     command: "git -c delta.features=side-by-side stash show -p {{.SelectedStashEntry.Index}}"
     context: "stash"
     description: "Show stash with Delta side-by-side"
     loadingText: "Opening stash in Delta..."
     output: terminal
   # For local branches
-  - key: "O"
+  - key: "I"
     command: "git -c delta.features=side-by-side diff {{.CheckedOutBranch.Name}}..{{.SelectedLocalBranch.Name}}"
     context: "localBranches"
     description: "Compare current branch with selected branch"
     loadingText: "Comparing branches with Delta..."
     output: terminal
   # For remote branches
-  - key: "O"
+  - key: "I"
     command: "git -c delta.features=side-by-side diff {{.CheckedOutBranch.Name}}..{{.SelectedRemoteBranch.RemoteName}}/{{.SelectedRemoteBranch.Name}}"
     context: "remoteBranches"
     description: "Compare current branch with selected remote branch"
     loadingText: "Comparing with remote branch..."
     output: terminal
   # For commits when viewing branch history (after pressing Enter on a branch)
-  - key: "O"
+  - key: "I"
     command: "git -c delta.features=side-by-side show {{.SelectedCommit.Sha}} -p"
     context: "subCommits"
     description: "Show commit with Delta side-by-side"
     loadingText: "Opening commit diff in Delta..."
     output: terminal
   # For tags
-  - key: "O"
+  - key: "I"
     command: "git -c delta.features=side-by-side show {{.SelectedTag.Name}} -p"
     context: "tags"
     description: "Show tag with Delta side-by-side"
