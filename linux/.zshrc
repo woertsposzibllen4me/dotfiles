@@ -13,7 +13,8 @@ source ~/bin/wsl-ssh-agent-relay.sh
 
 # Basic environment setup
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-export PATH=~/.npm-global/bin:$PATH
+export PATH="$HOME/.npm-global/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 export dotfiles="$HOME/dotfiles"
 unsetopt BEEP
 
@@ -142,6 +143,21 @@ alias lgcfg='edit-lazygit-config'
 alias tmcfg='edit-tmux-config'
 alias zscfg='edit-zshrc'
 alias gitcfg='git config --global -e'
+
+## Python environment setup
+function set_python_path() {
+    export PYTHONPATH="$(pwd)"
+    echo "PYTHONPATH set to: $PYTHONPATH"
+}
+
+function enter_megascript_environment() {
+    cd "$HOME/woertsposzibllen4me"
+    set_python_path
+    source ./.venv/bin/activate
+}
+
+# Python environment alias
+alias eme='enter_megascript_environment'
 
 
 function copy-path-to-clipboard() {
