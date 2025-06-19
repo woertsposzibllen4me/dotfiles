@@ -339,7 +339,6 @@ config.keys = {
     mods = "CTRL",
     action = wezterm.action_callback(function(window, pane)
       local vars = pane:get_user_vars() or {}
-      local title = pane:get_title() or ""
       local in_Windows_nvim = vars.in_Windows_nvim
       local in_wsl = vars.in_wsl
       if in_Windows_nvim == "1" or in_wsl == "1" then
@@ -359,7 +358,6 @@ config.keys = {
     mods = "CTRL",
     action = wezterm.action_callback(function(window, pane)
       local vars = pane:get_user_vars() or {}
-      local title = pane:get_title() or ""
       local in_Windows_nvim = vars.in_Windows_nvim
       local in_wsl = vars.in_wsl
       if in_Windows_nvim == "1" or in_wsl == "1" then
@@ -379,7 +377,6 @@ config.keys = {
     mods = "CTRL",
     action = wezterm.action_callback(function(window, pane)
       local vars = pane:get_user_vars() or {}
-      local title = pane:get_title() or ""
       local in_Windows_nvim = vars.in_Windows_nvim
       local in_wsl = vars.in_wsl
       if in_Windows_nvim == "1" or in_wsl == "1" then
@@ -399,7 +396,6 @@ config.keys = {
     mods = "CTRL",
     action = wezterm.action_callback(function(window, pane)
       local vars = pane:get_user_vars() or {}
-      local title = pane:get_title() or ""
       local in_Windows_nvim = vars.in_Windows_nvim
       local in_wsl = vars.in_wsl
       if in_Windows_nvim == "1" or in_wsl == "1" then
