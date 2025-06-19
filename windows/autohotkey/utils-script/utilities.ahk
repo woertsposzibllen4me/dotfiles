@@ -265,11 +265,11 @@ AppendLeaderKey(key) {
   LeaderKeyBuffer .= key
 
   if (LeaderKeyBuffer = "a") {
-    ActivateOrCreateBrowser1Window()
+    ActivateBrowser1Window()
   } else if (LeaderKeyBuffer = "s") {
-    ActivateOrCreateBrowser2Window()
+    ActivateBrowser2Window()
   } else if (LeaderKeyBuffer = "d") {
-    ActivateOrCreateBrowser3Window()
+    ActivateBrowser3Window()
   } else if (LeaderKeyBuffer = "c") {
     ActivateVSCode()
   } else if (LeaderKeyBuffer = "w") {
@@ -294,8 +294,10 @@ AppendLeaderKey(key) {
     ReplaceSlashes("/")
   } else if (LeaderKeyBuffer = "mc") {
     Click
-  } else if (LeaderKeyBuffer = "Space]") {
-    ResetChromeWindowList()
+    ; } else if (LeaderKeyBuffer = "Space]") {
+    ;   ResetChromeWindowList()
+  } else if (LeaderKeyBuffer = "y") {
+    ActivatePyCharm()
   } else {
     ToolTip("Leader mode: " LeaderKeyBuffer)   ; show progress
     return                                    ; wait for more keys
@@ -363,12 +365,30 @@ ActivateOrCreateWindow(&windowID, runCommand, exeName, urls := "") {
 }
 
 ; ---------- SPECIFIC LAUNCHERS ----------
+ActivatePyCharm() {
+  SetTitleMatchMode 2
+  if WinExist("ahk_exe pycharm64.exe")
+    WinActivate
+  else {
+    ; Try to find PyCharm with wildcard for version
+    Loop Files, "C:\Program Files\JetBrains\PyCharm Community Edition*", "D"
+    {
+      batPath := A_LoopFileFullPath "\bin\pycharm64.exe"
+      if FileExist(batPath) {
+        Run batPath
+        return
+      }
+    }
+    MsgBox "Could not find PyCharm executable."
+  }
+}
+
 ActivateSpotify() {
   global SpotifyWindow_ID
   return ActivateOrCreateWindow(&SpotifyWindow_ID, "spotify.exe", "spotify.exe")
 }
 
-ActivateOrCreateBrowser1Window() {
+ActivateBrowser1Window() {
   global Browser1_ID
   return ActivateOrCreateWindow(&Browser1_ID,
     "chrome.exe",
@@ -376,7 +396,7 @@ ActivateOrCreateBrowser1Window() {
     "https://claude.ai https://chat.openai.com")
 }
 
-ActivateOrCreateBrowser2Window() {
+ActivateBrowser2Window() {
   global Browser2_ID
   return ActivateOrCreateWindow(&Browser2_ID,
     "chrome.exe",
@@ -384,7 +404,7 @@ ActivateOrCreateBrowser2Window() {
     "https://claude.ai https://chat.openai.com")
 }
 
-ActivateOrCreateBrowser3Window() {
+ActivateBrowser3Window() {
   global Browser3_ID
   return ActivateOrCreateWindow(&Browser3_ID,
     "chrome.exe",
