@@ -112,6 +112,7 @@ source <(fzf --zsh)
 # Aliases
 alias dot='cd $HOME/dotfiles'
 alias vid='cd $HOME/.config/nvim'
+alias vidata='cd ~/.local/share/nvim/'
 
 alias clip='xclip -selection clipboard'
 alias vi='nvim'
