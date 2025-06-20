@@ -3,11 +3,17 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local act = wezterm.action
 local manually_set_titles = {}
+local font_size = 11.8 -- Allows for 97/98 char lenght lines in Nvim vs 87/88 with 12.0.
+-- local font_size = 12
 config.font = wezterm.font("BerkeleyMono Nerd Font", { weight = "Regular" })
-config.font_size = 12.0
+config.font_size = font_size
 config.default_cursor_style = "SteadyBlock"
 -- config.cursor_blink_rate = 0
 -- config.debug_key_events = true
+
+config.set_environment_variables = {
+  WEZTERM_FONT_SIZE = tostring(font_size),
+}
 
 config.audible_bell = "Disabled"
 config.default_prog = { "pwsh" }
@@ -15,12 +21,21 @@ config.initial_cols = 120
 config.initial_rows = 30
 config.enable_kitty_keyboard = false -- Breaks ahk remapping
 config.enable_kitty_graphics = true
-config.window_padding = {
-  left = 4,
-  right = 4,
-  top = 0,
-  bottom = 0,
-}
+if font_size ~= 12 then
+  config.window_padding = { -- Adjust inevitable padding with font != 12
+    left = 11,
+    right = 9,
+    top = 8,
+    bottom = 0,
+  }
+else
+  config.window_padding = {
+    left = 0,
+    right = 0,
+    top = 0,
+    bottom = 0,
+  }
+end
 config.max_fps = 144
 
 require("wezterm").on("format-window-title", function()
