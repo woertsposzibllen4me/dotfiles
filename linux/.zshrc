@@ -11,6 +11,11 @@ source ~/bin/wsl-ssh-agent-relay.sh
 #   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # fi
 
+# Get wezterm font size from environment variable if available
+if command -v powershell.exe >/dev/null 2>&1; then
+    export WEZTERM_FONT_SIZE=$(powershell.exe -Command "echo \$env:WEZTERM_FONT_SIZE" 2>/dev/null | tr -d '\r')
+fi
+
 # Basic environment setup
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
