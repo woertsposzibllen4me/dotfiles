@@ -343,7 +343,21 @@ config.keys = {
       local vars = pane:get_user_vars() or {}
       local in_Windows_nvim = vars.in_Windows_nvim
       local in_wsl = vars.in_wsl
-      if in_Windows_nvim == "1" or in_wsl == "1" then
+      local tab = pane:tab()
+
+      wezterm.log_info("tab: " .. tostring(tab))
+      wezterm.log_info("pane: " .. tostring(pane))
+      local panes_with_info = tab:panes_with_info()
+
+      local pane_is_zoomed = false
+      for _, pane_info in ipairs(panes_with_info) do
+        if pane_info.is_active then
+          pane_is_zoomed = pane_info.is_zoomed
+          break
+        end
+      end
+
+      if in_Windows_nvim == "1" or in_wsl == "1" or pane_is_zoomed then
         window:perform_action(wezterm.action.SendKey({ key = "h", mods = "CTRL" }), pane)
       else
         window:perform_action(wezterm.action.ActivatePaneDirection("Left"), pane)
@@ -362,7 +376,21 @@ config.keys = {
       local vars = pane:get_user_vars() or {}
       local in_Windows_nvim = vars.in_Windows_nvim
       local in_wsl = vars.in_wsl
-      if in_Windows_nvim == "1" or in_wsl == "1" then
+      local tab = pane:tab()
+
+      wezterm.log_info("tab: " .. tostring(tab))
+      wezterm.log_info("pane: " .. tostring(pane))
+      local panes_with_info = tab:panes_with_info()
+
+      local pane_is_zoomed = false
+      for _, pane_info in ipairs(panes_with_info) do
+        if pane_info.is_active then
+          pane_is_zoomed = pane_info.is_zoomed
+          break
+        end
+      end
+
+      if in_Windows_nvim == "1" or in_wsl == "1" or pane_is_zoomed then
         window:perform_action(wezterm.action.SendKey({ key = "j", mods = "CTRL" }), pane)
       else
         window:perform_action(wezterm.action.ActivatePaneDirection("Down"), pane)
@@ -381,7 +409,21 @@ config.keys = {
       local vars = pane:get_user_vars() or {}
       local in_Windows_nvim = vars.in_Windows_nvim
       local in_wsl = vars.in_wsl
-      if in_Windows_nvim == "1" or in_wsl == "1" then
+      local tab = pane:tab()
+
+      wezterm.log_info("tab: " .. tostring(tab))
+      wezterm.log_info("pane: " .. tostring(pane))
+      local panes_with_info = tab:panes_with_info()
+
+      local pane_is_zoomed = false
+      for _, pane_info in ipairs(panes_with_info) do
+        if pane_info.is_active then
+          pane_is_zoomed = pane_info.is_zoomed
+          break
+        end
+      end
+
+      if in_Windows_nvim == "1" or in_wsl == "1" or pane_is_zoomed then
         window:perform_action(wezterm.action.SendKey({ key = "k", mods = "CTRL" }), pane)
       else
         window:perform_action(wezterm.action.ActivatePaneDirection("Up"), pane)
@@ -400,7 +442,21 @@ config.keys = {
       local vars = pane:get_user_vars() or {}
       local in_Windows_nvim = vars.in_Windows_nvim
       local in_wsl = vars.in_wsl
-      if in_Windows_nvim == "1" or in_wsl == "1" then
+      local tab = pane:tab()
+
+      wezterm.log_info("tab: " .. tostring(tab))
+      wezterm.log_info("pane: " .. tostring(pane))
+      local panes_with_info = tab:panes_with_info()
+
+      local pane_is_zoomed = false
+      for _, pane_info in ipairs(panes_with_info) do
+        if pane_info.is_active then
+          pane_is_zoomed = pane_info.is_zoomed
+          break
+        end
+      end
+
+      if in_Windows_nvim == "1" or in_wsl == "1" or pane_is_zoomed then
         window:perform_action(wezterm.action.SendKey({ key = "l", mods = "CTRL" }), pane)
       else
         window:perform_action(wezterm.action.ActivatePaneDirection("Right"), pane)
