@@ -272,6 +272,18 @@ local function log_custom_info(window)
   end
 end
 
+local function write_zoom_info(zoomed)
+  local temp_dir = os.getenv("TEMP") or os.getenv("TMPDIR") or "/tmp"
+  local zoom_file = temp_dir .. "/wezterm_zoom.txt"
+  local file = io.open(zoom_file, "w")
+  if not file then
+    wezterm.log_error("Failed to open zoom file for writing: " .. zoom_file)
+    return
+  end
+  file:write(zoomed and "true" or "false")
+  file:close()
+end
+
 config.leader = { key = " ", mods = "SHIFT" }
 config.keys = {
 
@@ -345,8 +357,6 @@ config.keys = {
       local in_wsl = vars.in_wsl
       local tab = pane:tab()
 
-      wezterm.log_info("tab: " .. tostring(tab))
-      wezterm.log_info("pane: " .. tostring(pane))
       local panes_with_info = tab:panes_with_info()
 
       local pane_is_zoomed = false
@@ -356,6 +366,8 @@ config.keys = {
           break
         end
       end
+
+      write_zoom_info(pane_is_zoomed)
 
       if in_Windows_nvim == "1" or in_wsl == "1" or pane_is_zoomed then
         window:perform_action(wezterm.action.SendKey({ key = "h", mods = "CTRL" }), pane)
@@ -378,8 +390,6 @@ config.keys = {
       local in_wsl = vars.in_wsl
       local tab = pane:tab()
 
-      wezterm.log_info("tab: " .. tostring(tab))
-      wezterm.log_info("pane: " .. tostring(pane))
       local panes_with_info = tab:panes_with_info()
 
       local pane_is_zoomed = false
@@ -389,6 +399,8 @@ config.keys = {
           break
         end
       end
+
+      write_zoom_info(pane_is_zoomed)
 
       if in_Windows_nvim == "1" or in_wsl == "1" or pane_is_zoomed then
         window:perform_action(wezterm.action.SendKey({ key = "j", mods = "CTRL" }), pane)
@@ -411,8 +423,6 @@ config.keys = {
       local in_wsl = vars.in_wsl
       local tab = pane:tab()
 
-      wezterm.log_info("tab: " .. tostring(tab))
-      wezterm.log_info("pane: " .. tostring(pane))
       local panes_with_info = tab:panes_with_info()
 
       local pane_is_zoomed = false
@@ -422,6 +432,8 @@ config.keys = {
           break
         end
       end
+
+      write_zoom_info(pane_is_zoomed)
 
       if in_Windows_nvim == "1" or in_wsl == "1" or pane_is_zoomed then
         window:perform_action(wezterm.action.SendKey({ key = "k", mods = "CTRL" }), pane)
@@ -444,8 +456,6 @@ config.keys = {
       local in_wsl = vars.in_wsl
       local tab = pane:tab()
 
-      wezterm.log_info("tab: " .. tostring(tab))
-      wezterm.log_info("pane: " .. tostring(pane))
       local panes_with_info = tab:panes_with_info()
 
       local pane_is_zoomed = false
@@ -455,6 +465,8 @@ config.keys = {
           break
         end
       end
+
+      write_zoom_info(pane_is_zoomed)
 
       if in_Windows_nvim == "1" or in_wsl == "1" or pane_is_zoomed then
         window:perform_action(wezterm.action.SendKey({ key = "l", mods = "CTRL" }), pane)
