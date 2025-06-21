@@ -1,4 +1,3 @@
--- Pull in the wezterm API
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local act = wezterm.action
@@ -154,23 +153,21 @@ local function get_last_two_path_segments(tab)
 end
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
+  local process_name = get_process_name(tab.active_pane.foreground_process_name)
+  local process_icon = process_icons[process_name] or ""
+  local tab_number = tab.tab_index + 1
+  local is_zoomed = tab.active_pane.is_zoomed
+  local zoom_icon = is_zoomed and " " or ""
+
   if manually_set_titles[tostring(tab.tab_id)] then -- Keep the title if it was manually set
-    local process_name = get_process_name(tab.active_pane.foreground_process_name)
-    local process_icon = process_icons[process_name] or ""
     local title = tab.tab_title or ""
-    local tab_number = tab.tab_index + 1
-    local zoom_icon = tab.active_pane.is_zoomed and " " or ""
 
     return {
       { Text = string.format("%s%d: %s%s ", zoom_icon, tab_number, process_icon, title) },
     }
   end
 
-  local process_name = get_process_name(tab.active_pane.foreground_process_name)
-  local process_icon = process_icons[process_name] or ""
   local parent_folder, cwd = get_last_two_path_segments(tab)
-  local tab_number = tab.tab_index + 1 -- Wezterm uses 0-based indexing, so we add 1
-  local zoom_icon = tab.active_pane.is_zoomed and " " or ""
 
   -- Check if the tab has a custom title set by Neovim set through OSC sequences (should have "[nvim]" in the title)
   if tab.active_pane.title and tab.active_pane.title:match("%[nvim%]") then
@@ -259,16 +256,6 @@ config.key_tables = {
   search_mode = wezterm.gui.default_key_tables().search_mode,
 }
 
--- Clear search in copy mode
-table.insert(config.key_tables.copy_mode, {
-  key = "c",
-  mods = "CTRL",
-  action = act.Multiple({
-    act.CopyMode("ClearPattern"),
-    act.CopyMode("ClearSelectionMode"),
-  }),
-})
-
 local function get_uri(window, pane)
   local uri = pane:get_current_working_dir()
   if uri then
@@ -276,7 +263,7 @@ local function get_uri(window, pane)
   end
 end
 
-local function log_all_user_vars(window)
+local function log_custom_info(window)
   local tab = window:active_tab()
   for _, pane in ipairs(tab:panes()) do
     local user_vars = pane:get_user_vars()
@@ -293,7 +280,7 @@ config.keys = {
     key = "?",
     mods = "CTRL|SHIFT",
     action = wezterm.action_callback(function(window, pane)
-      log_all_user_vars(window)
+      log_custom_info(window)
     end),
   },
 
