@@ -2,7 +2,7 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local act = wezterm.action
 local manually_set_titles = {}
-local font_size = 11.8 -- Allows for 97/98 char lenght lines in Nvim vs 87/88 with 12.0.
+local font_size = 11.8 -- Allows for 97/98 char length lines in Nvim vs 87/88 with 12.0.
 -- local font_size = 12
 config.font = wezterm.font("BerkeleyMono Nerd Font", { weight = "Regular" })
 config.font_size = font_size
@@ -11,7 +11,7 @@ config.default_cursor_style = "SteadyBlock"
 -- config.debug_key_events = true
 
 config.set_environment_variables = {
-  WEZTERM_FONT_SIZE = tostring(font_size),
+  WEZTERM_FONT_SIZE = tostring(font_size), -- Nvim dashboard integration usage
 }
 
 config.audible_bell = "Disabled"
@@ -339,7 +339,7 @@ config.keys = {
     action = wezterm.action.ScrollByLine(1),
   },
 
-  -- Fullscreen
+  -- Full screen
   { key = "F11", action = wezterm.action.ToggleFullScreen },
 
   -- Navigate between panes
