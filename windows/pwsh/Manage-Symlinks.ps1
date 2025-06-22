@@ -45,6 +45,22 @@ $dotfilesConfig = @{
     "source"  = "$dotfilesRepo\kanata.kbd"
     "target" = "$HOME\AppData\Roaming\kanata\kanata.kbd"
   }
+
+  "Yazi general config" = @{
+    "source"  = "$dotfilesRepo\yazi-config\yazi.toml"
+    "target" = "$HOME\AppData\Roaming\yazi\config\yazi.toml"
+  }
+
+  "Yazi package" = @{
+    "source"  = "$dotfilesRepo\yazi-config\package.toml"
+    "target" = "$HOME\AppData\Roaming\yazi\config\package.toml"
+  }
+
+  "Yazi theme" = @{
+    "source"  = "$dotfilesRepo\yazi-config\theme.toml"
+    "target" = "$HOME\AppData\Roaming\yazi\config\theme.toml"
+  }
+
 }
 
 function Sync-Symlinks {
