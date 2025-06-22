@@ -16,11 +16,7 @@ Import-Module Terminal-Icons
 Import-Module posh-git
 
 ## Custom modules
-Import-Module "$env:DOTFILES\windows\pwsh\Cut-Paste.psm1"
 Import-Module "$env:DOTFILES\windows\pwsh\ProfileFunctions.psm1"
-# cut paste aliases
-Set-Alias -Name cut -Value Move-ItemToBuffer
-Set-Alias -Name paste -Value Restore-ItemFromBuffer
 # general functions aliases
 Set-Alias -Name spp -Value Set-PythonPath
 Set-Alias -Name eme -Value Enter-MegaScriptEnvironment
