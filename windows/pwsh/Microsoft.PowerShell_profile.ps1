@@ -7,9 +7,12 @@ $claudeApiKey = Get-Content -Path "C:\Users\ville\myfiles\documents\api-keys\Ant
 
 ## Environment variables
 $env:PYTHONIOENCODING="utf-8"
-$env:ANTHROPIC_API_KEY = $claudeApiKey.Trim()
+$env:AVANTE_ANTHROPIC_API_KEY = $claudeApiKey.Trim() # scoped for avante nivm usage
 $env:YAZI_FILE_ONE="C:\Program Files\Git\usr\bin\file.exe"
 $env:DOTFILES = "$HOME\dotfiles"
+
+## These are forwarded to WSL when using "wsl" from pwsh
+$env:WSLENV = "AVANTE_ANTHROPIC_API_KEY"
 
 ## Modules
 Import-Module Terminal-Icons
