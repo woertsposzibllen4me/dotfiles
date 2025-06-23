@@ -1,20 +1,21 @@
 # Detect env
 WSL_ENV=false
 if [[ -n "$WSL_DISTRO_NAME" ]]; then
-    WSL_ENV=true
+  WSL_ENV=true
 fi
 
-# Wsl env inital setup
+# WSL CONFIGURATION START =====================================================
 if $WSL_ENV; then
-# Relay ssh key (must be on top)
-source ~/bin/wsl-ssh-agent-relay.sh
-# Setting Wezterm pane user variable "in_wsl" to true
-printf "\033]1337;SetUserVar=%s=%s\007" in_wsl $(echo -n 1 | base64)
-# Fix incorrect delta color rendering
-export COLORTERM=truecolor
-# Fix no udercurl in nvim for some reason with default "xterm-256color" TERM
-export TERM="tmux-256color"
+  # Relay ssh key (must be on top)
+  source ~/bin/wsl-ssh-agent-relay.sh
+  # Setting Wezterm pane user variable "in_wsl" to true
+  printf "\033]1337;SetUserVar=%s=%s\007" in_wsl $(echo -n 1 | base64)
+  # Fix incorrect delta color rendering
+  export COLORTERM=truecolor
+  # Fix no udercurl in nvim for some reason with default "xterm-256color" TERM
+  export TERM="tmux-256color"
 fi
+# WSL CONFIGURATION END =======================================================
 
 # Update starship config for WSL mounted path module
 # ~/bin/update-starship-config.sh
@@ -28,7 +29,7 @@ fi
 
 # Get wezterm font size from environment variable if available
 if command -v powershell.exe >/dev/null 2>&1; then
-    export WEZTERM_FONT_SIZE=$(powershell.exe -Command "echo \$env:WEZTERM_FONT_SIZE" 2>/dev/null | tr -d '\r')
+  export WEZTERM_FONT_SIZE=$(powershell.exe -Command "echo \$env:WEZTERM_FONT_SIZE" 2>/dev/null | tr -d '\r')
 fi
 
 # Basic environment setup
@@ -42,8 +43,6 @@ unsetopt BEEP
 # case insensitive completions
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 
-
-# History settings
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
@@ -55,11 +54,10 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-
 # Terminal position setup
 printf '\n%.0s' {1..$LINES}
 precmd() {
-    print $'\n\n\n\n\e[5A'
+  print $'\n\n\n\n\e[5A'
 }
 function clear-and-put-prompt-at-bottom() {
   printf "\e[H\ec\e[${LINES}B"
@@ -68,11 +66,11 @@ alias clear='clear-and-put-prompt-at-bottom'
 
 # Initialize zinit
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
+  print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+  command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+  command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+    print -P "%F{33} %F{34}Installation successful.%f%b" || \
+    print -P "%F{160} The clone has failed.%f%b"
 fi
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
@@ -80,13 +78,12 @@ autoload -Uz _zinit
 
 # Load important annexes
 zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
+  zdharma-continuum/zinit-annex-as-monitor \
+  zdharma-continuum/zinit-annex-bin-gem-node \
+  zdharma-continuum/zinit-annex-patch-dl \
+  zdharma-continuum/zinit-annex-rust
 
 # Load plugins here
-
 
 # powerlevel10k
 zinit ice depth=1
@@ -123,7 +120,7 @@ function zvm_after_init() {
 # Load FZF completion
 source <(fzf --zsh)
 
-# Aliases
+# Locations/bin Aliases
 alias dot='cd $HOME/dotfiles'
 alias vid='cd $HOME/.config/nvim'
 alias vidata='cd ~/.local/share/nvim/'
@@ -142,8 +139,8 @@ alias lat='eza --icons -laT'
 alias zf="__zoxide_zi"
 alias zz="z -"
 
-## Custom functions
-## Quick edit functions
+## CUSTOM FUNCTIONS START =====================================================
+# QUICK EDIT FUNCTIONS START ==================================================
 function edit-wezterm-profile() {
   nvim "$DOTFILES/.wezterm.lua"
 }
@@ -157,29 +154,29 @@ function edit-zshrc() {
   nvim "$HOME/.zshrc"
 }
 
-# Edit aliases
+# Quick Edit aliases
 alias wzcfg='edit-wezterm-profile'
 alias lgcfg='edit-lazygit-config'
 alias tmcfg='edit-tmux-config'
 alias zscfg='edit-zshrc'
 alias gitcfg='git config --global -e'
 
-## Python environment setup
+# QUICK EDIT FUNCTIONS END ====================================================
+# UTILITY FUNCTIONS START =====================================================
+
+# Python environment setup
 function set_python_path() {
-    export PYTHONPATH="$(pwd)"
-    echo "PYTHONPATH set to: $PYTHONPATH"
+  export PYTHONPATH="$(pwd)"
+  echo "PYTHONPATH set to: $PYTHONPATH"
 }
 
 function enter_megascript_environment() {
-    cd "$HOME/woertsposzibllen4me"
-    set_python_path
-    source ./.venv/bin/activate
+  cd "$HOME/woertsposzibllen4me"
+  set_python_path
+  source ./.venv/bin/activate
 }
 
-# Python environment alias
-alias eme='enter_megascript_environment'
-
-
+# Copy path to clipboard
 function copy-path-to-clipboard() {
   if [ -z "$1" ]; then
     echo "Error: Please provide a file or directory path"
@@ -203,17 +200,21 @@ function copy-path-to-clipboard() {
 
 # Yazi file navigation
 function lf() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
 }
 
-# Utility aliases
+# Utility functions aliases
 alias virepro='start-nvim-bug-repro'
 alias cpath='copy-path-to-clipboard'
+alias eme='enter_megascript_environment'
+
+# UTILITY FUNCTIONS END =======================================================
+## CUSTOM FUNCTIONS END =======================================================
 
 # Initialize final tools
 eval "$(zoxide init zsh)"
@@ -223,9 +224,9 @@ eval "$(zoxide init zsh)"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 zshexit() {
-    if $WSL_ENV; then
-      echo "Exiting wsl...👋"
-      # Reset Wezterm pane user variable "in_wsl" to false
-        printf "\033]1337;SetUserVar=%s=%s\007" in_wsl "MA=="
-    fi
+  if $WSL_ENV; then
+    echo "Exiting wsl...👋"
+    # Reset Wezterm pane user variable "in_wsl" to false
+    printf "\033]1337;SetUserVar=%s=%s\007" in_wsl "MA=="
+  fi
 }
