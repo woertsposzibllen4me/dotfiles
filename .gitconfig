@@ -20,24 +20,42 @@
 	old = red bold
 	new = green bold
 	whitespace = red reverse
-  oldMoved = brightblack bold
-  ; oldMoved = "#541d1d" bold ; dark red alternative
-  newMoved = blue bold
 [delta]
-  minus-style = syntax "#3f0001"
-  ; plus-style = syntax
+  minus-style = dim syntax "#3f0001"
+  plus-style = syntax "#002800"
+  ; minus-style = syntax
+  ; plus-style = dim syntax
+  ; minus-non-emph-style = dim syntax "#3f0001"
+  ; plus-non-emph-style = syntax "#002800"
+  ; plus-empty-line-marker-style = green bold "#002800"
+  ; minus-empty-line-marker-style = red bold "#3f0001"
+  keep-plus-minus-markers = false
 	navigate = true
 	light = false
 	file-style = bold yellow
 	file-decoration-style = yellow box
 	hunk-header-style = line-number syntax
-  map-styles = "bold brightblack => bold #9d39b3 #3f0001, bold blue => bold blue #002800"
-	line-numbers = false
+  ; map-styles = "bold brightblack => bold #9d39b3 #3f0001, bold blue => bold blue #002800"
+  ; map-styles = "\
+  ;   bold #363e47 => bold #363e47 #3f0001, \
+  ;   bold blue => bold blue #002800, \
+  ;   bold brightblack => bold brightblack #3f0001, \
+  ;   bold cyan => bold cyan #002800"
+	line-numbers = true
+; line-numbers-minus-style = "#444444"
+; line-numbers-zero-style = "#444444"
+; line-numbers-plus-style = "#444444"
+line-numbers-left-format = "{nm:>4} "
+line-numbers-right-format = "{np:>4} "
+; line-numbers-left-style = blue
+; line-numbers-right-style = blue
 [init]
 	defaultBranch = main
 [diff]
 	colorMoved = default
+	; colorMoved = dimmed-zebra
 	colormovedws = allow-indentation-change
+	; colormovedws = ignore-all-space, ignore-space-at-eol, ignore-space-change
 	tool = vscode
 [difftool]
 	prompt = false
