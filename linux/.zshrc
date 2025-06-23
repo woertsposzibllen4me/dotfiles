@@ -1,5 +1,20 @@
+# Detect env
+WSL_ENV=false
+if [[ -n "$WSL_DISTRO_NAME" ]]; then
+    WSL_ENV=true
+fi
+
+# Wsl env inital setup
+if $WSL_ENV; then
 # Relay ssh key (must be on top)
 source ~/bin/wsl-ssh-agent-relay.sh
+# Setting Wezterm pane user variable "in_wsl" to true
+printf "\033]1337;SetUserVar=%s=%s\007" in_wsl $(echo -n 1 | base64)
+# Fix incorrect delta color rendering
+export COLORTERM=truecolor
+# Fix no udercurl in nvim for some reason with default "xterm-256color" TERM
+export TERM="tmux-256color"
+fi
 
 # Update starship config for WSL mounted path module
 # ~/bin/update-starship-config.sh
@@ -20,7 +35,8 @@ fi
 export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
-export dotfiles="$HOME/dotfiles"
+export PATH="$HOME/go/bin:$PATH"
+export DOTFILES="$HOME/dotfiles"
 unsetopt BEEP
 
 # case insensitive completions
@@ -39,8 +55,6 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-# Wezterm user vars setup
-printf "\033]1337;SetUserVar=%s=%s\007" in_wsl $(echo -n 1 | base64)
 
 # Terminal position setup
 printf '\n%.0s' {1..$LINES}
@@ -131,7 +145,7 @@ alias zz="z -"
 ## Custom functions
 ## Quick edit functions
 function edit-wezterm-profile() {
-  nvim "$dotfiles/.wezterm.lua"
+  nvim "$DOTFILES/.wezterm.lua"
 }
 function edit-lazygit-config() {
   nvim "$HOME/.config/lazygit/config.yml"
@@ -208,6 +222,10 @@ eval "$(zoxide init zsh)"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-TRAPEXIT() {
-  printf "\033]1337;SetUserVar=%s=%s\007" in_wsl $(echo -n 0 | base64)
+zshexit() {
+    if $WSL_ENV; then
+      echo "Exiting wsl...👋"
+      # Reset Wezterm pane user variable "in_wsl" to false
+        printf "\033]1337;SetUserVar=%s=%s\007" in_wsl "MA=="
+    fi
 }
