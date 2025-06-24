@@ -12,8 +12,12 @@ if $WSL_ENV; then
   printf "\033]1337;SetUserVar=%s=%s\007" in_wsl $(echo -n 1 | base64)
   # Fix incorrect delta color rendering
   export COLORTERM=truecolor
-  # HACK: Fix no udercurl in nvim for some reason with default "xterm-256color" TERM
-  export TERM="tmux-256color"
+
+  # export TERM="tmux-256color"
+  # NOTE:this might be working normally again, not needed anymore ? Apparently
+  # this was fixed by compiling an indentical xterm-256color file in
+  # ~/.terminfo/x/xterm-256color over the default one in
+  # /usr/share/terminfo/x/xterm-256color. Ask claude how to do it ...
 fi
 # WSL CONFIGURATION END =======================================================
 
