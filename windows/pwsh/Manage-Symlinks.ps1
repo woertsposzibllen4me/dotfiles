@@ -66,9 +66,6 @@ function Test-EmojiSupport {
 
     if ($wtSession -or $terminalProgram -eq "vscode" -or $terminalProgram -eq "WezTerm") {
       $canUseEmoji = $true
-    } elseif ([System.Console]::OutputEncoding.CodePage -eq 65001) {
-      # UTF-8 encoding suggests emoji support
-      $canUseEmoji = $true
     }
 
     return $canUseEmoji
