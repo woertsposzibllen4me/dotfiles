@@ -48,6 +48,10 @@ $dotfilesConfig = @{
     "source"  = "$dotfilesRepo\yazi-config\theme.toml"
     "target" = "$HOME\AppData\Roaming\yazi\config\theme.toml"
   }
+  "Yazi keymap" = @{
+    "source"  = "$dotfilesRepo\yazi-config\keymap.toml"
+    "target" = "$HOME\AppData\Roaming\yazi\config\keymap.toml"
+  }
 }
 
 # Test if terminal supports emojis by checking encoding and terminal type
