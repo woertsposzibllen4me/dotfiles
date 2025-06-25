@@ -292,6 +292,8 @@ AppendLeaderKey(key) {
     ReplaceSlashes("\")
   } else if (LeaderKeyBuffer = "/") {
     ReplaceSlashes("/")
+  } else if (LeaderKeyBuffer = "o") {
+    ActivateOBS()
   } else if (LeaderKeyBuffer = "mc") {
     Click
     ; } else if (LeaderKeyBuffer = "Space]") {
@@ -381,6 +383,13 @@ ActivatePyCharm() {
     }
     MsgBox "Could not find PyCharm executable."
   }
+}
+
+ActivateOBS() {
+  if WinExist("ahk_exe obs64.exe")
+    WinActivate
+  else
+    Run "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\OBS Studio\OBS Studio (64bit).lnk"
 }
 
 ActivateSpotify() {
