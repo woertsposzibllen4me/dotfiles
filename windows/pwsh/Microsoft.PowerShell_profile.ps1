@@ -1,6 +1,6 @@
 # Keep prompt at the bottom of the terminal during startup
-$consoleHeight = $host.UI.RawUI.WindowSize.Height
-Write-Host ("`n" * $consoleHeight)
+# $consoleHeight = $host.UI.RawUI.WindowSize.Height
+# Write-Host ("`n" * $consoleHeight)
 
 ## Constants
 $claudeApiKey = Get-Content -Path "C:\Users\ville\myfiles\documents\api-keys\anthropic\loïc-onboarding-api-key.txt" -Raw
@@ -68,12 +68,15 @@ Set-PSReadLineKeyHandler -Chord 'Alt-;' -Function AcceptSuggestion
 ## Fzf options
 Import-Module PSFzf
 $env:_PSFZF_FZF_DEFAULT_OPTS = '--layout=reverse --height=50% --preview-window=hidden'
-Set-PsFzfOption `
-  -PSReadlineChordProvider 'Ctrl+t' `
-  -PSReadlineChordReverseHistory 'Ctrl+r' `
-  -PSReadlineChordSetLocation 'Alt+c' `
 
-Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
+# Set-PsFzfOption `
+#   -PSReadlineChordProvider 'Ctrl+t' `
+#   -PSReadlineChordReverseHistory 'Ctrl+r' `
+#   -PSReadlineChordSetLocation 'Alt+c' `
+# Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
+
+. "$env:DOTFILES\windows\pwsh\PSfzf-config.ps1"
+Register-SmartPsFzfHandlers -EnableLogging $true
 
 
 ## Minor utility functions
@@ -139,7 +142,7 @@ Set-Alias -Name kacfg -Value Edit-Kanata-Config
 Set-Alias -Name zz -Value Set-LastDirectory
 
 Set-Alias -Name lst -Value Show-TreeList
-Set-Alias -Name clear -Value Clear-AndPutPromptAtBottom
+# Set-Alias -Name clear -Value Clear-AndPutPromptAtBottom
 
 ## Exec aliases
 Set-Alias -Name lg -Value lazygit
@@ -228,10 +231,10 @@ function Invoke-Starship-PreCommand {
   }
   $host.ui.Write($prompt)
   # Prompt positioning
-  if ($Host.UI.RawUI.WindowSize.Height -gt 40) {
-    Write-Host "`n`n`n`n" -NoNewline
-    Write-Host "$([char]27)[4A" -NoNewline
-  }
+  # if ($Host.UI.RawUI.WindowSize.Height -gt 40) {
+  #   Write-Host "`n`n`n`n" -NoNewline
+  #   Write-Host "$([char]27)[4A" -NoNewline
+  # }
 }
 
 ## Zoxide
