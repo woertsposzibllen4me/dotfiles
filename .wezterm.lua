@@ -303,6 +303,21 @@ config.keys = {
     action = wezterm.action.ShowDebugOverlay,
   },
 
+  -- HACK: Only enable multiline pasting while in Windows nvim or WSL to prevent accidents. (C-V is
+  -- safe with pwsh right now and doesn't execute right away)
+  {
+    key = "v",
+    mods = "CTRL|SHIFT",
+    action = wezterm.action_callback(function(window, pane)
+      local vars = pane:get_user_vars() or {}
+      local in_Windows_nvim = vars.in_Windows_nvim
+      local in_wsl = vars.in_wsl
+      if in_Windows_nvim == "1" or in_wsl == "1" then
+        window:perform_action(wezterm.action.PasteFrom("Clipboard"), pane)
+      end
+    end),
+  },
+
   -- Emojis
   {
     key = "o",
