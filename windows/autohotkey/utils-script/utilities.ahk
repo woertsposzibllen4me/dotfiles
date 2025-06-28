@@ -9,6 +9,84 @@ SendMode "Input"
 SetWorkingDir A_ScriptDir        ; Consistent starting directory
 TraySetIcon "..\\icons\\utils.png"
 
+DetectSpecificKeyboard() {
+  keyboards := GetKeyboardInfo()
+  detectedKeyboards := []
+  for keyboard in keyboards {
+    keyboardType := "Unknown"
+    ; Check VID/PID in Device ID
+    if InStr(keyboard.DeviceID, "VID_3434&PID_0121") {
+      keyboardType := "Keychron Q3"
+    }
+    else if InStr(keyboard.DeviceID, "VID_16C0&PID_27DB") {
+      keyboardType := "Glove80"
+    }
+    ; Only add unique keyboards (avoid duplicates from multiple interfaces)
+    found := false
+    for existing in detectedKeyboards {
+      if (existing = keyboardType) {
+        found := true
+        break
+      }
+    }
+    if (!found && keyboardType != "Unknown") {
+      detectedKeyboards.Push(keyboardType)
+    }
+  }
+  return detectedKeyboards
+}
+
+; Get keyboard information via WMI
+GetKeyboardInfo() {
+  keyboards := []
+  for objItem in ComObjGet("winmgmts:").ExecQuery("SELECT * FROM Win32_Keyboard") {
+    keyboards.Push({
+      Name: objItem.Name,
+      Description: objItem.Description,
+      DeviceID: objItem.DeviceID,
+      PNPDeviceID: objItem.PNPDeviceID
+    })
+  }
+  return keyboards
+}
+
+; Run detection once at startup
+detectedNames := DetectSpecificKeyboard()
+
+; Show detected keyboard names
+for keyboard in detectedNames {
+  MsgBox("Detected: " . keyboard)
+}
+
+; Set current keyboard variable for hotkeys
+currentKeyboard := ""
+for keyboard in detectedNames {
+  if (keyboard = "Keychron Q3") {
+    currentKeyboard := "keychronQ3"
+    break
+  }
+  else if (keyboard = "Glove80") {
+    currentKeyboard := "glove"
+    break
+  }
+}
+
+; Write full details to file
+keyboards := GetKeyboardInfo()
+outputFile := "keyboard_info.txt"
+if FileExist(outputFile) {
+  FileDelete(outputFile)
+}
+
+for keyboard in keyboards {
+  content := "Name: " . keyboard.Name . "`n"
+    . "Description: " . keyboard.Description . "`n"
+    . "Device ID: " . keyboard.DeviceID . "`n"
+    . "PNP Device ID: " . keyboard.PNPDeviceID . "`n"
+    . "----------------------------------------`n"
+  FileAppend(content, outputFile)
+}
+
 ; =======================================
 ; GLOBALS
 ; =======================================
@@ -514,7 +592,7 @@ ReplaceSlashes(direction := "/") {
 ^,::+F13
 #HotIf
 
-#HotIf !WinActive("ahk_exe dota2.exe") && !WinActive("Warcraft III")
+#HotIf !WinActive("ahk_exe dota2.exe") && !WinActive("Warcraft III") && (currentKeyboard = "keychronQ3")
 CapsLock::Esc
 Esc::CapsLock
 #HotIf
