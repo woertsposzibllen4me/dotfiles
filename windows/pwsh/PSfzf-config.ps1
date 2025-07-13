@@ -34,7 +34,7 @@ function Invoke-PatchedFzfWrapper {
 
   # For tab completion, we need to capture content changes
   $needsContentCapture = $OperationName -eq "Tab Completion"
-  
+
   if ($needsContentCapture) {
     # Define capture area - content that might be displaced by FZF
     $captureStart = [Math]::Max(0, $promptLine - $fzfHeight)
@@ -177,57 +177,34 @@ function Invoke-PatchedFzfWrapper {
 # Convenience functions for specific FZF operations
 function Invoke-PatchedFzfCompletion {
   param(
-    [string]$LogPath = "$env:TEMP\fzf-debug.log",
     [bool]$EnableLogging = $true
   )
-  
-  Invoke-PatchedFzfWrapper -FzfFunction { Invoke-FzfTabCompletion } -LogPath $LogPath -EnableLogging $EnableLogging -OperationName "Tab Completion"
+
+  Invoke-PatchedFzfWrapper -FzfFunction { Invoke-FzfTabCompletion } -EnableLogging $EnableLogging -OperationName "Tab Completion"
 }
 
 function Invoke-PatchedFzfReverseHistorySearch {
   param(
-    [string]$LogPath = "$env:TEMP\fzf-debug.log",
     [bool]$EnableLogging = $true
   )
-  
-  Invoke-PatchedFzfWrapper -FzfFunction { Invoke-FzfPSReadlineHandlerHistory } -LogPath $LogPath -EnableLogging $EnableLogging -OperationName "Reverse History Search"
+
+  Invoke-PatchedFzfWrapper -FzfFunction { Invoke-FzfPSReadlineHandlerHistory } -EnableLogging $EnableLogging -OperationName "Reverse History Search"
 }
 
 function Invoke-PatchedFzfProviderSearch {
   param(
-    [string]$LogPath = "$env:TEMP\fzf-debug.log",
     [bool]$EnableLogging = $true
   )
-  
-  Invoke-PatchedFzfWrapper -FzfFunction { Invoke-FzfPSReadlineHandlerProvider } -LogPath $LogPath -EnableLogging $EnableLogging -OperationName "Provider Search"
+
+  Invoke-PatchedFzfWrapper -FzfFunction { Invoke-FzfPSReadlineHandlerProvider } -EnableLogging $EnableLogging -OperationName "Provider Search"
 }
 
 function Invoke-PatchedFzfSetLocation {
   param(
-    [string]$LogPath = "$env:TEMP\fzf-debug.log",
-    [bool]$EnableLogging = $true
-  )
-  
-  Invoke-PatchedFzfWrapper -FzfFunction { Invoke-FzfPSReadlineHandlerSetLocation } -LogPath $LogPath -EnableLogging $EnableLogging -OperationName "Set Location"
-}
-
-# Register the smart completion key handlers
-function Register-PatchedFzfCompletion {
-  param(
-    [string]$Key = "Ctrl+o",
-    [string]$ViMode = "Insert",
     [bool]$EnableLogging = $true
   )
 
-  if ($EnableLogging) {
-    Set-PSReadLineKeyHandler -ViMode $ViMode -Key $Key -ScriptBlock {
-      Invoke-PatchedFzfCompletion -EnableLogging $true
-    }
-  } else {
-    Set-PSReadLineKeyHandler -ViMode $ViMode -Key $Key -ScriptBlock {
-      Invoke-PatchedFzfCompletion -EnableLogging $false
-    }
-  }
+  Invoke-PatchedFzfWrapper -FzfFunction { Invoke-FzfPSReadlineHandlerSetLocation } -EnableLogging $EnableLogging -OperationName "Set Location"
 }
 
 # Register all PSFzf key handlers with smart repositioning
@@ -260,17 +237,3 @@ function Register-SmartPsFzfHandlers {
     Invoke-PatchedFzfCompletion -EnableLogging $EnableLogging
   }.GetNewClosure()
 }
-
-# Example usage - replace your existing PSFzf setup with this:
-<#
-# Instead of:
-# Set-PsFzfOption `
-#   -PSReadlineChordProvider 'Ctrl+t' `
-#   -PSReadlineChordReverseHistory 'Ctrl+r' `
-#   -PSReadlineChordSetLocation 'Alt+c'
-# Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
-
-# Use this:
-Register-SmartPsFzfHandlers -EnableLogging $true
-#>
-
