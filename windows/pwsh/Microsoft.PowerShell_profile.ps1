@@ -20,11 +20,13 @@ Import-Module posh-git
 
 ## Custom modules
 Import-Module "$env:DOTFILES\windows\pwsh\ProfileFunctions.psm1"
-# general functions aliases
+# Imported functions aliases
 Set-Alias -Name spp -Value Set-PythonPath
 Set-Alias -Name eme -Value Enter-MegaScriptEnvironment
 Set-Alias -Name cpath -Value Copy-PathToClipboard
 Set-Alias -Name dsize -Value Get-DirectorySize
+Set-Alias -Name lf -Value Invoke-Yazi
+Set-Alias -Name y -Value Invoke-Yazi
 
 ## Path additions
 $pathsToAdd = @(

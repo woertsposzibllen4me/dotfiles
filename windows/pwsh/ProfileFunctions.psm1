@@ -44,8 +44,8 @@ function Get-DirectorySize {
 }
 
 
-function lf {
-  # Our yazi invocation (We prefer typing lf over y tbh)
+function Invoke-Yazi {
+  # Our yazi invocation with directory changing support
   $tmp = [System.IO.Path]::GetTempFileName()
   yazi $args --cwd-file="$tmp"
   $cwd = Get-Content -Path $tmp -Encoding UTF8
