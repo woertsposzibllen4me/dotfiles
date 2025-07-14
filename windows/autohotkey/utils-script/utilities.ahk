@@ -362,6 +362,8 @@ AppendLeaderKey(key) {
     WriteMessageAvoidTooVerbose()
   } else if (LeaderKeyBuffer = "mw") {
     WriteMessageWorstUserName()
+  } else if (LeaderKeyBuffer = "mx") {
+    WriteMessageExplainCode()
   } else if (LeaderKeyBuffer = "Spacep") {
     ActivateAdminPowerShell()
   } else if (LeaderKeyBuffer = "n") {
@@ -563,6 +565,10 @@ WriteMessageAvoidTooVerbose() {
 
 WriteMessageWorstUserName() {
   SendText "woertsposzibllen4me"
+}
+
+WriteMessageExplainCode() {
+  SendText "Can you explain every single line in depth ? No need to review code which has similar logic twice, but for every new uncovered piece of logic explain it very thoroughly please. There should be little room for further questioning if at all."
 }
 
 ReplaceSlashes(direction := "/") {
