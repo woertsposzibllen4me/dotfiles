@@ -1,5 +1,6 @@
 gui:
   mainPanelSplitMode: horizontal
+  useHunkModeInStagingView: true
   skipRewordInEditorWarning: true
   theme:
     activeBorderColor:
