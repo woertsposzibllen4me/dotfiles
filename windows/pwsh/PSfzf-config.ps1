@@ -1,6 +1,53 @@
 # FZF Smart Completion with Auto-Repositioning
 # This module provides intelligent cursor repositioning when FZF displaces terminal content
 
+function Invoke-CursorRepositioning {
+  param(
+    [Parameter(Mandatory)]
+    [int]$FzfHeight,
+    [Parameter(Mandatory)]
+    [int]$TerminalHeight,
+    [Parameter(Mandatory)]
+    [int]$TerminalWidth,
+    [Parameter(Mandatory)]
+    [System.Management.Automation.Host.PSHostRawUserInterface]$RawUI,
+    [string]$LogPath = "$env:TEMP\fzf-debug.log",
+    [bool]$EnableLogging = $true,
+    [string]$OperationName = "FZF Operation"
+  )
+
+  $currentPosAfter = $RawUI.CursorPosition
+  $threshold = $TerminalHeight - $FzfHeight
+  
+  if ($currentPosAfter.Y -gt $threshold) {
+    $newPos = $currentPosAfter
+    $moveAmount = $TerminalHeight - $currentPosAfter.Y - $FzfHeight
+    $newPos.Y = [Math]::Max(0, $currentPosAfter.Y + $moveAmount - 1)
+
+    $RawUI.CursorPosition = $newPos
+
+    if ($EnableLogging) {
+      $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss.fff"
+      "[$timestamp] Repositioned cursor after $OperationName to Y=$($newPos.Y)" | Out-File -FilePath $LogPath -Append
+    }
+
+    # Clear remnants below new position
+    for ($clearLine = $newPos.Y + 1; $clearLine -lt $TerminalHeight; $clearLine++) {
+      $RawUI.CursorPosition = @{ X = 0; Y = $clearLine }
+      Write-Host (" " * $TerminalWidth) -NoNewline
+    }
+
+    # Redraw prompt at new position
+    $RawUI.CursorPosition = $newPos
+    [Microsoft.PowerShell.PSConsoleReadLine]::ClearLine()
+    [Microsoft.PowerShell.PSConsoleReadLine]::InvokePrompt()
+    
+    return $true  # Indicate that repositioning occurred
+  }
+  
+  return $false  # No repositioning needed
+}
+
 function Invoke-PatchedFzfWrapper {
   param(
     [Parameter(Mandatory)]
@@ -119,30 +166,12 @@ function Invoke-PatchedFzfWrapper {
         "[$timestamp] FZF UI detected, checking for repositioning..." | Out-File -FilePath $LogPath -Append
       }
 
-      $currentPosAfter = $rawUI.CursorPosition
-
-      # Reposition if cursor is too low
-      if ($currentPosAfter.Y -gt ($terminalHeight - $fzfHeight)) {
-        $newPos = $currentPosAfter
-        $moveAmount = $terminalHeight - $currentPosAfter.Y - $fzfHeight
-        $newPos.Y = [Math]::Max(0, $currentPosAfter.Y + $moveAmount - 3)
-
-        $rawUI.CursorPosition = $newPos
-
+      $repositioned = Invoke-CursorRepositioning -FzfHeight $fzfHeight -TerminalHeight $terminalHeight -TerminalWidth $terminalWidth -RawUI $rawUI -LogPath $LogPath -EnableLogging $EnableLogging -OperationName $OperationName
+      
+      if (-not $repositioned) {
         if ($EnableLogging) {
-          "[$timestamp] Repositioned cursor to Y=$($newPos.Y)" | Out-File -FilePath $LogPath -Append
+          "[$timestamp] No repositioning needed for $OperationName" | Out-File -FilePath $LogPath -Append
         }
-
-        # Clear remnants below new position
-        for ($clearLine = $newPos.Y + 1; $clearLine -lt $terminalHeight; $clearLine++) {
-          $rawUI.CursorPosition = @{ X = 0; Y = $clearLine }
-          Write-Host (" " * $terminalWidth) -NoNewline
-        }
-
-        # Redraw prompt at new position
-        $rawUI.CursorPosition = $newPos
-        [Microsoft.PowerShell.PSConsoleReadLine]::ClearLine()
-        [Microsoft.PowerShell.PSConsoleReadLine]::InvokePrompt()
       }
     } else {
       if ($EnableLogging) {
@@ -152,28 +181,12 @@ function Invoke-PatchedFzfWrapper {
       [Microsoft.PowerShell.PSConsoleReadLine]::Insert("")
     }
   } else {
-    # For non-tab completion operations, use simpler repositioning logic
-    $currentPosAfter = $rawUI.CursorPosition
-    if ($currentPosAfter.Y -gt ($terminalHeight - $fzfHeight)) {
-      $newPos = $currentPosAfter
-      $moveAmount = $terminalHeight - $currentPosAfter.Y - $fzfHeight
-      $newPos.Y = [Math]::Max(0, $currentPosAfter.Y + $moveAmount - 3)
-
-      $rawUI.CursorPosition = $newPos
-
-      if ($EnableLogging) {
-        "[$timestamp] Repositioned cursor after $OperationName to Y=$($newPos.Y)" | Out-File -FilePath $LogPath -Append
-      }
-
-      # Clear remnants
-      for ($clearLine = $newPos.Y + 1; $clearLine -lt $terminalHeight; $clearLine++) {
-        $rawUI.CursorPosition = @{ X = 0; Y = $clearLine }
-        Write-Host (" " * $terminalWidth) -NoNewline
-      }
-
-      $rawUI.CursorPosition = $newPos
-      [Microsoft.PowerShell.PSConsoleReadLine]::ClearLine()
-      [Microsoft.PowerShell.PSConsoleReadLine]::InvokePrompt()
+    # For non-tab completion operations, use the common repositioning logic
+    $repositioned = Invoke-CursorRepositioning -FzfHeight $fzfHeight -TerminalHeight $terminalHeight -TerminalWidth $terminalWidth -RawUI $rawUI -LogPath $LogPath -EnableLogging $EnableLogging -OperationName $OperationName
+    
+    if (-not $repositioned -and $EnableLogging) {
+      $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss.fff"
+      "[$timestamp] No repositioning needed for $OperationName" | Out-File -FilePath $LogPath -Append
     }
   }
 }
@@ -241,3 +254,4 @@ function Register-SmartPsFzfHandlers {
     Invoke-PatchedFzfCompletion -EnableLogging $EnableLogging
   }.GetNewClosure()
 }
+
