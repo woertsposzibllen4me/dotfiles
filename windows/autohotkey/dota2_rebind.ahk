@@ -1,10 +1,25 @@
 #SingleInstance Force
 A_MaxHotkeysPerInterval := 500
-#HotIf WinActive("Dota 2")
-SetWorkingDir A_ScriptDir  ; Ensures a consistent starting directory.
+SetWorkingDir A_ScriptDir
 TraySetIcon "icons\dota2.png"
+
+#HotIf WinActive("Dota 2")
 LWin::=
 CapsLock::-
-`::0
-XButton1::Alt ; to be improved tbh with some better combo based implementation
-XButton2::XButton1 ; This is to keep backwards menu navigation working, using mouse 5 instead of mouse 4
+
+; XButton1 + specific keys = Alt + those keys
+XButton1 & z::!z
+XButton1 & x::!x
+XButton1 & c::!c
+XButton1 & v::!v
+XButton1 & b::!b
+XButton1 & g::!g
+XButton1 & 1::!1
+XButton1 & 2::!2
+XButton1 & 3::!3
+XButton1 & 4::!4
+XButton1 & 5::!5
+XButton1 & 6::!6
+XButton1 & `::!`
+XButton1 & F1::!F1
+XButton1::XButton1
