@@ -1,6 +1,6 @@
 # Keep prompt at the bottom of the terminal during startup
-# $consoleHeight = $host.UI.RawUI.WindowSize.Height
-# Write-Host ("`n" * $consoleHeight)
+$consoleHeight = $host.UI.RawUI.WindowSize.Height
+Write-Host ("`n" * $consoleHeight)
 
 ## Constants
 $claudeApiKey = Get-Content -Path "C:\Users\ville\myfiles\documents\api-keys\anthropic\loïc-onboarding-api-key.txt" -Raw
@@ -69,7 +69,7 @@ Set-PSReadLineKeyHandler -Chord 'Alt-;' -Function AcceptSuggestion
 
 ## Fzf options
 Import-Module PSFzf
-$env:_PSFZF_FZF_DEFAULT_OPTS = '--layout=reverse --height=50% --preview-window=hidden'
+$env:_PSFZF_FZF_DEFAULT_OPTS = '--layout=reverse --height=40% --preview-window=hidden'
 
 # Set-PsFzfOption `
 #   -PSReadlineChordProvider 'Ctrl+t' `
@@ -233,10 +233,10 @@ function Invoke-Starship-PreCommand {
   }
   $host.ui.Write($prompt)
   # Prompt positioning
-  # if ($Host.UI.RawUI.WindowSize.Height -gt 40) {
-  #   Write-Host "`n`n`n`n" -NoNewline
-  #   Write-Host "$([char]27)[4A" -NoNewline
-  # }
+  if ($Host.UI.RawUI.WindowSize.Height -gt 40) {
+    Write-Host "`n`n`n`n" -NoNewline
+    Write-Host "$([char]27)[4A" -NoNewline
+  }
 }
 
 ## Zoxide
