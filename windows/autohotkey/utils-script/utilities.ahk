@@ -246,8 +246,6 @@ ResetChromeWindowList() {
 ; =======================================
 ; LEADER‑KEY DEFINITIONS
 ; =======================================
-; Ctrl+Space activates leader key mode
-$^Space:: ActivateLeaderKey()
 
 ; Process keystrokes while in leader mode
 #HotIf LeaderKeyActive
@@ -586,7 +584,7 @@ ReplaceSlashes(direction := "/") {
 }
 
 ; =======================================
-; ADDITIONAL HOTKEYS
+; GENERAL HOTKEYS
 ; =======================================
 !j::Down
 !k::Up
@@ -598,6 +596,12 @@ ReplaceSlashes(direction := "/") {
 ^,::+F13
 #HotIf
 
+; Leader key functionality - available on all keyboards except in games
+#HotIf !WinActive("ahk_exe dota2.exe") && !WinActive("Warcraft III")
+$^Space:: ActivateLeaderKey()
+#HotIf
+
+; Keyboard-specific hotkeys - only for Keychron Q3, also excluding games
 #HotIf !WinActive("ahk_exe dota2.exe") && !WinActive("Warcraft III") && (currentKeyboard = "keychronQ3")
 CapsLock::Esc
 Esc::CapsLock
