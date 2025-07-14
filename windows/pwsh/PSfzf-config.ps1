@@ -28,9 +28,14 @@ function Invoke-PatchedFzfWrapper {
     $fzfHeight = [Math]::Floor($terminalHeight / 2)  # Default to 50%
   }
 
+  if ($EnableLogging) {
+    "[$timestamp] Terminal size: $terminalWidth x $terminalHeight" | Out-File -FilePath $LogPath -Append
+    "[$timestamp] FZF height option parsed as: $fzfHeight lines" | Out-File -FilePath $LogPath -Append
+  }
+
   # Get current cursor position to identify prompt line
-  $currentPos = $rawUI.CursorPosition
-  $promptLine = $currentPos.Y
+  $currentPosBefore = $rawUI.CursorPosition
+  $promptLine = $currentPosBefore.Y
 
   # For tab completion, we need to capture content changes
   $needsContentCapture = $OperationName -eq "Tab Completion"
@@ -117,12 +122,11 @@ function Invoke-PatchedFzfWrapper {
       $currentPosAfter = $rawUI.CursorPosition
 
       # Reposition if cursor is too low
-      if ($currentPosAfter.Y -gt $fzfHeight) {
+      if ($currentPosAfter.Y -gt ($terminalHeight - $fzfHeight)) {
         $newPos = $currentPosAfter
-        $moveAmount = $currentPosAfter.Y - $fzfHeight
-        $newPos.Y = [Math]::Max(0, $currentPosAfter.Y - $moveAmount - 2)
+        $moveAmount = $terminalHeight - $currentPosAfter.Y - $fzfHeight
+        $newPos.Y = [Math]::Max(0, $currentPosAfter.Y + $moveAmount - 3)
 
-        # Move to new position
         $rawUI.CursorPosition = $newPos
 
         if ($EnableLogging) {
@@ -150,10 +154,10 @@ function Invoke-PatchedFzfWrapper {
   } else {
     # For non-tab completion operations, use simpler repositioning logic
     $currentPosAfter = $rawUI.CursorPosition
-    if ($currentPosAfter.Y -gt $fzfHeight) {
+    if ($currentPosAfter.Y -gt ($terminalHeight - $fzfHeight)) {
       $newPos = $currentPosAfter
-      $moveAmount = $currentPosAfter.Y - $fzfHeight
-      $newPos.Y = [Math]::Max(0, $currentPosAfter.Y - $moveAmount - 2)
+      $moveAmount = $terminalHeight - $currentPosAfter.Y - $fzfHeight
+      $newPos.Y = [Math]::Max(0, $currentPosAfter.Y + $moveAmount - 3)
 
       $rawUI.CursorPosition = $newPos
 
