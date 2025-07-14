@@ -4,7 +4,7 @@ if [[ -n "$WSL_DISTRO_NAME" ]]; then
   WSL_ENV=true
 fi
 
-# WSL CONFIGURATION START =====================================================
+# === WSL CONFIGURATION START ===
 if $WSL_ENV; then
   # Relay ssh key (must be on top)
   source ~/bin/wsl-ssh-agent-relay.sh
@@ -21,7 +21,7 @@ if $WSL_ENV; then
     # && tic -x -o ~/.terminfo $tempfile \
     # && rm $tempfile
 fi
-# WSL CONFIGURATION END =======================================================
+# === WSL CONFIGURATION END ===
 
 # Update starship config for WSL mounted path module
 # ~/bin/update-starship-config.sh
@@ -145,8 +145,8 @@ alias lat='eza --icons -laT'
 alias zf="__zoxide_zi"
 alias zz="z -"
 
-## CUSTOM FUNCTIONS START =====================================================
-# QUICK EDIT FUNCTIONS START ==================================================
+# === CUSTOM FUNCTIONS START ===
+# === QUICK EDIT FUNCTIONS START ===
 function edit-wezterm-profile() {
   nvim "$DOTFILES/.wezterm.lua"
 }
@@ -167,8 +167,8 @@ alias tmcfg='edit-tmux-config'
 alias zscfg='edit-zshrc'
 alias gitcfg='git config --global -e'
 
-# QUICK EDIT FUNCTIONS END ====================================================
-# UTILITY FUNCTIONS START =====================================================
+# === QUICK EDIT FUNCTIONS END ===
+# === UTILITY FUNCTIONS START ===
 
 # Python environment setup
 function set_python_path() {
@@ -219,8 +219,8 @@ alias virepro='start-nvim-bug-repro'
 alias cpath='copy-path-to-clipboard'
 alias eme='enter_megascript_environment'
 
-# UTILITY FUNCTIONS END =======================================================
-## CUSTOM FUNCTIONS END =======================================================
+# === UTILITY FUNCTIONS END ===
+# === CUSTOM FUNCTIONS END ===
 
 # Initialize final tools
 eval "$(zoxide init zsh)"
