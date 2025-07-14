@@ -584,15 +584,27 @@ config.keys = {
     action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }),
   },
 
-  -- Switch to tabs
-  { key = "1", mods = "LEADER", action = wezterm.action({ ActivateTab = 0 }) },
-  { key = "2", mods = "LEADER", action = wezterm.action({ ActivateTab = 1 }) },
-  { key = "3", mods = "LEADER", action = wezterm.action({ ActivateTab = 2 }) },
-  { key = "4", mods = "LEADER", action = wezterm.action({ ActivateTab = 3 }) },
-  { key = "5", mods = "LEADER", action = wezterm.action({ ActivateTab = 4 }) },
-  { key = "6", mods = "LEADER", action = wezterm.action({ ActivateTab = 5 }) },
-  { key = "7", mods = "LEADER", action = wezterm.action({ ActivateTab = 6 }) },
-  { key = "8", mods = "LEADER", action = wezterm.action({ ActivateTab = 7 }) },
+  -- Switch tabs
+  { key = "phys:1", mods = "LEADER", action = wezterm.action.ActivateTab(0) },
+  { key = "phys:1", mods = "LEADER|SHIFT", action = wezterm.action.ActivateTab(0) },
+  { key = "phys:2", mods = "LEADER", action = wezterm.action.ActivateTab(1) },
+  { key = "phys:2", mods = "LEADER|SHIFT", action = wezterm.action.ActivateTab(1) },
+  { key = "phys:3", mods = "LEADER", action = wezterm.action.ActivateTab(2) },
+  { key = "phys:3", mods = "LEADER|SHIFT", action = wezterm.action.ActivateTab(2) },
+  { key = "phys:4", mods = "LEADER", action = wezterm.action.ActivateTab(3) },
+  { key = "phys:4", mods = "LEADER|SHIFT", action = wezterm.action.ActivateTab(3) },
+  { key = "phys:5", mods = "LEADER", action = wezterm.action.ActivateTab(4) },
+  { key = "phys:5", mods = "LEADER|SHIFT", action = wezterm.action.ActivateTab(4) },
+  { key = "phys:6", mods = "LEADER", action = wezterm.action.ActivateTab(5) },
+  { key = "phys:6", mods = "LEADER|SHIFT", action = wezterm.action.ActivateTab(5) },
+  { key = "phys:7", mods = "LEADER", action = wezterm.action.ActivateTab(6) },
+  { key = "phys:7", mods = "LEADER|SHIFT", action = wezterm.action.ActivateTab(6) },
+  { key = "phys:8", mods = "LEADER", action = wezterm.action.ActivateTab(7) },
+  { key = "phys:8", mods = "LEADER|SHIFT", action = wezterm.action.ActivateTab(7) },
+  { key = "phys:9", mods = "LEADER", action = wezterm.action.ActivateTab(8) },
+  { key = "phys:9", mods = "LEADER|SHIFT", action = wezterm.action.ActivateTab(8) },
+  { key = "phys:0", mods = "LEADER", action = wezterm.action.ActivateTab(9) },
+  { key = "phys:0", mods = "LEADER|SHIFT", action = wezterm.action.ActivateTab(9) },
 
   -- Toggle tabs
   {
