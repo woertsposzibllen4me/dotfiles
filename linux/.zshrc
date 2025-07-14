@@ -13,11 +13,13 @@ if $WSL_ENV; then
   # Fix incorrect delta color rendering
   export COLORTERM=truecolor
 
-  # export TERM="tmux-256color"
-  # NOTE:this might be working normally again, not needed anymore ? Apparently
-  # this was fixed by compiling an indentical xterm-256color file in
-  # ~/.terminfo/x/xterm-256color over the default one in
-  # /usr/share/terminfo/x/xterm-256color. Ask claude how to do it ...
+  # HACK: fixes no undercurl in nvim
+  export TERM="wezterm"
+  # NOTE: Might have to build the .terminfo file with:
+  # tempfile=$(mktemp) \
+    # && curl -o $tempfile https://raw.githubusercontent.com/wezterm/wezterm/main/termwiz/data/wezterm.terminfo \
+    # && tic -x -o ~/.terminfo $tempfile \
+    # && rm $tempfile
 fi
 # WSL CONFIGURATION END =======================================================
 
