@@ -553,6 +553,11 @@ config.keys = {
     mods = "LEADER",
     action = wezterm.action.CloseCurrentPane({ confirm = true }),
   },
+  {
+    key = "X",
+    mods = "LEADER",
+    action = wezterm.action.CloseCurrentTab({ confirm = true }),
+  },
 
   -- Zoom
   {
@@ -583,6 +588,11 @@ config.keys = {
     mods = "LEADER",
     action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }),
   },
+  {
+    key = "T",
+    mods = "LEADER",
+    action = wezterm.action({ SpawnTab = "CurrentPaneDomain" }),
+  },
 
   -- Switch tabs
   { key = "phys:1", mods = "LEADER", action = wezterm.action.ActivateTab(0) },
@@ -605,13 +615,6 @@ config.keys = {
   { key = "phys:9", mods = "LEADER|SHIFT", action = wezterm.action.ActivateTab(8) },
   { key = "phys:0", mods = "LEADER", action = wezterm.action.ActivateTab(9) },
   { key = "phys:0", mods = "LEADER|SHIFT", action = wezterm.action.ActivateTab(9) },
-
-  -- Toggle tabs
-  {
-    key = "T",
-    mods = "LEADER",
-    action = act.EmitEvent("toggle-tabbar"),
-  },
 
   -- Custom bind for nvim
   {
