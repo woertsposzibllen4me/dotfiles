@@ -45,6 +45,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export DOTFILES="$HOME/dotfiles"
 unsetopt BEEP
+export FZF_DEFAULT_OPTS='--layout=reverse --height=40% --preview-window=hidden'
 
 # case insensitive completions
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -90,8 +91,6 @@ zinit light-mode for \
   zdharma-continuum/zinit-annex-rust
 
 # Load plugins here
-
-# powerlevel10k
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
 
@@ -119,6 +118,7 @@ function zvm_config() {
 function zvm_after_init() {
   zvm_bindkey viins '^p' history-search-backward
   zvm_bindkey viins '^n' history-search-forward
+  zvm_bindkey viins '^r' fzf-history-widget
   bindkey '^[[C' forward-word # Right arrow
   bindkey '\e;' end-of-line # Alt-;
 }
@@ -213,6 +213,8 @@ function lf() {
   fi
   rm -f -- "$tmp"
 }
+
+alias y='lf'
 
 # Utility functions aliases
 alias virepro='start-nvim-bug-repro'
