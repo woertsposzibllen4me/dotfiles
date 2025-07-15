@@ -4,7 +4,7 @@ function Set-PythonPath {
 }
 
 function Enter-MegaScriptEnvironment {
-  Set-Location "C:\Users\ville\woertsposzibllen4me"
+  Set-Location $env:STREAMING_REPO_PATH
   Set-PythonPath
   .\.venv\Scripts\activate
 }

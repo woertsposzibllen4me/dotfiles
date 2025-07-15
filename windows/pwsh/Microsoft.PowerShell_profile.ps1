@@ -3,13 +3,15 @@ $consoleHeight = $host.UI.RawUI.WindowSize.Height
 Write-Host ("`n" * $consoleHeight)
 
 ## Constants
-$claudeApiKey = Get-Content -Path "C:\Users\ville\myfiles\documents\api-keys\anthropic\loïc-onboarding-api-key.txt" -Raw
+$claudeApiKey = Get-Content -Path "$HOME\myfiles\documents\api-keys\anthropic\loïc-onboarding-api-key.txt" -Raw
 
 ## Environment variables
 $env:PYTHONIOENCODING="utf-8"
 $env:AVANTE_ANTHROPIC_API_KEY = $claudeApiKey.Trim() # scoped for avante nivm usage
 $env:YAZI_FILE_ONE="C:\Program Files\Git\usr\bin\file.exe"
-$env:DOTFILES = "$HOME\dotfiles"
+$env:DOTFILES = "$HOME\myfiles\dotfiles"
+$env:STREAMING_DATA_PATH = "$HOME\myfiles\streaming-data"
+$env:STREAMING_REPO_PATH = "$HOME\myfiles\woertsposzibllen4me"
 
 ## These are forwarded to WSL when using "wsl" from pwsh
 $env:WSLENV = "AVANTE_ANTHROPIC_API_KEY"
