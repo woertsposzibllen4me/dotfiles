@@ -144,7 +144,7 @@ Set-Alias -Name kacfg -Value Edit-Kanata-Config
 Set-Alias -Name zz -Value Set-LastDirectory
 
 Set-Alias -Name lst -Value Show-TreeList
-# Set-Alias -Name clear -Value Clear-AndPutPromptAtBottom
+Set-Alias -Name clear -Value Clear-AndPutPromptAtBottom
 
 ## Exec aliases
 Set-Alias -Name lg -Value lazygit
