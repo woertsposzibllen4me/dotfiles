@@ -1,67 +1,67 @@
 $dotfilesConfig = @{
 
   "PowerShell profile" = @{
-    "source" = "$env:DOTFILES\windows\pwsh\Microsoft.PowerShell_profile.ps1"
+    "source" = "$env:DOTFILES_PATH\windows\pwsh\Microsoft.PowerShell_profile.ps1"
     "target" = "$HOME\OneDrive\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"
   }
 
   "Git config" = @{
-    "source" = "$env:DOTFILES\.gitconfig"
+    "source" = "$env:DOTFILES_PATH\.gitconfig"
     "target" = "$HOME\.gitconfig"
   }
 
   "Lazygit config" = @{
-    "source" = "$env:DOTFILES\lazygit-config.yml"
+    "source" = "$env:DOTFILES_PATH\lazygit-config.yml"
     "target" = "$HOME\AppData\Local\lazygit\config.yml"
   }
 
   "VS Code keybinds" = @{
-    "source" = "$env:DOTFILES\vscode\keybindings.json"
+    "source" = "$env:DOTFILES_PATH\vscode\keybindings.json"
     "target" = "$HOME\AppData\Roaming\Code\User\keybindings.json"
   }
 
   "VS Code settings" = @{
-    "source" = "$env:DOTFILES\vscode\settings.json"
+    "source" = "$env:DOTFILES_PATH\vscode\settings.json"
     "target" = "$HOME\AppData\Roaming\Code\User\settings.json"
   }
 
   "Wezterm config" = @{
-    "source" = "$env:DOTFILES\.wezterm.lua"
+    "source" = "$env:DOTFILES_PATH\.wezterm.lua"
     "target" = "$HOME\.wezterm.lua"
   }
 
   "Nvim config" = @{
-    "source"  = "$env:DOTFILES\nvim-config3.0"
+    "source"  = "$env:DOTFILES_PATH\nvim-config3.0"
     "target" = "$HOME\AppData\Local\nvim\"
   }
 
   "Starship config" = @{
-    "source"  = "$env:DOTFILES\starship.toml"
+    "source"  = "$env:DOTFILES_PATH\starship.toml"
     "target" = "$HOME\.config\starship.toml"
   }
 
   "Kanata config" = @{
-    "source"  = "$env:DOTFILES\kanata.kbd"
+    "source"  = "$env:DOTFILES_PATH\kanata.kbd"
     "target" = "$HOME\AppData\Roaming\kanata\kanata.kbd"
   }
 
   "Yazi general config" = @{
-    "source"  = "$env:DOTFILES\yazi-config\yazi.toml"
+    "source"  = "$env:DOTFILES_PATH\yazi-config\yazi.toml"
     "target" = "$HOME\AppData\Roaming\yazi\config\yazi.toml"
   }
 
   "Yazi package" = @{
-    "source"  = "$env:DOTFILES\yazi-config\package.toml"
+    "source"  = "$env:DOTFILES_PATH\yazi-config\package.toml"
     "target" = "$HOME\AppData\Roaming\yazi\config\package.toml"
   }
 
   "Yazi theme" = @{
-    "source"  = "$env:DOTFILES\yazi-config\theme.toml"
+    "source"  = "$env:DOTFILES_PATH\yazi-config\theme.toml"
     "target" = "$HOME\AppData\Roaming\yazi\config\theme.toml"
   }
 
   "Yazi keymap" = @{
-    "source"  = "$env:DOTFILES\yazi-config\keymap.toml"
+    "source"  = "$env:DOTFILES_PATH\yazi-config\keymap.toml"
     "target" = "$HOME\AppData\Roaming\yazi\config\keymap.toml"
   }
 }

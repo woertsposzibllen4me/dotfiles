@@ -9,7 +9,7 @@ $claudeApiKey = Get-Content -Path "$HOME\myfiles\documents\api-keys\anthropic\lo
 $env:PYTHONIOENCODING="utf-8"
 $env:AVANTE_ANTHROPIC_API_KEY = $claudeApiKey.Trim() # scoped for avante nivm usage
 $env:YAZI_FILE_ONE="C:\Program Files\Git\usr\bin\file.exe"
-$env:DOTFILES = "$HOME\myfiles\dotfiles"
+$env:DOTFILES_PATH = "$HOME\myfiles\dotfiles"
 $env:STREAMING_DATA_PATH = "$HOME\myfiles\streaming-data"
 $env:STREAMING_REPO_PATH = "$HOME\myfiles\woertsposzibllen4me"
 
@@ -21,7 +21,7 @@ Import-Module Terminal-Icons
 Import-Module posh-git
 
 ## Custom modules
-Import-Module "$env:DOTFILES\windows\pwsh\ProfileFunctions.psm1"
+Import-Module "$env:DOTFILES_PATH\windows\pwsh\ProfileFunctions.psm1"
 # Imported functions aliases
 Set-Alias -Name spp -Value Set-PythonPath
 Set-Alias -Name eme -Value Enter-MegaScriptEnvironment
@@ -32,7 +32,7 @@ Set-Alias -Name y -Value Invoke-Yazi
 
 ## Path additions
 $pathsToAdd = @(
-  "$env:DOTFILES\windows\batch"
+  "$env:DOTFILES_PATH\windows\batch"
   "$HOME\myfiles\programs\PROGRAMS_ON_PATH"
   "C:\Program Files\Git\bin"
 )
@@ -79,7 +79,7 @@ $env:_PSFZF_FZF_DEFAULT_OPTS = '--layout=reverse --height=40% --preview-window=h
 #   -PSReadlineChordSetLocation 'Alt+c' `
 # Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
 
-. "$env:DOTFILES\windows\pwsh\PSfzf-config.ps1"
+. "$env:DOTFILES_PATH\windows\pwsh\PSfzf-config.ps1"
 Register-SmartPsFzfHandlers -EnableLogging $true
 
 
@@ -96,11 +96,11 @@ function Edit-Profile {
 }
 
 function Edit-Wezterm-Profile {
-  nvim "$env:DOTFILES\.wezterm.lua"
+  nvim "$env:DOTFILES_PATH\.wezterm.lua"
 }
 
 function Edit-Lazygit-Config {
-  nvim "$env:DOTFILES\lazygit-config.yml"
+  nvim "$env:DOTFILES_PATH\lazygit-config.yml"
 }
 
 function Edit-Git-Config {
@@ -108,7 +108,7 @@ function Edit-Git-Config {
 }
 
 function Edit-Kanata-Config {
-  nvim "$env:DOTFILES\kanata.kbd"
+  nvim "$env:DOTFILES_PATH\kanata.kbd"
 }
 
 function Show-TreeList {
@@ -160,7 +160,7 @@ Set-Alias -Name zf -Value zi
 
 ## Location functions
 function ahk {
-  Set-Location "$env:DOTFILES\windows\autohotkey"
+  Set-Location "$env:DOTFILES_PATH\windows\autohotkey"
 }
 
 function vidata {
@@ -168,7 +168,7 @@ function vidata {
 }
 
 function vid {
-  Set-Location "$env:DOTFILES\nvim-config3.0" # better than if in $HOME for lazydev nvim plugin usage
+  Set-Location "$env:DOTFILES_PATH\nvim-config3.0" # better than if in $HOME for lazydev nvim plugin usage
 }
 
 function vir {
@@ -184,7 +184,7 @@ function loc {
 }
 
 function dot {
-  Set-Location "$env:DOTFILES"
+  Set-Location "$env:DOTFILES_PATH"
 }
 
 function my {
