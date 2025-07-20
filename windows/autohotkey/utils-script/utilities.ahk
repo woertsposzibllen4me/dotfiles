@@ -243,6 +243,53 @@ ResetChromeWindowList() {
   SaveChromeWindowList()
 }
 
+; Capture Current Chrome Window
+CaptureCurrentChromeWindow(slot) {
+  global Browser1_ID, Browser2_ID, Browser3_ID
+
+  ; Get the currently active window
+  activeID := WinGetID("A")
+
+  ; Check if it's a Chrome window
+  try {
+    activeExe := WinGetProcessName("ahk_id " activeID)
+    if (activeExe != "chrome.exe") {
+      MsgBox("❌ Active window is not Chrome (" activeExe ")")
+      return false
+    }
+  } catch {
+    MsgBox("❌ Could not identify active window")
+    return false
+  }
+
+  ; Assign to the requested slot
+  if (slot = 1) {
+    Browser1_ID := activeID
+    slotName := "Browser1"
+  } else if (slot = 2) {
+    Browser2_ID := activeID
+    slotName := "Browser2"
+  } else if (slot = 3) {
+    Browser3_ID := activeID
+    slotName := "Browser3"
+  } else {
+    MsgBox("❌ Invalid slot: " slot)
+    return false
+  }
+
+  ; Add to Chrome window list if not already there
+  AddToChromeWindowList(activeID)
+
+  ; Save the changes
+  WriteWindowIDs()
+
+  ; Show confirmation
+  ToolTip("✅ Captured Chrome window to " slotName " (ID: " activeID ")")
+  SetTimer(() => ToolTip(), -2000)
+
+  return true
+}
+
 ; =======================================
 ; LEADER‑KEY DEFINITIONS
 ; =======================================
@@ -251,56 +298,82 @@ ResetChromeWindowList() {
 #HotIf LeaderKeyActive
 a:: AppendLeaderKey("a")
 ^a:: AppendLeaderKey("a")
++a:: AppendLeaderKey("A")
 b:: AppendLeaderKey("b")
 ^b:: AppendLeaderKey("b")
++b:: AppendLeaderKey("B")
 c:: AppendLeaderKey("c")
 ^c:: AppendLeaderKey("c")
++c:: AppendLeaderKey("C")
 d:: AppendLeaderKey("d")
 ^d:: AppendLeaderKey("d")
++d:: AppendLeaderKey("D")
 e:: AppendLeaderKey("e")
 ^e:: AppendLeaderKey("e")
++e:: AppendLeaderKey("E")
 f:: AppendLeaderKey("f")
 ^f:: AppendLeaderKey("f")
++f:: AppendLeaderKey("F")
 g:: AppendLeaderKey("g")
 ^g:: AppendLeaderKey("g")
++g:: AppendLeaderKey("G")
 h:: AppendLeaderKey("h")
 ^h:: AppendLeaderKey("h")
++h:: AppendLeaderKey("H")
 i:: AppendLeaderKey("i")
 ^i:: AppendLeaderKey("i")
++i:: AppendLeaderKey("I")
 j:: AppendLeaderKey("j")
 ^j:: AppendLeaderKey("j")
++j:: AppendLeaderKey("J")
 k:: AppendLeaderKey("k")
 ^k:: AppendLeaderKey("k")
++k:: AppendLeaderKey("K")
 l:: AppendLeaderKey("l")
 ^l:: AppendLeaderKey("l")
++l:: AppendLeaderKey("L")
 m:: AppendLeaderKey("m")
 ^m:: AppendLeaderKey("m")
++m:: AppendLeaderKey("M")
 n:: AppendLeaderKey("n")
 ^n:: AppendLeaderKey("n")
++n:: AppendLeaderKey("N")
 o:: AppendLeaderKey("o")
 ^o:: AppendLeaderKey("o")
++o:: AppendLeaderKey("O")
 p:: AppendLeaderKey("p")
 ^p:: AppendLeaderKey("p")
++p:: AppendLeaderKey("P")
 q:: AppendLeaderKey("q")
 ^q:: AppendLeaderKey("q")
++q:: AppendLeaderKey("Q")
 r:: AppendLeaderKey("r")
 ^r:: AppendLeaderKey("r")
++r:: AppendLeaderKey("R")
 s:: AppendLeaderKey("s")
 ^s:: AppendLeaderKey("s")
++s:: AppendLeaderKey("S")
 t:: AppendLeaderKey("t")
 ^t:: AppendLeaderKey("t")
++t:: AppendLeaderKey("T")
 u:: AppendLeaderKey("u")
 ^u:: AppendLeaderKey("u")
++u:: AppendLeaderKey("U")
 v:: AppendLeaderKey("v")
 ^v:: AppendLeaderKey("v")
++v:: AppendLeaderKey("V")
 w:: AppendLeaderKey("w")
 ^w:: AppendLeaderKey("w")
++w:: AppendLeaderKey("W")
 x:: AppendLeaderKey("x")
 ^x:: AppendLeaderKey("x")
++x:: AppendLeaderKey("X")
 y:: AppendLeaderKey("y")
 ^y:: AppendLeaderKey("y")
++y:: AppendLeaderKey("Y")
 z:: AppendLeaderKey("z")
 ^z:: AppendLeaderKey("z")
++z:: AppendLeaderKey("Z")
 Space:: AppendLeaderKey("Space")
 ^Space:: AppendLeaderKey("Space")
 1:: AppendLeaderKey("1")
@@ -339,44 +412,49 @@ CancelLeaderKeyFunc() {
 AppendLeaderKey(key) {
   global LeaderKeyBuffer
   LeaderKeyBuffer .= key
-
-  if (LeaderKeyBuffer = "a") {
+  if (LeaderKeyBuffer == "a") {
     ActivateBrowser1Window()
-  } else if (LeaderKeyBuffer = "s") {
+  } else if (LeaderKeyBuffer == "s") {
     ActivateBrowser2Window()
-  } else if (LeaderKeyBuffer = "d") {
+  } else if (LeaderKeyBuffer == "d") {
     ActivateBrowser3Window()
-  } else if (LeaderKeyBuffer = "c") {
+  } else if (LeaderKeyBuffer == "A") {
+    CaptureCurrentChromeWindow(1)
+  } else if (LeaderKeyBuffer == "S") {
+    CaptureCurrentChromeWindow(2)
+  } else if (LeaderKeyBuffer == "D") {
+    CaptureCurrentChromeWindow(3)
+  } else if (LeaderKeyBuffer == "c") {
     ActivateVSCode()
-  } else if (LeaderKeyBuffer = "w") {
+  } else if (LeaderKeyBuffer == "w") {
     ActivateWezTerm()
-  } else if (LeaderKeyBuffer = "p") {
+  } else if (LeaderKeyBuffer == "p") {
     ActivatePowerShell()
-  } else if (LeaderKeyBuffer = "g") {
+  } else if (LeaderKeyBuffer == "g") {
     ActivateSpotify()
-  } else if (LeaderKeyBuffer = "x") {
+  } else if (LeaderKeyBuffer == "x") {
     ActivateExplorer()
-  } else if (LeaderKeyBuffer = "mm") {
+  } else if (LeaderKeyBuffer == "mm") {
     WriteMessageAvoidTooVerbose()
-  } else if (LeaderKeyBuffer = "mw") {
+  } else if (LeaderKeyBuffer == "mw") {
     WriteMessageWorstUserName()
-  } else if (LeaderKeyBuffer = "mx") {
+  } else if (LeaderKeyBuffer == "mx") {
     WriteMessageExplainCode()
-  } else if (LeaderKeyBuffer = "Spacep") {
+  } else if (LeaderKeyBuffer == "Spacep") {
     ActivateAdminPowerShell()
-  } else if (LeaderKeyBuffer = "n") {
+  } else if (LeaderKeyBuffer == "n") {
     ActivateNeo4j()
-  } else if (LeaderKeyBuffer = "\") {
+  } else if (LeaderKeyBuffer == "\") {
     ReplaceSlashes("\")
-  } else if (LeaderKeyBuffer = "/") {
+  } else if (LeaderKeyBuffer == "/") {
     ReplaceSlashes("/")
-  } else if (LeaderKeyBuffer = "o") {
+  } else if (LeaderKeyBuffer == "o") {
     ActivateOBS()
-  } else if (LeaderKeyBuffer = "mc") {
+  } else if (LeaderKeyBuffer == "mc") {
     Click
-    ; } else if (LeaderKeyBuffer = "Space]") {
-    ;   ResetChromeWindowList()
-  } else if (LeaderKeyBuffer = "y") {
+  } else if (LeaderKeyBuffer == "Space]") {
+    ResetChromeWindowList()
+  } else if (LeaderKeyBuffer == "y") {
     ActivatePyCharm()
   } else {
     ToolTip("Leader mode: " LeaderKeyBuffer)   ; show progress
@@ -480,7 +558,8 @@ ActivateBrowser1Window() {
   return ActivateOrCreateWindow(&Browser1_ID,
     "chrome.exe",
     "chrome.exe",
-    "https://claude.ai https://chat.openai.com")
+    ; "https://claude.ai https://chat.openai.com"
+  )
 }
 
 ActivateBrowser2Window() {
@@ -488,7 +567,8 @@ ActivateBrowser2Window() {
   return ActivateOrCreateWindow(&Browser2_ID,
     "chrome.exe",
     "chrome.exe",
-    "https://claude.ai https://chat.openai.com")
+    ; "https://claude.ai https://chat.openai.com"
+  )
 }
 
 ActivateBrowser3Window() {
@@ -496,7 +576,8 @@ ActivateBrowser3Window() {
   return ActivateOrCreateWindow(&Browser3_ID,
     "chrome.exe",
     "chrome.exe",
-    "https://claude.ai https://chat.openai.com")
+    ; "https://claude.ai https://chat.openai.com"
+  )
 }
 
 ActivateVSCode() {
