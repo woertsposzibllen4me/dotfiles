@@ -8,6 +8,12 @@ LWin::=
 CapsLock::-
 
 ; XButton1 + specific keys = Alt + those keys
+XButton1 & q::!q
+XButton1 & w::!w
+XButton1 & e::!e
+XButton1 & r::!r
+XButton1 & d::!d
+XButton1 & f::!f
 XButton1 & z::!z
 XButton1 & x::!x
 XButton1 & c::!c
