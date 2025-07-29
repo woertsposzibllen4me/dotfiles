@@ -452,6 +452,8 @@ AppendLeaderKey(key) {
     ActivateOBS()
   } else if (LeaderKeyBuffer == "mc") {
     Click
+  } else if (LeaderKeyBuffer == "RR") {
+    Reload
   } else if (LeaderKeyBuffer == "Space]") {
     ResetChromeWindowList()
   } else if (LeaderKeyBuffer == "y") {
