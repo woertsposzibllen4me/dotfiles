@@ -6,6 +6,7 @@ TraySetIcon "icons\dota2.png"
 #HotIf WinActive("Dota 2")
 LWin::=
 CapsLock::-
+`::'
 
 ; XButton1 + specific keys = Alt + those keys
 XButton1 & q::!q
