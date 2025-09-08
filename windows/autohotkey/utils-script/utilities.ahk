@@ -669,10 +669,6 @@ ReplaceSlashes(direction := "/") {
 ; =======================================
 ; GENERAL HOTKEYS
 ; =======================================
-!j::Down
-!k::Up
-!h::Left
-!l::Right
 
 #HotIf WinActive("Wezterm")
 ^;::F13
@@ -688,4 +684,8 @@ $^Space:: ActivateLeaderKey()
 #HotIf !WinActive("ahk_exe dota2.exe") && !WinActive("Warcraft III") && (currentKeyboard = "keychronQ3")
 CapsLock::Esc
 Esc::CapsLock
+!j::Down
+!k::Up
+!h::Left
+!l::Right
 #HotIf
