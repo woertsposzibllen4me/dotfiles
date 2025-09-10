@@ -1,32 +1,43 @@
 #SingleInstance Force
-A_MaxHotkeysPerInterval := 500
+A_MaxHotkeysPerInterval := 99999
+SendMode "Event"
 SetWorkingDir A_ScriptDir
 TraySetIcon "icons\dota2.png"
 
 #HotIf WinActive("Dota 2")
-LWin::=
-CapsLock::-
-`::'
+`::Insert
+CapsLock::Home
+LWin::Delete
 
-; XButton1 + specific keys = Alt + those keys
-; XButton1 & q::!q
-; XButton1 & w::!w
-; XButton1 & e::!e
-; XButton1 & r::!r
-; XButton1 & d::!d
-; XButton1 & f::!f
-; XButton1 & z::!z
-; XButton1 & x::!x
-; XButton1 & c::!c
-; XButton1 & v::!v
-; XButton1 & b::!b
-; XButton1 & g::!g
-; XButton1 & 1::!1
-; XButton1 & 2::!2
-; XButton1 & 3::!3
-; XButton1 & 4::!4
-; XButton1 & 5::!5
-; XButton1 & 6::!6
-; XButton1 & `::!`
-; XButton1 & F1::!F1
-; XButton1::XButton1
+; Keep vim style up/down navigtion for the shop
+!j:: Send "{Down}"
+!k:: Send "{Up}"
+
+;==========================================
+;Camera experimental combos start
+;==========================================
+!q::!F10
+!w::!F11
+!e::!F13
+!a::!F14
+!s::!F15
+!d::!F16
+!z::!F17
+!x::!F18
+!c::!F19
+!CapsLock::!F20
+
+; To be able to actually create the mappings in the IG menu
+Ins::F13
+Home::F14
+PGUp::F15
+Del::F16
+End::F17
+PgDn::F18
+
+; We do not bind up/down arrows to avoid conflict with shop navigation
+Left::F19
+Right::F20
+;==========================================
+;Camera experimental combos end
+;==========================================
