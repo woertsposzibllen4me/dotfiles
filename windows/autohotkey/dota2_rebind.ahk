@@ -14,20 +14,18 @@ LWin::0
 !j:: Send "{Down}"
 !k:: Send "{Up}"
 
-; Units
-!q::9
-!w::Backspace
-; !e::
+; !q::9
+; !w::Backspace
 
 ; Cam pos
-!a::!Ins ; mid
+!e::!Ins ; mid
 !d::!Home ; safe
 !f::!PgUp ; off
-!v::!Del ; fountain
+!v::!End ; fountain
 
 ; Illu rune
 !z::!5
 !x::!6
 
 ; Shop
-!c::F11
+!q::F11
