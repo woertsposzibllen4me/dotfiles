@@ -14,18 +14,25 @@ LWin::0
 !j:: Send "{Down}"
 !k:: Send "{Up}"
 
-; !q::9
-; !w::Backspace
-
 ; Cam pos
-!e::!Ins ; mid
-!d::!Home ; safe
-!f::!PgUp ; off
-!v::!End ; fountain
+!q::!Ins ; mid
+!d::!Home ; top
+!c::!PgUp ; bot
+!e::!End ; fountain
+
+; Armlet toggle
+!a:: {
+  Send "{Alt up}"
+  Send "{g}"
+}
+!s:: {
+  Send "{Alt up}"
+  Send "{g}"
+}
 
 ; Illu rune
 !z::!5
 !x::!6
 
 ; Shop
-!q::F11
+!w::F11
