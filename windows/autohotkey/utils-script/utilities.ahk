@@ -450,8 +450,10 @@ AppendLeaderKey(key) {
     ReplaceSlashes("/")
   } else if (LeaderKeyBuffer == "o") {
     ActivateOBS()
-  } else if (LeaderKeyBuffer == "mc") {
-    Click
+  } else if (LeaderKeyBuffer == "c") {
+    ActivateDiscord()
+  } else if (LeaderKeyBuffer == "b") {
+    ActivateBraveBrowser()
   } else if (LeaderKeyBuffer == "RR") {
     Reload
   } else if (LeaderKeyBuffer == "Space]") {
@@ -548,6 +550,20 @@ ActivateOBS() {
     WinActivate
   else
     Run "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\OBS Studio\OBS Studio (64bit).lnk"
+}
+
+ActivateDiscord() {
+  if WinExist("ahk_exe Discord.exe")
+    WinActivate
+  else
+    Run "C:\Users\ville\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Discord Inc\Discord.lnk"
+}
+
+ActivateBraveBrowser() {
+  if WinExist("ahk_exe brave.exe")
+    WinActivate
+  else
+    Run "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Brave.lnk"
 }
 
 ActivateSpotify() {
