@@ -424,7 +424,7 @@ AppendLeaderKey(key) {
     CaptureCurrentChromeWindow(2)
   } else if (LeaderKeyBuffer == "D") {
     CaptureCurrentChromeWindow(3)
-  } else if (LeaderKeyBuffer == "c") {
+  } else if (LeaderKeyBuffer == "v") {
     ActivateVSCode()
   } else if (LeaderKeyBuffer == "w") {
     ActivateWezTerm()
