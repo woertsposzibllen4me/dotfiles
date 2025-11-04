@@ -20,19 +20,35 @@ LWin::0
 !c::!PgUp ; bot
 !e::!End ; fountain
 
-; Armlet toggle
-!a:: {
+; Scoreboard
+!f::!j
+
+!x:: {
   Send "{Alt up}"
-  Send "{g}"
-}
-!s:: {
-  Send "{Alt up}"
-  Send "{g}"
+  Send "{u}"
 }
 
 ; Illu rune
-!z::!5
-!x::!6
+!a::!5
+!s::!6
+
+!^Right:: {
+  Send "{Enter}"
+  Send "-teleport"
+  Send "{Enter}"
+}
+
+!^Left:: {
+  Send "{Enter}"
+  Send "-startgame"
+  Send "{Enter}"
+}
+
+!^Down:: {
+  Send "{Enter}"
+  Send "-item obs"
+  Send "{Enter}"
+}
 
 ; Shop
 !w::F11
