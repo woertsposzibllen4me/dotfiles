@@ -9,6 +9,29 @@ SendMode "Input"
 SetWorkingDir A_ScriptDir        ; Consistent starting directory
 TraySetIcon "..\\icons\\utils.png"
 
+; =======================================
+; GLOBALS
+; =======================================
+; Leader‑key system
+global LeaderKeyActive := false
+global LeaderKeyBuffer := ""
+global LeaderKeyTimeout := 2000
+
+global currentKeyboard := ""
+
+; Window IDs (persisted individually)
+global Browser1_ID := 0
+global Browser2_ID := 0
+global Browser3_ID := 0
+global SpotifyWindow_ID := 0
+
+; Chrome‑tracking (persisted as a list)
+global ChromeWindowList := []
+global ChromeWindowsFile := A_ScriptDir "\\chrome_windows.ini"
+
+; Config file for single‑value IDs
+global ConfigFile := A_ScriptDir "\\window_ids.ini"
+
 DetectSpecificKeyboard() {
   keyboards := GetKeyboardInfo()
   detectedKeyboards := []
@@ -59,7 +82,6 @@ for keyboard in detectedNames {
 }
 
 ; Set current keyboard variable for hotkeys
-currentKeyboard := ""
 for keyboard in detectedNames {
   if (keyboard = "Keychron Q3") {
     currentKeyboard := "keychronQ3"
@@ -86,27 +108,6 @@ for keyboard in keyboards {
     . "----------------------------------------`n"
   FileAppend(content, outputFile)
 }
-
-; =======================================
-; GLOBALS
-; =======================================
-; Leader‑key system
-global LeaderKeyActive := false
-global LeaderKeyBuffer := ""
-global LeaderKeyTimeout := 2000
-
-; Window IDs (persisted individually)
-global Browser1_ID := 0
-global Browser2_ID := 0
-global Browser3_ID := 0
-global SpotifyWindow_ID := 0
-
-; Chrome‑tracking (persisted as a list)
-global ChromeWindowList := []
-global ChromeWindowsFile := A_ScriptDir "\\chrome_windows.ini"
-
-; Config file for single‑value IDs
-global ConfigFile := A_ScriptDir "\\window_ids.ini"
 
 ; =======================================
 ; STARTUP / SHUTDOWN
