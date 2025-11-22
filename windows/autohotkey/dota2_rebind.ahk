@@ -5,10 +5,12 @@ SendMode "Event"
 SetWorkingDir A_ScriptDir
 TraySetIcon "icons\dota2.png"
 
-#HotIf WinActive("Dota 2")
+#HotIf WinActive("Dota 2") or WinActive("Deadlock")
 `::=
 CapsLock::-
 LWin::0
+
+#HotIf WinActive('Dota 2')
 
 ; Keep vim style up/down navigtion for the shop
 !j:: Send "{Down}"
@@ -52,3 +54,5 @@ LWin::0
 
 ; Shop
 !w::F11
+
+#HotIf
