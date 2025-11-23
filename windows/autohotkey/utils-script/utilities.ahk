@@ -292,125 +292,50 @@ CaptureCurrentChromeWindow(slot) {
 }
 
 ; =======================================
-; LEADER‑KEY DEFINITIONS
+; LEADER‑KEY HOTKEY CREATION
 ; =======================================
 
-; Process keystrokes while in leader mode
-#HotIf LeaderKeyActive
-a:: AppendLeaderKey("a")
-^a:: AppendLeaderKey("a")
-+a:: AppendLeaderKey("A")
-b:: AppendLeaderKey("b")
-^b:: AppendLeaderKey("b")
-+b:: AppendLeaderKey("B")
-c:: AppendLeaderKey("c")
-^c:: AppendLeaderKey("c")
-+c:: AppendLeaderKey("C")
-d:: AppendLeaderKey("d")
-^d:: AppendLeaderKey("d")
-+d:: AppendLeaderKey("D")
-e:: AppendLeaderKey("e")
-^e:: AppendLeaderKey("e")
-+e:: AppendLeaderKey("E")
-f:: AppendLeaderKey("f")
-^f:: AppendLeaderKey("f")
-+f:: AppendLeaderKey("F")
-g:: AppendLeaderKey("g")
-^g:: AppendLeaderKey("g")
-+g:: AppendLeaderKey("G")
-h:: AppendLeaderKey("h")
-^h:: AppendLeaderKey("h")
-+h:: AppendLeaderKey("H")
-i:: AppendLeaderKey("i")
-^i:: AppendLeaderKey("i")
-+i:: AppendLeaderKey("I")
-j:: AppendLeaderKey("j")
-^j:: AppendLeaderKey("j")
-+j:: AppendLeaderKey("J")
-k:: AppendLeaderKey("k")
-^k:: AppendLeaderKey("k")
-+k:: AppendLeaderKey("K")
-l:: AppendLeaderKey("l")
-^l:: AppendLeaderKey("l")
-+l:: AppendLeaderKey("L")
-m:: AppendLeaderKey("m")
-^m:: AppendLeaderKey("m")
-+m:: AppendLeaderKey("M")
-n:: AppendLeaderKey("n")
-^n:: AppendLeaderKey("n")
-+n:: AppendLeaderKey("N")
-o:: AppendLeaderKey("o")
-^o:: AppendLeaderKey("o")
-+o:: AppendLeaderKey("O")
-p:: AppendLeaderKey("p")
-^p:: AppendLeaderKey("p")
-+p:: AppendLeaderKey("P")
-q:: AppendLeaderKey("q")
-^q:: AppendLeaderKey("q")
-+q:: AppendLeaderKey("Q")
-r:: AppendLeaderKey("r")
-^r:: AppendLeaderKey("r")
-+r:: AppendLeaderKey("R")
-s:: AppendLeaderKey("s")
-^s:: AppendLeaderKey("s")
-+s:: AppendLeaderKey("S")
-t:: AppendLeaderKey("t")
-^t:: AppendLeaderKey("t")
-+t:: AppendLeaderKey("T")
-u:: AppendLeaderKey("u")
-^u:: AppendLeaderKey("u")
-+u:: AppendLeaderKey("U")
-v:: AppendLeaderKey("v")
-^v:: AppendLeaderKey("v")
-+v:: AppendLeaderKey("V")
-w:: AppendLeaderKey("w")
-^w:: AppendLeaderKey("w")
-+w:: AppendLeaderKey("W")
-x:: AppendLeaderKey("x")
-^x:: AppendLeaderKey("x")
-+x:: AppendLeaderKey("X")
-y:: AppendLeaderKey("y")
-^y:: AppendLeaderKey("y")
-+y:: AppendLeaderKey("Y")
-z:: AppendLeaderKey("z")
-^z:: AppendLeaderKey("z")
-+z:: AppendLeaderKey("Z")
-Space:: AppendLeaderKey("Space")
-^Space:: AppendLeaderKey("Space")
-1:: AppendLeaderKey("1")
-2:: AppendLeaderKey("2")
-3:: AppendLeaderKey("3")
-4:: AppendLeaderKey("4")
-5:: AppendLeaderKey("5")
-6:: AppendLeaderKey("6")
-7:: AppendLeaderKey("7")
-8:: AppendLeaderKey("8")
-9:: AppendLeaderKey("9")
-0:: AppendLeaderKey("0")
-!:: AppendLeaderKey("!")
-@:: AppendLeaderKey("@")
-#:: AppendLeaderKey("#")
-$:: AppendLeaderKey("$")
-%:: AppendLeaderKey("%")
-^:: AppendLeaderKey("^")
-&:: AppendLeaderKey("&")
-*:: AppendLeaderKey("*")
-(:: AppendLeaderKey("(")
-):: AppendLeaderKey(")")
-/:: AppendLeaderKey("/")
-\:: AppendLeaderKey("\")
-]:: AppendLeaderKey("]")
-[:: AppendLeaderKey("[")
-; Using CapsLock for canceling since you rebind Escape
-CapsLock:: CancelLeaderKeyFunc()
-#HotIf
+MakeCallback(val) {
+  return (*) => AppendLeaderKey(val)
+}
 
-; Activates leader key mode
+; Set the context for dynamically created hotkeys
+HotIf (*) => LeaderKeyActive
+
+for letter in StrSplit("abcdefghijklmnopqrstuvwxyz") {
+  lower := letter
+  upper := StrUpper(letter)
+  Hotkey lower, MakeCallback(lower)
+  Hotkey "^" lower, MakeCallback(lower)
+  Hotkey "+" lower, MakeCallback(upper)
+}
+
+for n in StrSplit("0123456789") {
+  Hotkey n, MakeCallback(n)
+}
+
+Hotkey "Space", MakeCallback("Space")
+Hotkey "^Space", MakeCallback("Space")
+
+specials := ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "/", "\", "]", "["]
+for s in specials {
+  Hotkey s, MakeCallback(s)
+}
+
+Hotkey "Esc", (*) => CancelLeaderKeyFunc()
+Hotkey "CapsLock", (*) => CancelLeaderKeyFunc()
+
+HotIf
+
+; =======================================
+; LEADER‑KEY FUNCTIONS ASSIGNMENT
+; =======================================
+
 ActivateLeaderKey() {
   global LeaderKeyActive, LeaderKeyBuffer, LeaderKeyTimeout
   LeaderKeyActive := true
   LeaderKeyBuffer := ""
-  SetTimer(CancelLeaderKeyFunc, 0)            ; reset existing
+  SetTimer(CancelLeaderKeyFunc, 0) ; reset existing
   SetTimer(CancelLeaderKeyFunc, LeaderKeyTimeout)
   ToolTip("Leader mode active")
   SoundPlay("C:\\Windows\\Media\\Windows Balloon.wav")
