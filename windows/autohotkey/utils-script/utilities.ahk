@@ -17,6 +17,40 @@ global LeaderKeyActive := false
 global LeaderKeyBuffer := ""
 global LeaderKeyTimeout := 2000
 
+global LeaderCommands := Map(
+  ; Single character commands
+  "b", ActivateBraveBrowser,
+  "d", ActivateDiscord,
+  "k", ActivateKovaaks,
+  "l", ActivateDeadlock,
+  "n", ActivateNeo4j,
+  "o", ActivateOBS,
+  "p", ActivatePowerShell,
+  "s", ActivateSpotify,
+  "v", ActivateVSCode,
+  "w", ActivateWezTerm,
+  "x", ActivateExplorer,
+  "y", ActivatePyCharm,
+  ; Number commands
+  "1", ActivateBrowser1Window,
+  "2", ActivateBrowser2Window,
+  "3", ActivateBrowser3Window,
+  ; Symbol commands
+  "!", (*) => CaptureCurrentChromeWindow(1),
+  "@", (*) => CaptureCurrentChromeWindow(2),
+  "#", (*) => CaptureCurrentChromeWindow(3),
+  "/", (*) => ReplaceSlashes("/"),
+  "\", (*) => ReplaceSlashes("\"),
+  ; Multi-character commands
+  "mm", WriteMessageAvoidTooVerbose,
+  "mw", WriteMessageWorstUserName,
+  "mx", WriteMessageExplainCode,
+  "RR", (*) => Reload,
+  "Spacep", ActivateAdminPowerShell,
+  "Space]", ResetChromeWindowList
+)
+
+
 global currentKeyboard := ""
 
 ; Window IDs (persisted individually)
@@ -322,8 +356,8 @@ for s in specials {
   Hotkey s, MakeCallback(s)
 }
 
-Hotkey "Esc", (*) => CancelLeaderKeyFunc()
-Hotkey "CapsLock", (*) => CancelLeaderKeyFunc()
+Hotkey "Esc", (*) => CancelLeaderKey()
+Hotkey "CapsLock", (*) => CancelLeaderKey()
 
 HotIf
 
@@ -335,92 +369,32 @@ ActivateLeaderKey() {
   global LeaderKeyActive, LeaderKeyBuffer, LeaderKeyTimeout
   LeaderKeyActive := true
   LeaderKeyBuffer := ""
-  SetTimer(CancelLeaderKeyFunc, 0) ; reset existing
-  SetTimer(CancelLeaderKeyFunc, LeaderKeyTimeout)
+  SetTimer(CancelLeaderKey, 0) ; reset existing
+  SetTimer(CancelLeaderKey, LeaderKeyTimeout)
   ToolTip("Leader mode active")
   SoundPlay("C:\\Windows\\Media\\Windows Balloon.wav")
 }
 
-CancelLeaderKeyFunc() {
-  CancelLeaderKey()
-}
 
 AppendLeaderKey(key) {
-  global LeaderKeyBuffer
+  global LeaderKeyBuffer, LeaderCommands
   LeaderKeyBuffer .= key
 
-  ; Single character commands
-  if (LeaderKeyBuffer == "b") {
-    ActivateBraveBrowser()
-  } else if (LeaderKeyBuffer == "d") {
-    ActivateDiscord()
-  } else if (LeaderKeyBuffer == "k") {
-    ActivateKovaaks()
-  } else if (LeaderKeyBuffer == "l") {
-    ActivateDeadlock()
-  } else if (LeaderKeyBuffer == "n") {
-    ActivateNeo4j()
-  } else if (LeaderKeyBuffer == "o") {
-    ActivateOBS()
-  } else if (LeaderKeyBuffer == "p") {
-    ActivatePowerShell()
-  } else if (LeaderKeyBuffer == "s") {
-    ActivateSpotify()
-  } else if (LeaderKeyBuffer == "v") {
-    ActivateVSCode()
-  } else if (LeaderKeyBuffer == "w") {
-    ActivateWezTerm()
-  } else if (LeaderKeyBuffer == "x") {
-    ActivateExplorer()
-  } else if (LeaderKeyBuffer == "y") {
-    ActivatePyCharm()
-
-    ; Number commands
-  } else if (LeaderKeyBuffer == "1") {
-    ActivateBrowser1Window()
-  } else if (LeaderKeyBuffer == "2") {
-    ActivateBrowser2Window()
-  } else if (LeaderKeyBuffer == "3") {
-    ActivateBrowser3Window()
-
-    ; Symbol commands
-  } else if (LeaderKeyBuffer == "!") {
-    CaptureCurrentChromeWindow(1)
-  } else if (LeaderKeyBuffer == "#") {
-    CaptureCurrentChromeWindow(3)
-  } else if (LeaderKeyBuffer == "/") {
-    ReplaceSlashes("/")
-  } else if (LeaderKeyBuffer == "@") {
-    CaptureCurrentChromeWindow(2)
-  } else if (LeaderKeyBuffer == "\") {
-    ReplaceSlashes("\")
-
-    ; Multi-character commands
-  } else if (LeaderKeyBuffer == "mm") {
-    WriteMessageAvoidTooVerbose()
-  } else if (LeaderKeyBuffer == "mw") {
-    WriteMessageWorstUserName()
-  } else if (LeaderKeyBuffer == "mx") {
-    WriteMessageExplainCode()
-  } else if (LeaderKeyBuffer == "RR") {
-    Reload ; reload this script (for testing)
-  } else if (LeaderKeyBuffer == "Spacep") {
-    ActivateAdminPowerShell()
-  } else if (LeaderKeyBuffer == "Space]") {
-    ResetChromeWindowList()
-
+  ; Check if we have a matching command
+  if (LeaderCommands.Has(LeaderKeyBuffer)) {
+    LeaderCommands[LeaderKeyBuffer]()
+    CancelLeaderKey()
   } else {
-    ToolTip("Leader mode: " LeaderKeyBuffer) ; show progress
-    return ; wait for more keys
+    ; Show progress and wait for more keys
+    ToolTip("Leader mode: " LeaderKeyBuffer)
   }
-  CancelLeaderKey() ; after any recognised command
 }
 
 CancelLeaderKey() {
   global LeaderKeyActive, LeaderKeyBuffer
   LeaderKeyActive := false
   LeaderKeyBuffer := ""
-  SetTimer(CancelLeaderKeyFunc, 0)
+  SetTimer(CancelLeaderKey, 0)
   ToolTip()
 }
 
