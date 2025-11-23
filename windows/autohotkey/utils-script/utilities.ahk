@@ -461,6 +461,10 @@ AppendLeaderKey(key) {
     ResetChromeWindowList()
   } else if (LeaderKeyBuffer == "y") {
     ActivatePyCharm()
+  } else if (LeaderKeyBuffer == "k") {
+    ActivateKovaaks()
+  } else if (LeaderKeyBuffer == "l") {
+    ActivateDeadlock()
   } else {
     ToolTip("Leader mode: " LeaderKeyBuffer)   ; show progress
     return                                    ; wait for more keys
@@ -655,6 +659,19 @@ ActivateNeo4j() {
     WinActivate
   else
     Run "C:\\Users\\ville\\AppData\\Local\\Programs\\Neo4j Desktop\\Neo4j Desktop.exe"
+}
+
+ActivateKovaaks() {
+  if WinExist("ahk_exe FPSAimTrainer-Win64-Shipping.exe")
+    WinActivate
+  else Run "C:\Users\ville\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Steam\KovaaK 2.0.url"
+}
+
+ActivateDeadlock() {
+  if WinExist("ahk_exe deadlock.exe")
+    WinActivate
+  else
+    Run "C:\Users\ville\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Steam\Deadlock.url"
 }
 
 WriteMessageAvoidTooVerbose() {
