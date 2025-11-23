@@ -687,13 +687,13 @@ ReplaceSlashes(direction := "/") {
 ; GENERAL HOTKEYS
 ; =======================================
 
-#HotIf WinActive("Wezterm")
+#HotIf WinActive("ahk_exe wezterm-gui.exe")
 ^;::F13
 ^,::+F13
 #HotIf
 
 Excludegames() {
-  return !WinActive("ahk_exe dota2.exe") && !WinActive("Warcraft III") && !WinActive("ahk_exe deadlock.exe")
+  return !WinActive("ahk_exe dota2.exe") && !WinActive("ahk_exe Warcraft III.exe") && !WinActive("ahk_exe deadlock.exe")
 }
 
 ; Leader key functionality - available on all keyboards except in games
