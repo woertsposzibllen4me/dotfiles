@@ -572,8 +572,10 @@ ActivateBraveBrowser() {
 }
 
 ActivateSpotify() {
-  global SpotifyWindow_ID
-  return ActivateOrCreateWindow(&SpotifyWindow_ID, "spotify.exe", "spotify.exe")
+  if WinExist("ahk_exe Spotify.exe")
+    WinActivate
+  else
+    Run "spotify.exe" ; It's some bullshit windows store unfindable path
 }
 
 ActivateBrowser1Window() {
