@@ -348,63 +348,72 @@ CancelLeaderKeyFunc() {
 AppendLeaderKey(key) {
   global LeaderKeyBuffer
   LeaderKeyBuffer .= key
-  if (LeaderKeyBuffer == "1") {
+
+  ; Single character commands
+  if (LeaderKeyBuffer == "b") {
+    ActivateBraveBrowser()
+  } else if (LeaderKeyBuffer == "d") {
+    ActivateDiscord()
+  } else if (LeaderKeyBuffer == "k") {
+    ActivateKovaaks()
+  } else if (LeaderKeyBuffer == "l") {
+    ActivateDeadlock()
+  } else if (LeaderKeyBuffer == "n") {
+    ActivateNeo4j()
+  } else if (LeaderKeyBuffer == "o") {
+    ActivateOBS()
+  } else if (LeaderKeyBuffer == "p") {
+    ActivatePowerShell()
+  } else if (LeaderKeyBuffer == "s") {
+    ActivateSpotify()
+  } else if (LeaderKeyBuffer == "v") {
+    ActivateVSCode()
+  } else if (LeaderKeyBuffer == "w") {
+    ActivateWezTerm()
+  } else if (LeaderKeyBuffer == "x") {
+    ActivateExplorer()
+  } else if (LeaderKeyBuffer == "y") {
+    ActivatePyCharm()
+
+    ; Number commands
+  } else if (LeaderKeyBuffer == "1") {
     ActivateBrowser1Window()
   } else if (LeaderKeyBuffer == "2") {
     ActivateBrowser2Window()
   } else if (LeaderKeyBuffer == "3") {
     ActivateBrowser3Window()
+
+    ; Symbol commands
   } else if (LeaderKeyBuffer == "!") {
     CaptureCurrentChromeWindow(1)
-  } else if (LeaderKeyBuffer == "@") {
-    CaptureCurrentChromeWindow(2)
   } else if (LeaderKeyBuffer == "#") {
     CaptureCurrentChromeWindow(3)
-  } else if (LeaderKeyBuffer == "v") {
-    ActivateVSCode()
-  } else if (LeaderKeyBuffer == "w") {
-    ActivateWezTerm()
-  } else if (LeaderKeyBuffer == "p") {
-    ActivatePowerShell()
-  } else if (LeaderKeyBuffer == "s") {
-    ActivateSpotify()
-  } else if (LeaderKeyBuffer == "x") {
-    ActivateExplorer()
+  } else if (LeaderKeyBuffer == "/") {
+    ReplaceSlashes("/")
+  } else if (LeaderKeyBuffer == "@") {
+    CaptureCurrentChromeWindow(2)
+  } else if (LeaderKeyBuffer == "\") {
+    ReplaceSlashes("\")
+
+    ; Multi-character commands
   } else if (LeaderKeyBuffer == "mm") {
     WriteMessageAvoidTooVerbose()
   } else if (LeaderKeyBuffer == "mw") {
     WriteMessageWorstUserName()
   } else if (LeaderKeyBuffer == "mx") {
     WriteMessageExplainCode()
+  } else if (LeaderKeyBuffer == "RR") {
+    Reload ; reload this script (for testing)
   } else if (LeaderKeyBuffer == "Spacep") {
     ActivateAdminPowerShell()
-  } else if (LeaderKeyBuffer == "n") {
-    ActivateNeo4j()
-  } else if (LeaderKeyBuffer == "\") {
-    ReplaceSlashes("\")
-  } else if (LeaderKeyBuffer == "/") {
-    ReplaceSlashes("/")
-  } else if (LeaderKeyBuffer == "o") {
-    ActivateOBS()
-  } else if (LeaderKeyBuffer == "d") {
-    ActivateDiscord()
-  } else if (LeaderKeyBuffer == "b") {
-    ActivateBraveBrowser()
-  } else if (LeaderKeyBuffer == "RR") {
-    Reload
   } else if (LeaderKeyBuffer == "Space]") {
     ResetChromeWindowList()
-  } else if (LeaderKeyBuffer == "y") {
-    ActivatePyCharm()
-  } else if (LeaderKeyBuffer == "k") {
-    ActivateKovaaks()
-  } else if (LeaderKeyBuffer == "l") {
-    ActivateDeadlock()
+
   } else {
-    ToolTip("Leader mode: " LeaderKeyBuffer)   ; show progress
-    return                                    ; wait for more keys
+    ToolTip("Leader mode: " LeaderKeyBuffer) ; show progress
+    return ; wait for more keys
   }
-  CancelLeaderKey()                             ; after any recognised command
+  CancelLeaderKey() ; after any recognised command
 }
 
 CancelLeaderKey() {
