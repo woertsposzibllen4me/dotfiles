@@ -387,6 +387,16 @@ Space:: AppendLeaderKey("Space")
 8:: AppendLeaderKey("8")
 9:: AppendLeaderKey("9")
 0:: AppendLeaderKey("0")
+!:: AppendLeaderKey("!")
+@:: AppendLeaderKey("@")
+#:: AppendLeaderKey("#")
+$:: AppendLeaderKey("$")
+%:: AppendLeaderKey("%")
+^:: AppendLeaderKey("^")
+&:: AppendLeaderKey("&")
+*:: AppendLeaderKey("*")
+(:: AppendLeaderKey("(")
+):: AppendLeaderKey(")")
 /:: AppendLeaderKey("/")
 \:: AppendLeaderKey("\")
 ]:: AppendLeaderKey("]")
@@ -413,17 +423,17 @@ CancelLeaderKeyFunc() {
 AppendLeaderKey(key) {
   global LeaderKeyBuffer
   LeaderKeyBuffer .= key
-  if (LeaderKeyBuffer == "a") {
+  if (LeaderKeyBuffer == "1") {
     ActivateBrowser1Window()
-  } else if (LeaderKeyBuffer == "s") {
+  } else if (LeaderKeyBuffer == "2") {
     ActivateBrowser2Window()
-  } else if (LeaderKeyBuffer == "d") {
+  } else if (LeaderKeyBuffer == "3") {
     ActivateBrowser3Window()
-  } else if (LeaderKeyBuffer == "A") {
+  } else if (LeaderKeyBuffer == "!") {
     CaptureCurrentChromeWindow(1)
-  } else if (LeaderKeyBuffer == "S") {
+  } else if (LeaderKeyBuffer == "@") {
     CaptureCurrentChromeWindow(2)
-  } else if (LeaderKeyBuffer == "D") {
+  } else if (LeaderKeyBuffer == "#") {
     CaptureCurrentChromeWindow(3)
   } else if (LeaderKeyBuffer == "v") {
     ActivateVSCode()
@@ -431,7 +441,7 @@ AppendLeaderKey(key) {
     ActivateWezTerm()
   } else if (LeaderKeyBuffer == "p") {
     ActivatePowerShell()
-  } else if (LeaderKeyBuffer == "g") {
+  } else if (LeaderKeyBuffer == "s") {
     ActivateSpotify()
   } else if (LeaderKeyBuffer == "x") {
     ActivateExplorer()
@@ -451,7 +461,7 @@ AppendLeaderKey(key) {
     ReplaceSlashes("/")
   } else if (LeaderKeyBuffer == "o") {
     ActivateOBS()
-  } else if (LeaderKeyBuffer == "c") {
+  } else if (LeaderKeyBuffer == "d") {
     ActivateDiscord()
   } else if (LeaderKeyBuffer == "b") {
     ActivateBraveBrowser()
