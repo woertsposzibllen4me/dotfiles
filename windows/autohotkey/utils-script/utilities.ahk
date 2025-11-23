@@ -693,7 +693,7 @@ ReplaceSlashes(direction := "/") {
 #HotIf
 
 Excludegames() {
-  return !WinActive("ahk_exe dota2.exe") && !WinActive("Warcraft III") && !WinActive("Deadlock")
+  return !WinActive("ahk_exe dota2.exe") && !WinActive("Warcraft III") && !WinActive("ahk_exe deadlock.exe")
 }
 
 ; Leader key functionality - available on all keyboards except in games
