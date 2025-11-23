@@ -185,7 +185,7 @@ VerifyWindowIDs() {
     for idx, name in windowsLost {
       lostList .= (idx > 1 ? ", " : "") . name
     }
-    MsgBox("Lost/duplicate window(s): " . lostList)
+    ; MsgBox("Lost/duplicate window(s): " . lostList) ; Uncomment for debugging
   }
 
   WriteWindowIDs()
