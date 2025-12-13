@@ -8,6 +8,7 @@ A_MaxHotkeysPerInterval := 3000
 SendMode "Input"
 SetWorkingDir A_ScriptDir        ; Consistent starting directory
 TraySetIcon "..\\icons\\utils.png"
+!PgDn:: Reload
 
 ; =======================================
 ; GLOBALS
@@ -647,3 +648,50 @@ Esc::CapsLock
 !h::Left
 !l::Right
 #HotIf
+
+; Mouse pos indicator
+
+overlayGui := ""
+isShowing := false
+
+!home:: {
+  global isShowing
+  if (isShowing) {
+    HideOverlay()
+  } else {
+    ShowOverlay()
+  }
+}
+
+ShowOverlay() {
+  global overlayGui, isShowing
+
+  ; Create a GUI window
+  overlayGui := Gui("+AlwaysOnTop -Caption +ToolWindow")
+  overlayGui.BackColor := "Black"
+  overlayGui.SetFont("s12 cLime", "Consolas")
+  overlayGui.Add("Text", "vPosText w200 h30 Center", "X: 0000 Y: 0000")
+  overlayGui.Show("x10 y10 NoActivate")
+
+  isShowing := true
+
+  ; Update position every 50ms
+  SetTimer(UpdatePosition, 50)
+}
+
+HideOverlay() {
+  global overlayGui, isShowing
+
+  SetTimer(UpdatePosition, 0)  ; Stop the timer
+  if (overlayGui)
+    overlayGui.Destroy()
+
+  isShowing := false
+}
+
+UpdatePosition() {
+  global overlayGui
+
+  MouseGetPos(&xPos, &yPos)
+  overlayGui["PosText"].Text := "X: " . xPos . " Y: " . yPos
+}
