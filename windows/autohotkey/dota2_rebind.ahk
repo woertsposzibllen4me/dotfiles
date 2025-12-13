@@ -4,11 +4,69 @@ SettitleMatchMode 1
 SendMode "Event"
 SetWorkingDir A_ScriptDir
 TraySetIcon "icons\dota2.png"
+!PgDn:: Reload
+
 
 #HotIf WinActive("Dota 2") or WinActive("Deadlock")
 `::=
 CapsLock::-
 LWin::0
+
+
+waitshort() {
+  Sleep 80
+}
+
+waitlong() {
+  Sleep 250
+}
+
+!pgup:: {
+  ; open settings menu
+  Send "{Escape}"
+  MouseMove 220, 870
+  waitshort()
+  Click
+
+  ; goto keybinds
+  MouseMove 880, 100
+  waitshort()
+  Click
+
+  ; scroll down to quickbuy setting
+  MouseMove 850, 570
+  waitshort()
+  MouseClick "WheelDown", , , 15
+  waitlong()
+
+  ; bind 1
+  Click
+  waitshort()
+  Send "{Alt down}"
+  waitshort()
+  MouseClick "WheelUp"
+  waitshort()
+  Send "{Alt up}"
+  waitshort()
+
+  ; move to alt bind
+  MouseMove 1070, 570
+  MouseClick "WheelDown", , , 1
+  waitlong()
+
+  ; bind 2
+  Click
+  Send "{Alt down}"
+  waitshort()
+  MouseClick "WheelDown"
+  waitshort()
+  Send "{Alt up}"
+
+  ; exit
+  waitshort()
+  Send "{Escape}"
+  Send "{Escape}"
+}
 
 #HotIf WinActive('Dota 2')
 
