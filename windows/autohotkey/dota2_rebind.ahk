@@ -4,7 +4,7 @@ SettitleMatchMode 1
 SendMode "Event"
 SetWorkingDir A_ScriptDir
 TraySetIcon "icons\dota2.png"
-!PgDn:: Reload
++PgDn:: Reload
 
 
 #HotIf WinActive("Dota 2") or WinActive("Deadlock")
@@ -21,7 +21,7 @@ waitlong() {
   Sleep 250
 }
 
-!pgup:: {
+!Up:: {
   ; open settings menu
   Send "{Escape}"
   MouseMove 220, 870
