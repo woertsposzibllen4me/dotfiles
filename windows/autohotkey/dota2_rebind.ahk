@@ -4,7 +4,6 @@ SettitleMatchMode 1
 SendMode "Event"
 SetWorkingDir A_ScriptDir
 TraySetIcon "icons\dota2.png"
-+PgDn:: Reload
 
 
 #HotIf WinActive("Dota 2") or WinActive("Deadlock")

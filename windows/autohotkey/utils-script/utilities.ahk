@@ -8,7 +8,6 @@ A_MaxHotkeysPerInterval := 3000
 SendMode "Input"
 SetWorkingDir A_ScriptDir        ; Consistent starting directory
 TraySetIcon "..\\icons\\utils.png"
-!PgDn:: Reload
 
 ; =======================================
 ; GLOBALS
