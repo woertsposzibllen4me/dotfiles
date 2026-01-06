@@ -31,6 +31,7 @@ global LeaderCommands := Map(
   "w", ActivateWezTerm,
   "x", ActivateExplorer,
   "y", ActivatePyCharm,
+  "t", ActivateSteam,
   ; Number commands
   "1", ActivateBrowser1Window,
   "2", ActivateBrowser2Window,
@@ -480,6 +481,13 @@ ActivateDiscord() {
     WinActivate
   else
     Run "C:\Users\ville\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Discord Inc\Discord.lnk"
+}
+
+ActivateSteam() {
+  if WinExist("ahk_exe steamwebhelper.exe")
+    WinActivate
+  else
+    Run "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Steam\Steam.lnk"
 }
 
 ActivateBraveBrowser() {
