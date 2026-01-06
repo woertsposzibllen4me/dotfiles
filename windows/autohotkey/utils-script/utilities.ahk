@@ -551,7 +551,7 @@ ActivateWezTerm() {
   else if FileExist(fallbackPath)
     Run fallbackPath
   else
-    MsgBox "Could not find WezTerm executable at either path."
+    MsgBox "Could not find WezTerm executable at either path:`n" primaryPath "`n" fallbackPath
 }
 
 ActivatePowerShell() {
