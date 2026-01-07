@@ -55,3 +55,24 @@ function Invoke-Yazi {
   Remove-Item -Path $tmp
 }
 
+function Import-StreamingModules {
+  if (-not $env:STREAMING_REPO_PATH) {
+    throw "STREAMING_REPO_PATH environment variable is not set"
+  }
+
+  $obsModule = "$env:STREAMING_REPO_PATH\external\obs\version-control\obs-templater.psm1"
+  $streamDeckModule = "$env:STREAMING_REPO_PATH\external\streamdeck\version-control\streamdeck-templater.psm1"
+
+  if (-not (Test-Path $obsModule)) {
+    throw "OBS module not found at: $obsModule"
+  }
+
+  if (-not (Test-Path $streamDeckModule)) {
+    throw "StreamDeck module not found at: $streamDeckModule"
+  }
+
+  Import-Module $obsModule -Force -ErrorAction Stop
+  Import-Module $streamDeckModule -Force -ErrorAction Stop
+
+  Write-Host "Streaming tools loaded!" -ForegroundColor Green
+}
