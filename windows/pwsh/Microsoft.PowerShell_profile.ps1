@@ -84,6 +84,19 @@ Register-SmartPsFzfHandlers -EnableLogging $true
 
 
 ## Minor utility functions
+
+# List all dot-sourced scripts in the current session
+function listdotsourced{
+  (Get-History | Where-Object { $_.CommandLine -match '^\.\s+' }).CommandLine
+}
+
+# follow a symlink to its target directory
+function follow {
+  param($path)
+  $target = (Get-Item $path).Target
+  Set-Location (Split-Path $target)
+}
+
 function fcut {
   $global:cutFile = Get-Item $args[0]
 }
