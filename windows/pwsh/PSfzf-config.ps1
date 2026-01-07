@@ -1,5 +1,5 @@
 # FZF Smart Completion with Auto-Repositioning
-# This module provides intelligent cursor repositioning when FZF displaces terminal content
+# This module provides intelligent (lol) cursor repositioning when FZF displaces terminal content
 
 function Invoke-CursorRepositioning {
   param(
