@@ -84,6 +84,14 @@ Register-SmartPsFzfHandlers -EnableLogging $true
 
 
 ## Minor utility functions
+function fcut {
+  $global:cutFile = Get-Item $args[0]
+}
+
+function fpaste {
+  Move-Item $global:cutFile .
+}
+
 function Update-Profile {
   Add-Type -AssemblyName System.Windows.Forms
   [System.Windows.Forms.SendKeys]::SendWait(". $")
