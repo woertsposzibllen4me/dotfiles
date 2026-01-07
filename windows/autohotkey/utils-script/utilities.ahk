@@ -33,6 +33,7 @@ global LeaderCommands := Map(
   "y", ActivatePyCharm,
   "t", ActivateSteam,
   "r", ActivateStreamDeck,
+  "m", ActivateMailClient,
   ; Number commands
   "1", ActivateBrowser1Window,
   "2", ActivateBrowser2Window,
@@ -44,9 +45,9 @@ global LeaderCommands := Map(
   "/", (*) => ReplaceSlashes("/"),
   "\", (*) => ReplaceSlashes("\"),
   ; Multi-character commands
-  "mm", WriteMessageAvoidTooVerbose,
-  "mw", WriteMessageWorstUserName,
-  "mx", WriteMessageExplainCode,
+  ".m", WriteMessageAvoidTooVerbose,
+  ".w", WriteMessageWorstUserName,
+  ".x", WriteMessageExplainCode,
   "RR", Reload,
   "Spacep", ActivateAdminPowerShell,
   "Space]", ResetChromeWindowList
@@ -489,6 +490,13 @@ ActivateStreamDeck() {
     WinActivate
   else
     Run "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Elgato\Stream Deck.lnk"
+}
+
+ActivateMailClient() {
+  if WinExist("ahk_exe olk.exe")
+    WinActivate
+  else
+    Run "C:\Users\ville\OneDrive\Desktop\Useful\ahk\Outlook - Shortcut.lnk"
 }
 
 ActivateSteam() {
