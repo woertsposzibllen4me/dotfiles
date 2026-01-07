@@ -32,6 +32,7 @@ global LeaderCommands := Map(
   "x", ActivateExplorer,
   "y", ActivatePyCharm,
   "t", ActivateSteam,
+  "r", ActivateStreamDeck,
   ; Number commands
   "1", ActivateBrowser1Window,
   "2", ActivateBrowser2Window,
@@ -46,7 +47,7 @@ global LeaderCommands := Map(
   "mm", WriteMessageAvoidTooVerbose,
   "mw", WriteMessageWorstUserName,
   "mx", WriteMessageExplainCode,
-  "RR", (*) => Reload,
+  "RR", Reload,
   "Spacep", ActivateAdminPowerShell,
   "Space]", ResetChromeWindowList
 )
@@ -481,6 +482,13 @@ ActivateDiscord() {
     WinActivate
   else
     Run "C:\Users\ville\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Discord Inc\Discord.lnk"
+}
+
+ActivateStreamDeck() {
+  if WinExist("ahk_exe StreamDeck.exe")
+    WinActivate
+  else
+    Run "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Elgato\Stream Deck.lnk"
 }
 
 ActivateSteam() {
