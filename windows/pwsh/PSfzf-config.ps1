@@ -22,7 +22,7 @@ function Invoke-CursorRepositioning {
   if ($currentPosAfter.Y -gt $threshold) {
     $newPos = $currentPosAfter
     $moveAmount = $TerminalHeight - $currentPosAfter.Y - $FzfHeight
-    $newPos.Y = [Math]::Max(0, $currentPosAfter.Y + $moveAmount - 1)
+    $newPos.Y = [Math]::Max(0, $currentPosAfter.Y + $moveAmount - 2)
 
     $RawUI.CursorPosition = $newPos
 
