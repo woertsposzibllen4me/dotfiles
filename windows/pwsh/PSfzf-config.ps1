@@ -18,7 +18,7 @@ function Invoke-CursorRepositioning {
 
   $currentPosAfter = $RawUI.CursorPosition
   $threshold = $TerminalHeight - $FzfHeight
-  
+
   if ($currentPosAfter.Y -gt $threshold) {
     $newPos = $currentPosAfter
     $moveAmount = $TerminalHeight - $currentPosAfter.Y - $FzfHeight
@@ -41,10 +41,10 @@ function Invoke-CursorRepositioning {
     $RawUI.CursorPosition = $newPos
     [Microsoft.PowerShell.PSConsoleReadLine]::ClearLine()
     [Microsoft.PowerShell.PSConsoleReadLine]::InvokePrompt()
-    
+
     return $true  # Indicate that repositioning occurred
   }
-  
+
   return $false  # No repositioning needed
 }
 
@@ -167,7 +167,7 @@ function Invoke-PatchedFzfWrapper {
       }
 
       $repositioned = Invoke-CursorRepositioning -FzfHeight $fzfHeight -TerminalHeight $terminalHeight -TerminalWidth $terminalWidth -RawUI $rawUI -LogPath $LogPath -EnableLogging $EnableLogging -OperationName $OperationName
-      
+
       if (-not $repositioned) {
         if ($EnableLogging) {
           "[$timestamp] No repositioning needed for $OperationName" | Out-File -FilePath $LogPath -Append
@@ -183,7 +183,7 @@ function Invoke-PatchedFzfWrapper {
   } else {
     # For non-tab completion operations, use the common repositioning logic
     $repositioned = Invoke-CursorRepositioning -FzfHeight $fzfHeight -TerminalHeight $terminalHeight -TerminalWidth $terminalWidth -RawUI $rawUI -LogPath $LogPath -EnableLogging $EnableLogging -OperationName $OperationName
-    
+
     if (-not $repositioned -and $EnableLogging) {
       $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss.fff"
       "[$timestamp] No repositioning needed for $OperationName" | Out-File -FilePath $LogPath -Append
@@ -228,7 +228,7 @@ function Invoke-PatchedFzfSetLocation {
 function Register-SmartPsFzfHandlers {
   param(
     [string]$PSReadlineChordProvider = 'Ctrl+t',
-    [string]$PSReadlineChordReverseHistory = 'Ctrl+r', 
+    [string]$PSReadlineChordReverseHistory = 'Ctrl+r',
     [string]$PSReadlineChordSetLocation = 'Alt+c',
     [string]$TabCompletionKey = 'Tab',
     [bool]$EnableLogging = $true
