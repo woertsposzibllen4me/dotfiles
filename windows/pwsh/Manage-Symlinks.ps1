@@ -15,6 +15,11 @@ $dotfilesConfig = @{
     "target" = "$HOME\AppData\Local\lazygit\config.yml"
   }
 
+  "Alacritty config" = @{
+    "source" = "$env:DOTFILES_PATH\alacritty.toml"
+    "target" = "$HOME\AppData\Roaming\alacritty\alacritty.toml"
+  }
+
   "VS Code keybinds" = @{
     "source" = "$env:DOTFILES_PATH\vscode\keybindings.json"
     "target" = "$HOME\AppData\Roaming\Code\User\keybindings.json"
