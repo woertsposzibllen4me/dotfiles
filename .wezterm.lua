@@ -158,6 +158,12 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
   local tab_number = tab.tab_index + 1
   local is_zoomed = tab.active_pane.is_zoomed
   local zoom_icon = is_zoomed and " " or ""
+  local os_icon = ""
+  if process_name == "wslhost" then
+    os_icon = "🐧"
+  else
+    os_icon = "🪟 "
+  end
 
   if manually_set_titles[tostring(tab.tab_id)] then -- Keep the title if it was manually set
     local title = tab.tab_title or ""
@@ -176,8 +182,16 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
       { Text = " " .. title .. " " },
     }
   else
-    local title =
-      string.format("%s%d: %s%s (../%s/%s)", zoom_icon, tab_number, process_icon, process_name, parent_folder, cwd)
+    local title = string.format(
+      "%s%d: %s%s%s (../%s/%s)",
+      zoom_icon,
+      tab_number,
+      os_icon,
+      process_icon,
+      process_name,
+      parent_folder,
+      cwd
+    )
     return {
       { Text = " " .. title .. " " },
     }
