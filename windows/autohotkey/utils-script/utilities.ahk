@@ -490,7 +490,7 @@ ActivateStreamDeck() {
   if WinExist("ahk_exe StreamDeck.exe")
     WinActivate
   else
-    Run "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Elgato\Stream Deck.lnk"
+    Run "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Elgato\Stream Deck\Stream Deck.lnk"
 }
 
 ActivateMailClient() {
