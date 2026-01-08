@@ -71,8 +71,8 @@ function Import-StreamingModules {
     throw "StreamDeck module not found at: $streamDeckModule"
   }
 
-  Import-Module $obsModule -Force -ErrorAction Stop
-  Import-Module $streamDeckModule -Force -ErrorAction Stop
+  Import-Module $obsModule -Force -Global -ErrorAction Stop
+  Import-Module $streamDeckModule -Force -Global -ErrorAction Stop
 
   Write-Host "Streaming tools loaded!" -ForegroundColor Green
 }
