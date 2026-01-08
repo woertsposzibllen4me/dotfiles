@@ -97,10 +97,10 @@ function Sync-Symlinks {
 
     $result = Invoke-Expression $command
     if ($LASTEXITCODE -eq 0) {
-      Write-Host "Linked $($item.Key): $target -> $source"
+      Write-Host "Linked $($item.Key): $target -> $source" -ForegroundColor Green
     } else {
-      Write-Host "Failed to link $($item.Key): $target -> $source"
-      Write-Host "Error: $result"
+      Write-Host "Failed to link $($item.Key): $target -> $source" -ForegroundColor Red
+      Write-Host "Error: $result" -ForegroundColor Red
     }
   }
 }
