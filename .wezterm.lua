@@ -183,7 +183,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
     }
   else
     local title = string.format(
-      "%s%d: %s%s%s (../%s/%s)",
+      "%s%d: %s%s%s: ../%s/%s",
       zoom_icon,
       tab_number,
       os_icon,
