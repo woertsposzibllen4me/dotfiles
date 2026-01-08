@@ -176,7 +176,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, hover, max_width)
   local parent_folder, cwd = get_last_two_path_segments(tab)
 
   -- Check if the tab has a custom title set by Neovim set through OSC sequences (should have "[nvim]" in the title)
-  if tab.active_pane.title and tab.active_pane.title:match("%[nvim%]") then
+  if tab.active_pane.title and tab.active_pane.title:match("eovim") then
     local title = string.format("%s%d: %s", zoom_icon, tab_number, tab.active_pane.title)
     return {
       { Text = " " .. title .. " " },
