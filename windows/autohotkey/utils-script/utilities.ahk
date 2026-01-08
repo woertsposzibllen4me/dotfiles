@@ -32,7 +32,7 @@ global LeaderCommands := Map(
   "w", ActivateWezTerm,
   "x", ActivateExplorer,
   "y", ActivatePyCharm,
-  "t", ActivateSteam,
+  "g", ActivateSteam,
   "r", ActivateStreamDeck,
   "m", ActivateMailClient,
   ; Number commands
