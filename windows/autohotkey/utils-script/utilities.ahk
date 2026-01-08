@@ -558,7 +558,6 @@ ActivateBrowser3Window() {
 }
 
 ActivateVSCode() {
-  SetTitleMatchMode 2
   if WinExist("ahk_exe Code.exe")
     WinActivate
   else
@@ -566,11 +565,10 @@ ActivateVSCode() {
 }
 
 ActivateWezTerm() {
-  SetTitleMatchMode 3
   primaryPath := "C:\\Users\\ville\\scoop\\apps\\wezterm-nightly\\current\\wezterm-gui.exe"
   fallbackPath := "C:\\Users\\ville\\scoop\\shims\\wezterm-gui.exe"
 
-  if WinExist("Wezterm")
+  if WinExist("ahk_exe wezterm-gui.exe")
     WinActivate
   else if FileExist(primaryPath)
     Run primaryPath
@@ -582,7 +580,7 @@ ActivateWezTerm() {
 
 ActivatePowerShell() {
   SetTitleMatchMode 2
-  if WinExist("ahk_class CASCADIA_HOSTING_WINDOW_CLASS")
+  if WinExist("ahk_exe WindowsTerminal.exe")
     WinActivate
   else
     Run "pwsh"
@@ -601,7 +599,7 @@ ActivateAdminPowerShell() {
 }
 
 ActivateExplorer() {
-  if WinExist("ahk_class CabinetWClass")
+  if WinExist("ahk_exe explorer.exe")
     WinActivate
   else
     Run "explorer.exe"
