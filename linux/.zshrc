@@ -64,7 +64,8 @@ setopt hist_find_no_dups
 # Terminal position setup
 printf '\n%.0s' {1..$LINES}
 precmd() {
-  print $'\n\n\n\n\e[5A'
+  printf "\033]0;\007" # force terminal title to be empty to trigger wezterm redraw of the tab title
+  [[ $LINES -gt 40 ]] && print $'\n\n\n\n\e[5A' # space prompt from terminal bottom (if term is tall enough)
 }
 function clear-and-put-prompt-at-bottom() {
   printf "\e[H\ec\e[${LINES}B"
