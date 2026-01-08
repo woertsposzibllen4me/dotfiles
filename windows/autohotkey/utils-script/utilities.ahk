@@ -22,6 +22,7 @@ global LeaderCommands := Map(
   "a", ActivateAlacritty,
   "b", ActivateBraveBrowser,
   "d", ActivateDiscord,
+  "t", ActivateStreamerBot,
   "k", ActivateKovaaks,
   "l", ActivateDeadlock,
   "n", ActivateNeo4j,
@@ -491,6 +492,13 @@ ActivateStreamDeck() {
     WinActivate
   else
     Run "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Elgato\Stream Deck\Stream Deck.lnk"
+}
+
+ActivateStreamerBot() {
+  if WinExist("ahk_exe Streamer.bot.exe")
+    WinActivate
+  else
+    Run "C:\Users\ville\myfiles\programs\Streamer.bot\Streamer.bot.exe"
 }
 
 ActivateMailClient() {
