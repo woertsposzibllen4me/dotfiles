@@ -19,6 +19,7 @@ global LeaderKeyTimeout := 2000
 
 global LeaderCommands := Map(
   ; Single character commands
+  "a", ActivateAlacritty,
   "b", ActivateBraveBrowser,
   "d", ActivateDiscord,
   "k", ActivateKovaaks,
@@ -504,6 +505,15 @@ ActivateSteam() {
     WinActivate
   else
     Run "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Steam\Steam.lnk"
+}
+
+
+ActivateAlacritty() {
+  SetTitleMatchMode 2
+  if WinExist("ahk_exe alacritty.exe")
+    WinActivate
+  else
+    Run "C:\Users\ville\scoop\apps\alacritty\current\alacritty.exe"
 }
 
 ActivateBraveBrowser() {
