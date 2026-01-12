@@ -29,6 +29,7 @@ Set-Alias -Name cpath -Value Copy-PathToClipboard
 Set-Alias -Name dsize -Value Get-DirectorySize
 Set-Alias -Name lf -Value Invoke-Yazi
 Set-Alias -Name y -Value Invoke-Yazi
+Set-Alias -Name cpcode -Value Copy-FileContextRecursively
 
 ## Path additions
 $pathsToAdd = @(

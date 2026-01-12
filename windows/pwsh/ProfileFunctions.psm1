@@ -76,3 +76,37 @@ function Import-StreamingModules {
 
   Write-Host "Streaming tools loaded!" -ForegroundColor Green
 }
+
+function Copy-FileContextRecursively {
+  param(
+    [Parameter(Position=0)]
+    [string]$Path = "."
+  )
+
+  $output = @()
+
+  # Directory structure
+  $output += "=== DIRECTORY STRUCTURE ==="
+  $output += ""
+  $output += fd . $Path
+  $output += ""
+
+  # File contents
+  $output += "=== FILE CONTENTS ==="
+  $output += ""
+
+  $files = fd -t f . $Path
+  foreach ($file in $files) {
+    $output += ""
+    $output += "━━━ $file ━━━"
+    $output += ""
+    $output += Get-Content $file -Raw
+    $output += ""
+  }
+
+  # Copy to clipboard
+  $output -join "`n" | Set-Clipboard
+
+  $fileCount = $files.Count
+  Write-Host "✓ Copied structure and contents of $fileCount file(s) from '$Path' to clipboard"
+}
