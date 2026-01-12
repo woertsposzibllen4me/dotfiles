@@ -171,6 +171,33 @@ alias gitcfg='git config --global -e'
 # === QUICK EDIT FUNCTIONS END ===
 # === UTILITY FUNCTIONS START ===
 
+# Copy directory structure and file contents to clipboard
+cpcode() {
+  local path="${1:-.}"
+  local file_count=0
+  {
+    echo "=== DIRECTORY STRUCTURE ==="
+    echo ""
+    /usr/sbin/fd . "$path"
+    echo ""
+    echo "=== FILE CONTENTS ==="
+    echo ""
+    /usr/sbin/fd -t f . "$path" | while read -r file; do
+      echo ""
+      echo "━━━ $file ━━━"
+      echo ""
+      /usr/bin/cat "$file"
+      echo ""
+      ((file_count++))
+    done
+  } | /usr/sbin/xclip -selection clipboard
+
+  # Count files after the fact since subshell doesn't preserve variables
+  file_count=$(/usr/sbin/fd -t f . "$path" | /usr/bin/wc -l)
+  echo "✓ Copied structure and contents of $file_count file(s) from '$path' to clipboard"
+}
+compdef _path_files cpcode
+
 # Python environment setup
 function set_python_path() {
   export PYTHONPATH="$(pwd)"
