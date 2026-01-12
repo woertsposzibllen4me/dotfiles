@@ -1,25 +1,25 @@
 [user]
-	name = Loïc Villet
-	email = villet.loic@gmail.com
+  name = Loïc Villet
+  email = villet.loic@gmail.com
 [alias]
-	diffs = -c delta.features=side-by-side diff
-	difft = difftool -d --tool=difft
+  diffs = -c delta.features=side-by-side diff
+  difft = difftool -d --tool=difft
 [core]
-	editor = nvim
-	pager = delta
+  editor = nvim
+  pager = delta
 [interactive]
-	diffFilter = cat
+  diffFilter = cat
 [color "diff-highlight"]
 [color "diff"]
   plain = white
   context = white
   func = white
-	meta = "#575553"
-	frag = brightblack
-	commit = magenta
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+  meta = "#575553"
+  frag = brightblack
+  commit = magenta
+  old = red bold
+  new = green bold
+  whitespace = red reverse
 [delta]
   minus-style = dim syntax "#3f0001"
   plus-style = syntax "#002800"
@@ -30,18 +30,18 @@
   ; plus-empty-line-marker-style = green bold "#002800"
   ; minus-empty-line-marker-style = red bold "#3f0001"
   keep-plus-minus-markers = false
-	navigate = true
-	light = false
-	file-style = bold yellow
-	file-decoration-style = yellow box
-	hunk-header-style = line-number syntax
+  navigate = true
+  light = false
+  file-style = bold yellow
+  file-decoration-style = yellow box
+  hunk-header-style = line-number syntax
   ; map-styles = "bold brightblack => bold #9d39b3 #3f0001, bold blue => bold blue #002800"
   ; map-styles = "\
   ;   bold #363e47 => bold #363e47 #3f0001, \
   ;   bold blue => bold blue #002800, \
   ;   bold brightblack => bold brightblack #3f0001, \
   ;   bold cyan => bold cyan #002800"
-	line-numbers = true
+  line-numbers = true
 ; line-numbers-minus-style = "#444444"
 ; line-numbers-zero-style = "#444444"
 ; line-numbers-plus-style = "#444444"
@@ -50,17 +50,17 @@ line-numbers-right-format = "{np:>4} "
 ; line-numbers-left-style = blue
 ; line-numbers-right-style = blue
 [init]
-	defaultBranch = main
+  defaultBranch = main
 [diff]
-	colorMoved = default
-	; colorMoved = dimmed-zebra
-	colormovedws = allow-indentation-change
-	; colormovedws = ignore-all-space, ignore-space-at-eol, ignore-space-change
-	tool = vscode
+  colorMoved = default
+  ; colorMoved = dimmed-zebra
+  colormovedws = allow-indentation-change
+  ; colormovedws = ignore-all-space, ignore-space-at-eol, ignore-space-change
+  tool = vscode
 [difftool]
-	prompt = false
+  prompt = false
 [pager]
-	difftool = delta
+  difftool = delta
 # Windows paths
 [includeIf "gitdir/i:C:/Users/"]
     path = ~/myfiles/dotfiles/gitaliases.txt
@@ -69,15 +69,15 @@ line-numbers-right-format = "{np:>4} "
     path = ~/dotfiles/gitaliases.txt
 [include]
 ; [difftool "bc"] ; Unused, but kept for reference
-; 	cmd = "C:/Users/ville/AppData/Local/Programs/Beyond Compare 5/BCompare.exe" "$LOCAL" "$REMOTE"
+;   cmd = "C:/Users/ville/AppData/Local/Programs/Beyond Compare 5/BCompare.exe" "$LOCAL" "$REMOTE"
 [merge]
-	tool = vscode
+  tool = vscode
 [difftool "vscode"]
-	cmd = code --wait --diff $LOCAL $REMOTE
+  cmd = code --wait --diff $LOCAL $REMOTE
 [mergetool "vscode"]
-	cmd = code --wait $MERGED
+  cmd = code --wait $MERGED
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
