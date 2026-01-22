@@ -7,3 +7,4 @@ f1:: {
   Send "h"
   ; sleep 50
 }
+`::o

@@ -47,7 +47,7 @@ global LeaderCommands := Map(
   "/", (*) => ReplaceSlashes("/"),
   "\", (*) => ReplaceSlashes("\"),
   ; Multi-character commands
-  ".m", WriteMessageAvoidTooVerbose,
+  ".m", WriteMessageDontResendAllCode,
   ".w", WriteMessageWorstUserName,
   ".x", WriteMessageExplainCode,
   "RR", Reload,
@@ -634,8 +634,8 @@ ActivateDeadlock() {
     Run "C:\Users\ville\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Steam\Deadlock.url"
 }
 
-WriteMessageAvoidTooVerbose() {
-  SendText "Please only send back only as much code as is really needed, avoid being too verbose."
+WriteMessageDontResendAllCode() {
+  SendText "No need to resend me all the code for this one"
 }
 
 WriteMessageWorstUserName() {
