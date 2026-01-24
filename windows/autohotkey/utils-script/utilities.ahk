@@ -607,7 +607,7 @@ ActivateAdminPowerShell() {
 }
 
 ActivateExplorer() {
-  if WinExist("ahk_exe explorer.exe")
+  if WinExist("ahk_exe explorer.exe ahk_class CabinetWClass")
     WinActivate
   else
     Run "explorer.exe"
