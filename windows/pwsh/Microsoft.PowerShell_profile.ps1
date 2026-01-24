@@ -185,6 +185,10 @@ function ahk {
   Set-Location "$env:DOTFILES_PATH\windows\autohotkey"
 }
 
+function wslbackup {
+  wsl --terminate Arch; wsl --export Arch "$env:USERPROFILE\OneDrive\Backups\wsl\Arch-$(Get-Date -Format yyyyMMdd-HHmmss).tar"
+}
+
 function vidata {
   Set-Location "$HOME\AppData\Local\nvim-data"
 }
