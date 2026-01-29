@@ -15,62 +15,7 @@ LWin::0
 !j:: Send "{Down}"
 !k:: Send "{Up}"
 
-waitshort() {
-  Sleep 80
-}
-
-waitlong() {
-  Sleep 250
-}
-
-!Up:: {
-  ; open settings menu
-  Send "{Escape}"
-  MouseMove 220, 870
-  waitshort()
-  Click
-
-  ; goto keybinds
-  MouseMove 880, 100
-  waitshort()
-  Click
-
-  ; scroll down to quickbuy setting
-  MouseMove 850, 570
-  waitshort()
-  MouseClick "WheelDown", , , 15
-  waitlong()
-
-  ; bind 1
-  Click
-  waitshort()
-  Send "{Alt down}"
-  waitshort()
-  MouseClick "WheelUp"
-  waitshort()
-  Send "{Alt up}"
-  waitshort()
-
-  ; move to alt bind
-  MouseMove 1070, 570
-  MouseClick "WheelDown", , , 1
-  waitlong()
-
-  ; bind 2
-  Click
-  Send "{Alt down}"
-  waitshort()
-  MouseClick "WheelDown"
-  waitshort()
-  Send "{Alt up}"
-
-  ; exit
-  waitshort()
-  Send "{Escape}"
-  Send "{Escape}"
-}
-
-#HotIf WinActive('Dota 2')
+#HotIf WinActive("ahk_exe Dota 2.exe")
 ; Cam pos
 !q::!Ins ; mid
 !d::!Home ; top
