@@ -80,9 +80,12 @@ function Import-StreamingModules {
 function Copy-FileContextRecursively {
   param(
     [Parameter(Position=0)]
-    [string]$Path = "."
+    [string]$Path = ".",
+    [Parameter(Position=1)]
+    [string]$Filter = "*",
+    [Alias("d")]
+    [switch]$StructureOnly
   )
-
   $output = @()
 
   # Directory structure
@@ -91,22 +94,25 @@ function Copy-FileContextRecursively {
   $output += fd . $Path
   $output += ""
 
-  # File contents
-  $output += "=== FILE CONTENTS ==="
-  $output += ""
-
-  $files = fd -t f . $Path
-  foreach ($file in $files) {
+  # File contents (skip if StructureOnly is specified)
+  if (-not $StructureOnly) {
+    $output += "=== FILE CONTENTS ==="
     $output += ""
-    $output += "━━━ $file ━━━"
-    $output += ""
-    $output += Get-Content $file -Raw
-    $output += ""
+    $files = fd -t f . $Path
+    foreach ($file in $files) {
+      $output += ""
+      $output += "━━━ $file ━━━"
+      $output += ""
+      $output += Get-Content $file -Raw
+      $output += ""
+    }
+    $fileCount = $files.Count
+    $message = "✓ Copied structure and contents of $fileCount file(s) from '$Path' to clipboard"
+  } else {
+    $message = "✓ Copied directory structure from '$Path' to clipboard"
   }
 
   # Copy to clipboard
   $output -join "`n" | Set-Clipboard
-
-  $fileCount = $files.Count
-  Write-Host "✓ Copied structure and contents of $fileCount file(s) from '$Path' to clipboard"
+  Write-Host $message
 }
