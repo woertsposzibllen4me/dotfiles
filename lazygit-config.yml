@@ -47,6 +47,12 @@ customCommands:
     description: "Delta diff of selected item"
     loadingText: "Opening diff in Delta..."
     output: terminal
+  - key: "E"
+    command: 'git commit --allow-empty -m "{{index .PromptResponses 0}}"'
+    context: "files"
+    prompts:
+      - type: "input"
+        title: "Commit message"
   # For commits panel
   - key: "I"
     command: "git -c delta.features=side-by-side show {{.SelectedCommit.Sha}} -p"
